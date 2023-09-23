@@ -13,9 +13,9 @@ router.use(cookieParser());
 
 
 router.post('/vendorregister', async (req, res) => {
-    const { name, email, phone, password, cPassword } = req.body;
+    const { name, email, phone, password, cpassword } = req.body;
 
-    if (!name || !email || !phone || !password || !cPassword) {
+    if (!name || !email || !phone || !password || !cpassword) {
         res.status(422).json({ msg: "All fields need to be filled" });
     }
 
@@ -24,13 +24,15 @@ router.post('/vendorregister', async (req, res) => {
         if (vendorExist) {
             res.status(409).json({ msg: "Email already registered" });
         }
-        else if (password != cPassword) {
+        else if (password != cpassword) {
             res.status(422).json({ msg: "Passwords do not match" });
         }
-        const ven = new Vendor({ name, email, phone, password, confirmPassword });
+        const ven = new Vendor({ name, email, phone, password, cpassword });
+        console.log(ven)
         await ven.save();
         res.status(200).json({ msg: "User registered successfully" });
     } catch (error) {
+        console.log(error)
         res.status(500).json({ msg: "Some unexpected error occured" });
     }
 })
@@ -41,12 +43,12 @@ router.post('/signin', async (req, res) => {
         res.status(400).json({ msg: "Please fill all required fields" })
     }
     try {
-        const emailExist = await User.findOne({ email: email });
+        const emailExist = await Vendor.findOne({ email: email });
         if (emailExist) {
             const isMatch = await bcrypt.compare(password, emailExist.password);
             if (isMatch) {
                 token = await emailExist.generateAuthToken();
-                res.cookie('libcoo', token, {
+                res.cookie('inv_man', token, {
                     expires: new Date(Date.now() + 604800),
                     httpOnly: true
                 })
@@ -290,6 +292,11 @@ router.get('/allcompanies', async (req, res) => {
 //         res.status(500).json({ error: "Internal server error" }); // Handle errors properly
 //     }
 // })
+
+router.post('/vendorlogout', (req, res) => {
+    res.clearCookie('libcoo', {path:'/'})
+    res.status(200).json({msg:"User logged out successfully"})
+})
 
 
 //Lets continue tomorrow || Bye

@@ -6,6 +6,7 @@ const PORT = process.env.PORT;
 app.use(express.json());
 require('./db/conn');
 app.use(require('./routes/auth'));
+app.use(require('./routes/vendor'));
 
 
 app.listen(PORT, () => {

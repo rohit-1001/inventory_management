@@ -10,7 +10,7 @@ const Navbar = () => {
       
         if (confirmLogout) {
           try {
-            const res = await axios.post('/userlogout',{
+            const res = await axios.post('/vendorlogout',{
                 withCredentials: true
             });
       

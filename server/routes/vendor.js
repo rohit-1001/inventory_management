@@ -28,7 +28,6 @@ router.post('/vendorregister', async (req, res) => {
             res.status(422).json({ msg: "Passwords do not match" });
         }
         const ven = new Vendor({ name, email, phone, password, cpassword });
-        console.log(ven)
         await ven.save();
         res.status(200).json({ msg: "User registered successfully" });
     } catch (error) {
@@ -66,9 +65,9 @@ router.post('/signin', async (req, res) => {
     }
 })
 
-router.post('/addproducts', async (req, res) => {
+router.post('/addproducts', vendorAuthenticate, async (req, res) => {
     const { email, name, desc, quantity, category, pid, manufacturer } = req.body;
-    console.log("Request Body: ", req.body);
+    // console.log("Request Body: ", req.body);
 
     try {
         const vendor = await Vendor.findOne({ email: email });
@@ -95,9 +94,13 @@ router.post('/addproducts', async (req, res) => {
 
 
 // addstock
-router.post('/addstock1', async (req, res) => {
+router.post('/addstock', vendorAuthenticate, async (req, res) => {
     const { email, quantity, pid } = req.body;
-    console.log("Request Body: ", req.body);
+    // console.log("Request Body: ", req.body);
+
+    if(isNaN(quantity)){
+        res.status(422).json({ msg: "Invalid request made" });
+    }
 
     try {
         const vendor = await Vendor.findOne({ email: email });
@@ -122,38 +125,14 @@ router.post('/addstock1', async (req, res) => {
     }
 });
 
-router.post('/addstock2', async (req, res) => {
-    const { email, quantity, pid } = req.body;
-    console.log("Request Body: ", req.body);
-
-    try {
-        const vendor = await Vendor.findOne({ email: email });
-        if (!vendor) {
-            return res.status(400).json({ error: "Vendor not found" });
-        }
-        const product = vendor.products.find((product) => product.pid === pid);
-        if (!product) {
-            return res.status(400).json({ error: "Product not found" });
-        }
-
-        // Ensure the quantity is valid and add it to the product
-        product.quantity += quantity;
-
-        await vendor.save(); // Save the updated vendor document
-
-        res.status(200).json({ message: "Stock added successfully" });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: "Internal server error" }); // Handle errors properly
-    }
-});
-
-
-
 // substock
-router.post('/subtractstock', async (req, res) => {
+router.post('/subtractstock', vendorAuthenticate, async (req, res) => {
     const { email, quantity, pid } = req.body;
-    console.log("Request Body: ", req.body);
+    // console.log("Request Body: ", req.body);
+
+    if(isNaN(quantity)){
+        res.status(422).json({ msg: "Invalid request made" });
+    }
 
     try {
         const vendor = await Vendor.findOne({ email: email });
@@ -173,8 +152,7 @@ router.post('/subtractstock', async (req, res) => {
         } else {
             return res.status(400).json({ error: "Insufficient stock quantity" });
         }
-
-        await vendor.save(); // Save the updated vendor document
+        await Vendor.replaceOne({ email: email }, vendor);
 
         res.status(200).json({ message: "Stock subtracted successfully" });
     } catch (error) {
@@ -185,9 +163,13 @@ router.post('/subtractstock', async (req, res) => {
 
 
 
-router.post('/substock', async (req, res) => {
+router.post('/substock', vendorAuthenticate, async (req, res) => {
     const { email, name, desc, quantity, category, pid } = req.body;
-    console.log("Request Body: ", req.body);
+    // console.log("Request Body: ", req.body);
+
+    if(isNaN(quantity)){
+        res.status(422).json({ msg: "Invalid request made" });
+    }
 
     try {
         const vendor = await Vendor.findOne({ email: email });
@@ -213,9 +195,9 @@ router.post('/substock', async (req, res) => {
 
 
 // getallproductsofvendor
-router.post('/getallproducts', async (req, res) => {
+router.post('/getallproducts_v', vendorAuthenticate, async (req, res) => {
     const email = req.body.email;
-    console.log("Request Body: ", req.body);
+    // console.log("Request Body: ", req.body);
     try {
         const vendor = Vendor.find({ email: email });
         if (!vendor) {
@@ -231,16 +213,15 @@ router.post('/getallproducts', async (req, res) => {
         console.error(error);
         res.status(500).json({ error: "Internal server error" }); // Handle errors properly
     }
-
 });
 
 
 // getallproductsofcompany
-router.post('/getallproducts', async (req, res) => {
+router.post('/getallproducts_c', vendorAuthenticate, async (req, res) => {
     const email = req.body.email;
-    console.log("Request Body: ", req.body);
+    // console.log("Request Body: ", req.body);
     try {
-        const Company = Conpany.find({ email: email });
+        const Company = Company.find({ email: email });
         if (!Company) {
             return res.status(400).json({ error: "Vendor not found" });
         }
@@ -254,11 +235,10 @@ router.post('/getallproducts', async (req, res) => {
         console.error(error);
         res.status(500).json({ error: "Internal server error" }); // Handle errors properly
     }
-
 });
 
 
-router.get('/allcompanies', async (req, res) => {
+router.get('/allcompanies', vendorAuthenticate, async (req, res) => {
     try {
         // Use the Company model to find all companies in the database
         const companies = await Company.find();
@@ -277,21 +257,28 @@ router.get('/allcompanies', async (req, res) => {
 
 
 // order_request
-// router.post('/request', async (req, res) => {
-//     console.log("Request Body: ", req.body);
-//     const products = req.body.product;
-//     const c_email = req.body.c_email;
-//     const v_email = req.body.v_email;
-//     try {
+router.post('/request',vendorAuthenticate,  async (req, res) => {
+    console.log("Request Body: ", req.body);
+    const products = req.body.products;
+    const c_email = req.body.c_email;
+    const v_email = req.body.v_email;
 
-//         const 
+    const quantity = products.quantity
 
+    if (!products || !c_email || !v_email || !quantity || isNaN(quantity)) {
+        res.status(422).json({ msg: "Invalid request made" });
+    }
 
-//     } catch (error) {
-//         console.error(error);
-//         res.status(500).json({ error: "Internal server error" }); // Handle errors properly
-//     }
-// })
+    try {
+        const venreq = new Order({ c_email, v_email, products});
+        await venreq.save();
+        res.status(200).json({ msg: "Request sent successfully" });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+})
 
 router.post('/vendorlogout', (req, res) => {
     res.clearCookie('libcoo', {path:'/'})

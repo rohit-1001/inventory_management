@@ -5,6 +5,7 @@ const companyAuthenticate = require('../middleware/companyAuthenticate')
 const cookieParser = require('cookie-parser');
 router.use(cookieParser());
 const Company = require('../models/Company')
+const Vendor = require('../models/Vendor')
 
 router.post('/companyregister', async (req, res) => {
     const { name, email, phone, password, cpassword } = req.body;
@@ -214,8 +215,52 @@ router.post('/orders',  async (req, res) => {
     }
 })
 
-router.post('/companyacceptance', async (req, res) => {
-    const { status, id} = req.body;
+router.post('/orderacceptance', async (req, res) => {
+    const { status, id, c_email, v_email } = req.body;
+    const {pid, quantity} = req.body.products    
+
+    if(status==="Accepted"){
+        try{
+            const company = await Company.find ({email: c_email});
+            if(!company){
+                return res.status(400).json({error: "Company not found"});
+            }
+            const product = company.products.find((product) => product.pid === pid)
+            if(!product){
+                return res.status(400).json({error: "Product not found"})
+            }
+            if(product.quantity<quantity){
+                return res.status(400).json({error: "Product quantity not sufficient, cannot accept the order currently"})
+            }
+            product.quantity-=quantity;
+            await order.save();
+            res.status(200).json({msg: "Order accepted."});
+        }
+        catch(error){
+            console.error(error);
+            res.status(500).json({ error: "Internal server error" });
+        }
+    }
+    else if (status==="Completed"){
+        try{
+            const vendor =  await Vendor.findOne({email: v_email});
+            if(!vendor){
+                return res.status(400).json({error: "Vendor not found"});
+            }
+            const product = vendor.products.find((product) => product.pid === pid);
+            if(!product){
+                return res.status(400).json({error: "Product not found"});
+            }
+            product.quantity += req.body.quantity;
+            await vendor.save();
+            res.status(200).json({msg: "Order Status Updated Completed and Vendor data updated"});
+
+        }
+        catch(error){
+            console.error(error);
+            res.status(500).json({ error: "Internal server error" });
+        }
+    }
     try{
         const order = await Order.find ({_id: id});
         if(!order){
@@ -223,7 +268,7 @@ router.post('/companyacceptance', async (req, res) => {
         }
         order.status = status;
         await order.save();
-        res.status(200).json({msg: "Order accepted."});
+        res.status(200).json({msg: "Order Status Updated."});
     }
     catch(error){
         console.error(error);

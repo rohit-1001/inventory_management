@@ -42,6 +42,18 @@ const companySchema = new mongoose.Schema({
             pid:{
                 type:String,
                 required: true
+            },
+            threshold:{
+                type:Number,
+                required: true
+            },
+            s_price:{
+                type:Number,
+                required: true
+            },
+            c_price:{
+                type:Number,
+                required: true
             }
         }
     ],

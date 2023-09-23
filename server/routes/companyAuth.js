@@ -6,25 +6,7 @@ const cookieParser = require('cookie-parser');
 router.use(cookieParser());
 const Company = require('../models/Company')
 
-router.post('/comregister', async (req, res) => {
-    const { name, email, phone, password, cpassword } = req.body;
-    // console.log("Request Body: ", req.body);
-
-    try {
-        const company = await Company.findOne({ email: email });
-        if (!company) {
-            return res.status(400).json({ error: "Vendor not found" });
-        }
-        await company.save(); // Save the updated vendor document
-
-        res.status(201).json({ message: "Product added successfully" });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: "Internal server error" }); // Handle errors properly
-    }
-});
-
-router.post('/vendorregister', async (req, res) => {
+router.post('/companyregister', async (req, res) => {
     const { name, email, phone, password, cpassword } = req.body;
 
     if (!name || !email || !phone || !password || !cpassword) {
@@ -32,16 +14,16 @@ router.post('/vendorregister', async (req, res) => {
     }
 
     try {
-        const vendorExist = await Vendor.findOne({ email: email });
-        if (vendorExist) {
+        const companyExist = await Company.findOne({ email: email });
+        if (companyExist) {
             res.status(409).json({ msg: "Email already registered" });
         }
         else if (password != cpassword) {
             res.status(422).json({ msg: "Passwords do not match" });
         }
-        const ven = new Vendor({ name, email, phone, password, cpassword });
-        await ven.save();
-        res.status(200).json({ msg: "User registered successfully" });
+        const comp = new Company({ name, email, phone, password, cpassword });
+        await comp.save();
+        res.status(200).json({ msg: "Company registered successfully" });
     } catch (error) {
         console.log(error)
         res.status(500).json({ msg: "Some unexpected error occured" });
@@ -54,7 +36,7 @@ router.post('/signin', async (req, res) => {
         res.status(400).json({ msg: "Please fill all required fields" })
     }
     try {
-        const emailExist = await Vendor.findOne({ email: email });
+        const emailExist = await Company.findOne({ email: email });
         if (emailExist) {
             const isMatch = await bcrypt.compare(password, emailExist.password);
             if (isMatch) {
@@ -63,10 +45,10 @@ router.post('/signin', async (req, res) => {
                     expires: new Date(Date.now() + 604800),
                     httpOnly: true
                 })
-                res.status(200).json({ msg: "User login successful" })
+                res.status(200).json({ msg: "Login successful" })
             }
             else {
-                res.status(400).json({ msg: "User login failed" })
+                res.status(400).json({ msg: "Login failed" })
             }
         }
         else {
@@ -79,13 +61,13 @@ router.post('/signin', async (req, res) => {
 
 // router.post('/addproducts', vendorAuthenticate, async (req, res) => {
 router.post('/addproducts', async (req, res) => {
-    const { email, name, desc, quantity, category, pid, manufacturer } = req.body;
+    const { email, name, desc, quantity, category, pid, threshold, s_price, c_price } = req.body;
     // console.log("Request Body: ", req.body);
 
     try {
-        const vendor = await Vendor.findOne({ email: email });
-        if (!vendor) {
-            return res.status(400).json({ error: "Vendor not found" });
+        const company = await Company.findOne({ email: email });
+        if (!company) {
+            return res.status(400).json({ error: "Company not found" });
         }
         const newProduct = {
             name: name,
@@ -93,10 +75,12 @@ router.post('/addproducts', async (req, res) => {
             quantity: quantity,
             category: category,
             pid: pid,
-            manufacturer: manufacturer
+            threshold: threshold,
+            s_price:s_price,
+            c_price:c_price
         };
-        vendor.products.push(newProduct); // Use push to add a newProduct to the products array
-        await vendor.save(); // Save the updated vendor document
+        company.products.push(newProduct); // Use push to add a newProduct to the products array
+        await company.save(); // Save the updated vendor document
 
         res.status(201).json({ message: "Product added successfully" });
     } catch (error) {
@@ -117,11 +101,11 @@ router.post('/addstock', async (req, res) => {
     }
 
     try {
-        const vendor = await Vendor.findOne({ email: email });
-        if (!vendor) {
-            return res.status(400).json({ error: "Vendor not found" });
+        const company = await Company.findOne({ email: email });
+        if (!company) {
+            return res.status(400).json({ error: "Company not found" });
         }
-        const product = vendor.products.find((product) => product.pid === pid);
+        const product = company.products.find((product) => product.pid === pid);
         if (!product) {
             return res.status(400).json({ error: "Product not found" });
         }
@@ -130,7 +114,7 @@ router.post('/addstock', async (req, res) => {
         product.quantity += quantity;
         // vendor.find(product).quantity += quantity;
         // await vendor.save(); // Save the updated vendor document
-        await Vendor.replaceOne({ email: email }, vendor);
+        await Company.replaceOne({ email: email }, company);
 
         res.status(200).json({ message: "Stock added successfully" });
     } catch (error) {
@@ -150,13 +134,13 @@ router.post('/subtractstock', async (req, res) => {
     }
 
     try {
-        const vendor = await Vendor.findOne({ email: email });
-        if (!vendor) {
-            return res.status(400).json({ error: "Vendor not found" });
+        const company = await Company.findOne({ email: email });
+        if (!company) {
+            return res.status(400).json({ error: "Company not found" });
         }
 
         // Find the product with the matching pid
-        const product = vendor.products.find((product) => product.pid === pid);
+        const product = company.products.find((product) => product.pid === pid);
         if (!product) {
             return res.status(400).json({ error: "Product not found" });
         }
@@ -167,7 +151,7 @@ router.post('/subtractstock', async (req, res) => {
         } else {
             return res.status(400).json({ error: "Insufficient stock quantity" });
         }
-        await Vendor.replaceOne({ email: email }, vendor);
+        await Company.replaceOne({ email: email }, company);
         // await vendor.save()
 
         res.status(200).json({ message: "Stock subtracted successfully" });
@@ -176,3 +160,67 @@ router.post('/subtractstock', async (req, res) => {
         res.status(500).json({ error: "Internal server error" }); // Handle errors properly
     }
 });
+
+router.post('/getallproducts_c', async (req, res) => {
+    const email = req.body.email;
+    // console.log("Request Body: ", req.body);
+    try {
+        const Company = await Company.find({ email: email });
+        if (!Company) {
+            return res.status(400).json({ error: "Company not found" });
+        }
+        const products = Company.products;
+        if (!products) {
+            return res.status(400).json({ error: "No products found" });
+        }
+        res.status(200).json(products);
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Internal server error" }); // Handle errors properly
+    }
+});
+
+
+router.post('/profile',  async (req, res) => {
+    const email = req.body.email;
+    
+    try {
+        const company = await Company.findOne({ email: email });
+        if (!company) {
+            return res.status(400).json({ error: "Company not found" });
+        }
+        res.status(200).json(company);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+})
+
+
+//orders by vendors
+router.post('/orders',  async (req, res) => {
+    const email = req.body.email;
+    try{
+        const orders = await Order.find({c_email: email});
+        if(!orders){
+            return res.status(400).json({error: "No orders found"});
+        }
+        res.status(200).json(orders);   
+    }
+    catch(error){
+        console.error(error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+})
+
+// router.post('/companyacceptance', async (req, res) => {
+    
+// })
+
+router.post('/companylogout', (req, res) => {
+    res.clearCookie('inv_man', {path:'/'})
+    res.status(200).json({msg:"Logged out successfully"})
+})
+
+module.exports = router;

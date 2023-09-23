@@ -29,7 +29,7 @@ router.post('/vendorregister', async (req, res) => {
         }
         const ven = new Vendor({ name, email, phone, password, cpassword });
         await ven.save();
-        res.status(200).json({ msg: "User registered successfully" });
+        res.status(200).json({ msg: "Vendor registered successfully" });
     } catch (error) {
         console.log(error)
         res.status(500).json({ msg: "Some unexpected error occured" });
@@ -51,10 +51,10 @@ router.post('/signin', async (req, res) => {
                     expires: new Date(Date.now() + 604800),
                     httpOnly: true
                 })
-                res.status(200).json({ msg: "User login successful" })
+                res.status(200).json({ msg: "Login successful" })
             }
             else {
-                res.status(400).json({ msg: "User login failed" })
+                res.status(400).json({ msg: "Login failed" })
             }
         }
         else {
@@ -67,7 +67,7 @@ router.post('/signin', async (req, res) => {
 
 // router.post('/addproducts', vendorAuthenticate, async (req, res) => {
 router.post('/addproducts', async (req, res) => {
-    const { email, name, desc, quantity, category, pid, manufacturer } = req.body;
+    const { email, name, desc, quantity, category, pid, threshold , c_price, s_price, manufacturer} = req.body;
     // console.log("Request Body: ", req.body);
 
     try {
@@ -75,6 +75,18 @@ router.post('/addproducts', async (req, res) => {
         if (!vendor) {
             return res.status(400).json({ error: "Vendor not found" });
         }
+        const newProduct = {
+            name: name,
+            desc: desc,
+            quantity: quantity,
+            category: category,
+            pid: pid,
+            threshold: threshold,
+            manufacturer:manufacturer,
+            c_price : c_price,
+            s_price : s_price
+        };
+        vendor.products.push(newProduct); // Use push to add a newProduct to the products array
         await vendor.save(); // Save the updated vendor document
 
         res.status(201).json({ message: "Product added successfully" });
@@ -284,7 +296,7 @@ router.post('/orders',  async (req, res) => {
 
 router.post('/vendorlogout', (req, res) => {
     res.clearCookie('inv_man', {path:'/'})
-    res.status(200).json({msg:"User logged out successfully"})
+    res.status(200).json({msg:"Logged out successfully"})
 })
 
 

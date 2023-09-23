@@ -46,6 +46,18 @@ const vendorSchema = new mongoose.Schema({
             },
             manufacturer:{
                 type: String
+            },
+            threshold:{
+                type:Number,
+                required: true
+            },
+            s_price:{
+                type:Number,
+                required: true
+            },
+            c_price:{
+                type:Number,
+                required: true
             }
         }
     ],

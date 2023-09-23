@@ -237,16 +237,16 @@ router.get('/allcompanies', async (req, res) => {
 // router.post('/request',vendorAuthenticate,  async (req, res) => {
 router.post('/request',  async (req, res) => {
     console.log("Request Body: ", req.body);
-    const products = req.body.products;
+    const product = req.body.product;
     const c_email = req.body.c_email;
     const v_email = req.body.v_email;
 
-    if (!products || !c_email || !v_email) {
+    if (!product || !c_email || !v_email) {
         res.status(422).json({ msg: "Invalid request made" });
     }
 
     try {
-        const venreq = new Order({ c_email, v_email, products});
+        const venreq = new Order({ c_email, v_email, product});
         await venreq.save();
         res.status(200).json({ msg: "Request sent successfully" });
 
@@ -256,9 +256,32 @@ router.post('/request',  async (req, res) => {
     }
 })
 
-// router.post('/vendoracceptance', async (req, res) => {
-    
-// })
+
+// for deletion of order request
+router.post('/ordercancellation', async (req, res) => {
+    const id = req.body.id;
+
+    try {
+        const venreq = new Order({ _id_id});
+        if(venreq.status==="Accepted")
+            res.status(200).json({ msg: "Request already accepted" });
+        else{
+            try {
+                const del = new Order({ _id:id});
+                await del.delete();
+                res.status(200).json({ msg: "Request deleted successfully" });
+        
+            } catch (error) {
+                console.error(error);
+                res.status(500).json({ error: "Internal server error" });
+            }
+        }
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+})
 
 // vendor profile
 router.post('/profile',  async (req, res) => {

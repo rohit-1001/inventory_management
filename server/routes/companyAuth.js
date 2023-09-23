@@ -214,9 +214,22 @@ router.post('/orders',  async (req, res) => {
     }
 })
 
-// router.post('/companyacceptance', async (req, res) => {
-    
-// })
+router.post('/companyacceptance', async (req, res) => {
+    const { status, id} = req.body;
+    try{
+        const order = await Order.find ({_id: id});
+        if(!order){
+            return res.status(400).json({error: "No orders found"});
+        }
+        order.status = status;
+        await order.save();
+        res.status(200).json({msg: "Order accepted."});
+    }
+    catch(error){
+        console.error(error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+})
 
 router.post('/companylogout', (req, res) => {
     res.clearCookie('inv_man', {path:'/'})

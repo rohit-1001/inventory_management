@@ -9,9 +9,8 @@ import Login from './components/Login';
 import Signup from './components/Signup';
 // import Logout from './components/Logout';
 import NotFound from './components/NotFound';
-// import { useContext, useReducer } from 'react';
-// import {reducer, initialState} from '../reducer/UserReducer'
-
+import CDashboard from './Pages/CDashboard';
+import CProfile from './Pages/CProfile';
 // export const context = createContext();
 const Routing = () => {
   return (
@@ -22,6 +21,8 @@ const Routing = () => {
         <Route path="/contact" element={<Contact />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/codb" element={<CDashboard />} />
+        <Route path="/copr" element={<CProfile />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
   );

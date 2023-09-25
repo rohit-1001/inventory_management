@@ -49,6 +49,12 @@ const Navbar = () => {
                             <NavLink className="nav-link" to="/signup">Register</NavLink>
                         </li>
                         <li className="nav-item">
+                            <NavLink className="nav-link" to="/codb">Company_Dashboard</NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink className="nav-link" to="/copr">Company Profile</NavLink>
+                        </li>
+                        <li className="nav-item">
                             <p style={{cursor:'pointer'}} className="nav-link" onClick={userLogout}>Logout</p>
                         </li>
                     </ul>

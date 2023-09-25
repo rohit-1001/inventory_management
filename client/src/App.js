@@ -12,6 +12,7 @@ import NotFound from './components/NotFound';
 import CDashboard from './Pages/CDashboard';
 import CProfile from './Pages/CProfile';
 import Orders from './components/Orders/Orders';
+import Products from './components/Products/Products';
 // import { useContext, useReducer } from 'react';
 // import {reducer, initialState} from '../reducer/UserReducer'
 
@@ -108,20 +109,85 @@ const DUMMY_ORDERS = [
   }
 ];
 
+const DUMMY_PRODUCTS = [
+  {
+    "id": "p1",
+    "date": new Date(2020, 7, 24),
+    "vendor": "Adwait",
+    "p_name": "Shampoo"
+  },
+  {
+    "id": "p2",
+    "date": new Date(2020, 8, 15),
+    "vendor": "Aanya",
+    "p_name": "Conditioner"
+  },
+  {
+    "id": "p3",
+    "date": new Date(2020, 9, 8),
+    "vendor": "Beauty Essentials",
+    "p_name": "Soap"
+  },
+  {
+    "id": "p4",
+    "date": new Date(2020, 10, 3),
+    "vendor": "Dental Care Pro",
+    "p_name": "Toothbrush"
+  },
+  {
+    "id": "p5",
+    "date": new Date(2020, 11, 19),
+    "vendor": "Luxe Spa",
+    "p_name": "Body Lotion"
+  },
+  {
+    "id": "p6",
+    "date": new Date(2021, 0, 7),
+    "vendor": "StyleMasters",
+    "p_name": "Hair Gel"
+  },
+  {
+    "id": "p7",
+    "date": new Date(2021, 1, 2),
+    "vendor": "Skincare Solutions",
+    "p_name": "Face Wash"
+  },
+  {
+    "id": "p8",
+    "date": new Date(2021, 2, 12),
+    "vendor": "SafeHands",
+    "p_name": "Hand Sanitizer"
+  },
+  {
+    "id": "p9",
+    "date": new Date(2021, 3, 5),
+    "vendor": "Groom & Glide",
+    "p_name": "Shaving Cream"
+  },
+  {
+    "id": "p10",
+    "date": new Date(2021, 4, 20),
+    "vendor": "Fresh Scent",
+    "p_name": "Deodorant"
+  }
+];
+
+
 const Routing = () => {
   return (
-      <Routes>
-        <Route exact path="/" element={<Home />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/codb" element={<CDashboard />} />
-        <Route path="/copr" element={<CProfile />} />
-        <Route path="/orders" element={<Orders items={DUMMY_ORDERS} />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+    <Routes>
+      <Route exact path="/" element={<Home />} />
+      <Route path="/home" element={<Home />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/contact" element={<Contact />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<Signup />} />
+      <Route path="/codb" element={<CDashboard />} />
+      <Route path="/copr" element={<CProfile />} />
+      <Route path="/orders" element={<Orders items={DUMMY_ORDERS} />} />
+      <Route path="/products" element={<Products items={DUMMY_PRODUCTS} />} />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
 }
 function App() {

@@ -6,7 +6,7 @@
 }
 
 .orders-list__fallback {
-  color: #ffffff; /* Sets the text color */
+  color: #000000; /* Sets the text color */
   text-align: center; /* Centers the text */
   padding: 1rem; /* Adds some padding */
   font-size: 1.25rem; /* Increases the font size */

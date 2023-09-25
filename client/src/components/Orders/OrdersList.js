@@ -27,7 +27,7 @@ const OrdersList = (props) => {
               <td>{order.saleschannel}</td>
               <td>{order.count}</td>
               <td style={{
-                color: "black",
+                color: "white",
                 backgroundColor: order.status === "success" ? "green" : order.status === "fail" ? "red" : order.status === "pending" ? "yellow" : "white",
                 fontWeight: "bold", // Make the text bold
               }}>{order.status}</td>

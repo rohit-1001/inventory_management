@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const bcrypt = require('bcryptjs')
 
 const vendorSchema = new mongoose.Schema({
     name: {
@@ -45,6 +46,18 @@ const vendorSchema = new mongoose.Schema({
             },
             manufacturer:{
                 type: String
+            },
+            threshold:{
+                type:Number,
+                required: true
+            },
+            s_price:{
+                type:Number,
+                required: true
+            },
+            c_price:{
+                type:Number,
+                required: true
             }
         }
     ],
@@ -61,7 +74,7 @@ const vendorSchema = new mongoose.Schema({
 vendorSchema.pre('save', async function(next){
     if(this.isModified('password')){
         this.password = await bcrypt.hash(this.password, 10);
-        this.cPassword = await bcrypt.hash(this.cPassword, 10);
+        this.cpassword = await bcrypt.hash(this.cpassword, 10);
     }
     next();
 })

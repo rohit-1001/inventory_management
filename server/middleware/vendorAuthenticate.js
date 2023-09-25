@@ -2,9 +2,9 @@ const jwt = require('jsonwebtoken')
 const Vendor = require('../models/Vendor')
 
 
-const Authenticate = async (req, res, next) => {
+const vendorAuthenticate = async (req, res, next) => {
     try {
-        const token = req.cookies.libcoo;
+        const token = req.cookies.inv_man;
         const verifyToken = jwt.verify(token, process.env.SECRET_KEY)
         
         const findVendor = await Vendor.findOne({_id:verifyToken._id, "tokens.token":token})

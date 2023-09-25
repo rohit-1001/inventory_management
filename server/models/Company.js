@@ -42,6 +42,18 @@ const companySchema = new mongoose.Schema({
             pid:{
                 type:String,
                 required: true
+            },
+            threshold:{
+                type:Number,
+                required: true
+            },
+            s_price:{
+                type:Number,
+                required: true
+            },
+            c_price:{
+                type:Number,
+                required: true
             }
         }
     ],
@@ -55,6 +67,24 @@ const companySchema = new mongoose.Schema({
     ]
 })
 
+companySchema.pre('save', async function(next){
+    if(this.isModified('password')){
+        this.password = await bcrypt.hash(this.password, 10);
+        this.cpassword = await bcrypt.hash(this.cpassword, 10);
+    }
+    next();
+})
+
+companySchema.methods.generateAuthToken = async function(){
+    try {
+        const token = jwt.sign({_id: this._id}, process.env.SECRET_KEY);
+        this.tokens = this.tokens.concat({token: token});
+        await this.save();
+        return token;
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 const Company = mongoose.model('company', companySchema);
 module.exports = Company;

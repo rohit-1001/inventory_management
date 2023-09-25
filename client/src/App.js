@@ -119,6 +119,7 @@ const Routing = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/codb" element={<CDashboard />} />
         <Route path="/copr" element={<CProfile />} />
+        <Route path="/orders" element={<Orders items={DUMMY_ORDERS} />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
   );

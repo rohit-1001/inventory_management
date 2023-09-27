@@ -31,7 +31,7 @@ router.post('/companyregister', async (req, res) => {
     }
 })
 
-router.post('/signin', async (req, res) => {
+router.post('/companysignin', async (req, res) => {
     const { email, password } = req.body;
     if (!email || !password) {
         res.status(400).json({ msg: "Please fill all required fields" })
@@ -42,7 +42,7 @@ router.post('/signin', async (req, res) => {
             const isMatch = await bcrypt.compare(password, emailExist.password);
             if (isMatch) {
                 token = await emailExist.generateAuthToken();
-                res.cookie('inv_man', token, {
+                res.cookie('inv_man', {token, role:"company"}, {
                     expires: new Date(Date.now() + 604800),
                     httpOnly: true
                 })
@@ -275,6 +275,8 @@ router.post('/orderacceptance', async (req, res) => {
         res.status(500).json({ error: "Internal server error" });
     }
 })
+
+router.get('/')
 
 router.post('/companylogout', (req, res) => {
     res.clearCookie('inv_man', {path:'/'})

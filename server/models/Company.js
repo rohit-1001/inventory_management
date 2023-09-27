@@ -1,4 +1,6 @@
 const mongoose = require('mongoose')
+const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 
 const companySchema = new mongoose.Schema({
     name: {
@@ -54,6 +56,10 @@ const companySchema = new mongoose.Schema({
             c_price:{
                 type:Number,
                 required: true
+            },
+            sales:{
+                type: Number,
+                default: 0
             }
         }
     ],

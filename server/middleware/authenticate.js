@@ -4,7 +4,7 @@ const User = require('../models/User')
 
 const Authenticate = async (req, res, next) => {
     try {
-        const token = req.cookies.libcoo;
+        const token = req.cookies.inv_man;
         const verifyToken = jwt.verify(token, process.env.SECRET_KEY)
         
         const findUser = await User.findOne({_id:verifyToken._id, "tokens.token":token})

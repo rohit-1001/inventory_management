@@ -9,6 +9,7 @@ const vendorAuthenticate = require('../middleware/vendorAuthenticate')
 const authenticateContact = require('../middleware/authenticateContact')
 const cookieParser = require('cookie-parser');
 const Company = require('../models/Company');
+const Dashboard = require('../models/Dashboard');
 router.use(cookieParser());
 
 
@@ -36,7 +37,7 @@ router.post('/vendorregister', async (req, res) => {
     }
 })
 
-router.post('/signin', async (req, res) => {
+router.post('/vendorsignin', async (req, res) => {
     const { email, password } = req.body;
     if (!email || !password) {
         res.status(400).json({ msg: "Please fill all required fields" })
@@ -47,7 +48,7 @@ router.post('/signin', async (req, res) => {
             const isMatch = await bcrypt.compare(password, emailExist.password);
             if (isMatch) {
                 token = await emailExist.generateAuthToken();
-                res.cookie('inv_man', token, {
+                res.cookie('inv_man', {token, role:"vendor"}, {
                     expires: new Date(Date.now() + 604800),
                     httpOnly: true
                 })
@@ -67,7 +68,7 @@ router.post('/signin', async (req, res) => {
 
 // router.post('/addproducts', vendorAuthenticate, async (req, res) => {
 router.post('/addproducts', async (req, res) => {
-    const { email, name, desc, quantity, category, pid, threshold , c_price, s_price, manufacturer} = req.body;
+    const { email, name, desc, quantity, category, pid, threshold , c_price, s_price, manufacturer, month, year} = req.body;
     // console.log("Request Body: ", req.body);
 
     try {
@@ -86,6 +87,26 @@ router.post('/addproducts', async (req, res) => {
             c_price : c_price,
             s_price : s_price
         };
+
+
+        const dashboard = await Dashboard.findOne({ email: email });
+        if (!dashboard) {
+            const newDashboard = new Dashboard({
+                email: email,
+                data: [{
+                    month: month,
+                    year: year,
+                    monthly_data:{
+                        
+                    }
+                }]
+                });
+        }
+        else{
+            
+        }
+
+
         vendor.products.push(newProduct); // Use push to add a newProduct to the products array
         await vendor.save(); // Save the updated vendor document
 

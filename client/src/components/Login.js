@@ -182,7 +182,7 @@ const Login = () => {
               <button type="submit" value="Login" className="btn123">
                 Sign In
               </button>
-              <p className="social-text123">Or Sign in with our NGO</p>
+              <p className="social-text123">Or Sign in to our Inventory</p>
               <div className="social-media123">
                 <a href="/" className="social-icon123">
                   <i className="fab fa-facebook"></i>
@@ -314,11 +314,9 @@ const Login = () => {
           <div className="panels-container">
             <div className="panel left-panel">
               <div className="content123">
-                <h3>Member of our NGO?</h3>
+                <h3>Member of our Inventory?</h3>
                 <p>
-                  By logging in, you become part of our mission to create
-                  positive change in the world. Together, we can make a lasting
-                  impact.
+                  By logging in, you become part of our mission to create a more efficient and sustainable supply chain. Together, we can make a lasting impact on the world.
                 </p>
                 <button
                   className="btn123"
@@ -334,8 +332,7 @@ const Login = () => {
               <div className="content123">
                 <h3>New to our NGO?</h3>
                 <p>
-                  Sign up to be a part of our community and help create a better
-                  world.
+                Join our community and help us create a more efficient and sustainable world through better inventory management.
                 </p>
                 <button
                   className="btn123"

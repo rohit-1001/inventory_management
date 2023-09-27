@@ -271,7 +271,7 @@ a {
 .register-checkboxes {
     display: flex;
     justify-content: space-between;
-    margin: 10px;
+    margin: 5px;
   }
 .register-checkboxes span{
     display: flex;

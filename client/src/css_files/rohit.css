@@ -295,3 +295,12 @@ a {
     font-size: 14px;
     color: black;
   }
+
+.link_in_table{
+    text-decoration: none;
+    color: #2c4bc5;
+}
+
+.table_content123{
+    text-align: center;
+}

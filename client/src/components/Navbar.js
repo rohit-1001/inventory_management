@@ -60,6 +60,9 @@ const Navbar = () => {
                             <li className="nav-item">
                                 <NavLink className="nav-link" to="/copr">Profile</NavLink>
                             </li>
+                            <li className="nav-item">
+                                <NavLink className="nav-link" to="/admin">{"{Temp_Admin_Tab}"}</NavLink>
+                            </li>
 
                             <li className="nav-item">
                                 <p style={{ cursor: 'pointer' }} className="nav-link" onClick={userLogout}>Logout</p>

@@ -10,6 +10,7 @@ import Login from './components/Login';
 import Signup from './components/Signup';
 // import Logout from './components/Logout';
 import NotFound from './components/NotFound';
+import Admin from './components/Admin';
 import CDashboard from './Pages/CDashboard';
 import CProfile from './Pages/CProfile';
 import Orders from './components/Orders/Orders';
@@ -185,6 +186,7 @@ const Routing = () => {
       <Route path="/signup" element={<Signup />} />
       <Route path="/codb" element={<CDashboard />} />
       <Route path="/copr" element={<CProfile />} />
+      <Route path="/admin" element={<Admin />} />
       <Route path="/orders" element={<Orders items={DUMMY_ORDERS} />} />
       <Route path="/products" element={<Products items={DUMMY_PRODUCTS} />} />
       <Route path="*" element={<NotFound />} />

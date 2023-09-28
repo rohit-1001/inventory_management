@@ -39,11 +39,48 @@ router.get('/allvendors', async (req, res) => {
         }
 
         // Send the list of vendors as a JSON response
-        console.log(vendors)
         res.status(200).json(vendors);
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+//get all products
+router.post('/allproductsadmin', async (req, res) => {
+    const {email, role} = req.body
+    if(role==="vendor"){
+        try {
+            const vendor = await Vendor.findOne({ email: email });
+            if (!vendor) {
+                return res.status(400).json({ error: "Vendor not found" });
+            }
+            const products = vendor.products;
+            if (!products) {
+                return res.status(400).json({ error: "No products found" });
+            }
+            res.status(200).json(products);
+        }
+        catch (error) {
+            res.status(500).json({ error: "Internal server error" });
+        }
+    }
+    else if(role==="company"){
+        try {
+            const company = await Company.findOne({ email: email });
+            if (!company) {
+                return res.status(400).json({ error: "Company not found" });
+            }
+            const products = company.products;
+            if (!products) {
+                return res.status(400).json({ error: "No products found" });
+            }
+            res.status(200).json(products);
+        }
+        catch (error) {
+            console.error(error);
+            res.status(500).json({ error: "Internal server error" });
+        }
     }
 });
 

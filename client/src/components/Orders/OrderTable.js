@@ -4,17 +4,22 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 const columns = [
-    { field: 'id', headerName: 'ID', width: 70 },
     {
         field: 'date',
         headerName: 'Date',
         type: 'numeric',
-        width: 200,
+        width: 130,
     },
-    { field: 'vendor', headerName: 'Vendor', width: 200 },
-    { field: 'productName', headerName: 'Product Name', width: 200 },
+    { field: 'customer', headerName: 'Customer', width: 150 },
+    { field: 'saleschannel', headerName: 'Sales Channel', width: 150 },
+    {
+        field: 'count',
+        headerName: 'Count',
+        type: 'numeric',
+        width: 120,
+    },
+    { field: 'status', headerName: 'Status', width: 130 },
 ];
-
 
 function CustomToolbar() {
     return (
@@ -28,7 +33,7 @@ function CustomToolbar() {
     );
 }
 
-export default function ProductTable(props) {
+export default function OrderTable(props) {
     const [selectionModel, setSelectionModel] = React.useState([]);
 
     const handleSelection = (newSelection) => {
@@ -50,9 +55,9 @@ export default function ProductTable(props) {
                         paginationModel: { page: 0, pageSize: 5 },
                     },
                 }}
-                pagination
-                pageSize={5}
                 pageSizeOptions={[5, 10]}
+                // pagination
+                // pageSize={5}
                 checkboxSelection
             />
         </div>

@@ -56,7 +56,7 @@ const StockAlert = () => {
   
   
   return (
-    <div className="flex" style={{ display: 'flex', flexDirection: 'row', margin: "30px 0 0 0" }}>
+    <div className="flex" style={{ display: 'flex', flexDirection: 'row', margin: "0rem 6rem" }}>
       <div className='flex-item'>
         <StockPieChart chartData={chartData} />
       </div>

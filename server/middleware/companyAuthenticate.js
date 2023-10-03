@@ -26,3 +26,5 @@ const companyAuthenticate = async (req, res, next) => {
         res.status(401).json({msg:'Unauthorized access'})
     }
 }
+
+module.exports = companyAuthenticate

@@ -73,8 +73,9 @@ const Login = (props) => {
           window.alert(res.data.msg);
         } else {
           window.alert(res.data.msg);
-          props.details("company")
-          navigate("/");
+          const { setRole } = props.details;
+          setRole("company")
+          navigate("/codb");
         }
       } catch (error) {
         window.alert("Invalid Credentials");
@@ -87,8 +88,9 @@ const Login = (props) => {
           window.alert(res.data.msg);
         } else {
           window.alert(res.data.msg);
-          props.details("vendor")
-          navigate("/");
+          const { setRole } = props.details;
+          setRole("vendor")
+          navigate("/codb");
         }
       } catch (error) {
         window.alert("Invalid Credentials");

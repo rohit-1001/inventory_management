@@ -48,7 +48,7 @@ const Compchta = () => {
     const [chartData, setChartData] = useState(initialChartData);
     return (
         <div>
-            <div className="flex" style={{ display: 'flex', flexDirection: 'row', margin: "30px 0 0 0" }}>
+            <div className="flex" style={{ display: 'flex', flexDirection: 'row', margin: "4rem 11rem" }}>
                 <div className='flex-item'>
                     <EnhancedTable data={sampleData} />
                 </div>

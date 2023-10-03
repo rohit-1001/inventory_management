@@ -8,17 +8,17 @@ const columns = [
         field: 'date',
         headerName: 'Date',
         type: 'numeric',
-        width: 130,
+        width: 230,
     },
-    { field: 'customer', headerName: 'Customer', width: 150 },
-    { field: 'saleschannel', headerName: 'Sales Channel', width: 150 },
+    { field: 'customer', headerName: 'Customer', width: 250 },
+    { field: 'saleschannel', headerName: 'Sales Channel', width: 250 },
     {
         field: 'count',
         headerName: 'Count',
         type: 'numeric',
-        width: 120,
+        width: 230,
     },
-    { field: 'status', headerName: 'Status', width: 130 },
+    { field: 'status', headerName: 'Status', width: 100 },
 ];
 
 function CustomToolbar() {
@@ -41,7 +41,7 @@ export default function OrderTable(props) {
     };
 
     return (
-        <div style={{ height: 400, width: '100%' }}>
+        <div style={{ height: 500, width: '100%' }}>
             <DataGrid
                 rows={props.data}
                 columns={columns}

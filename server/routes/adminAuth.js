@@ -7,7 +7,7 @@ router.use(cookieParser());
 const Company = require('../models/Company')
 const Order = require('../models/Order')
 const Vendor = require('../models/Vendor')
-
+const Admin = require('../models/Admin')
 
 router.post('/adminlogin', async (req, res) => {
     const {email, password} = req.body;
@@ -112,6 +112,11 @@ router.post('/allproductsadmin', async (req, res) => {
         }
     }
 });
+
+router.post('/adminlogout', (req, res) => {
+    res.clearCookie('inv_man', {path:'/'})
+    res.status(200).json({msg:"Logged out successfully"})
+})
 
 
 module.exports = router;

@@ -19,7 +19,7 @@ import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { faUser } from '@fortawesome/free-solid-svg-icons';// Logout
 import axios from 'axios'
 import "./NavbarStyle.css";
-const Navbar = (props) => {
+const Navbar3 = (props) => {
   const navigate = useNavigate()
   const [showMediaIcons, setShowMediaIcons] = useState(false);
   let menuRef = useRef();
@@ -37,13 +37,11 @@ const Navbar = (props) => {
   }
   );
   const logout = async () => {
-    let confirmLogout = window.confirm('Are you sure, you want to log out?');
+    const confirmLogout = window.confirm('Are you sure, you want to log out?');
     if (confirmLogout) {
-      const { role, setRole } = props.details;
-      
-      if(role==="vendor"){
+      const { setRole } = props.details;
         try {
-          const res = await axios.post('/vendorlogout',{
+          const res = await axios.post('/adminlogout',{
               withCredentials: true
           });
     
@@ -55,22 +53,6 @@ const Navbar = (props) => {
         } catch (error) {
           window.alert('Some error occurred');
         }
-      }
-      else if(role==="company"){
-        try {
-          const res = await axios.post('/companylogout',{
-              withCredentials: true
-          });
-    
-          if (res.status === 200) {
-            window.alert(res.data.msg);
-            setRole("visitor")
-            navigate('/login');
-          }
-        } catch (error) {
-          window.alert('Some error occurred');
-        }
-      }
     }
   }
   return (
@@ -86,7 +68,7 @@ const Navbar = (props) => {
         <div className={showMediaIcons ? "inmobileview itemlist" : "itemlist"}>
           <ul className='List'>
 
-            <NavLink to="/codb"
+            <NavLink to="/adminDashboard"
               style={({ isActive }) => ({
                 color: isActive ? '#466bda' : '#545e6f',
                 textDecoration: 'none',
@@ -106,88 +88,7 @@ const Navbar = (props) => {
                 }}>Dashboard</li>
               </div>
             </NavLink>
-            <NavLink to="/products"
-              style={({ isActive }) => ({
-                color: isActive ? '#466bda' : '#545e6f',
-                textDecoration: 'none',
-                fontWeight: '500',
-                // background: isActive ? '#7600dc' : '#f0f0f0',
-              })}
-            >
-              <div style={{
-                display: "flex",
-                flexDirection: window.innerWidth <= 768 ? "row" : "column",
-                alignItems: "center",
-              }}>
-                <FontAwesomeIcon icon={faBox} />
-                <li className='listItem' onClick={() => setShowMediaIcons(false)} style={{
-                  fontWeight: '600',
-                  marginLeft: window.innerWidth <= 768 ? "10px" : "0px",
-                }}>Products</li>
-              </div>
-            </NavLink>
-            <NavLink to="/order-history"
-              style={({ isActive }) => ({
-                color: isActive ? '#466bda' : '#545e6f',
-                textDecoration: 'none',
-                fontWeight: '500',
-                // background: isActive ? '#7600dc' : '#f0f0f0',
-              })}
-            >
-              <div style={{
-                display: "flex",
-                flexDirection: window.innerWidth <= 768 ? "row" : "column",
-                alignItems: "center",
-              }}>
-                <FontAwesomeIcon icon={faHistory} />
-                <li className='listItem' onClick={() => setShowMediaIcons(false)} style={{
-                  fontWeight: '600',
-                  marginLeft: window.innerWidth <= 768 ? "10px" : "0px",
-                }}>Order History</li>
-              </div>
-            </NavLink>
-            <NavLink to="/orders"
-              style={({ isActive }) => ({
-                color: isActive ? '#466bda' : '#545e6f',
-                textDecoration: 'none',
-                fontWeight: '500',
-                // background: isActive ? '#7600dc' : '#f0f0f0',
-              })}
-            >
-              <div style={{
-                display: "flex",
-                flexDirection: window.innerWidth <= 768 ? "row" : "column",
-                alignItems: "center",
-              }}>
-                <FontAwesomeIcon icon={faClipboardList} />
-                <li className='listItem' onClick={() => setShowMediaIcons(false)} style={{
-                  fontWeight: '600',
-                  marginLeft: window.innerWidth <= 768 ? "10px" : "0px",
-                }}>Orders</li>
-              </div>
-            </NavLink>
-            <NavLink to="/copr"
-              style={({ isActive }) => ({
-                color: isActive ? '#466bda' : '#545e6f',
-                textDecoration: 'none',
-                fontWeight: '500',
-                // background: isActive ? '#7600dc' : '#f0f0f0',
-              })}
-            >
-              <div style={{
-                display: "flex",
-                flexDirection: window.innerWidth <= 768 ? "row" : "column",
-                alignItems: "center",
-
-              }}>
-                <FontAwesomeIcon icon={faUser} />
-                <li className='listItem' onClick={() => setShowMediaIcons(false)} style={{
-                  fontWeight: '600',
-                  marginLeft: window.innerWidth <= 768 ? "10px" : "0px",
-                }}>Profile</li>
-              </div>
-            </NavLink>
-            <NavLink onClick={logout}
+            <NavLink to="/logout" onClick={logout}
               style={({ isActive }) => ({
                 color: isActive ? '#466bda' : '#545e6f',
                 textDecoration: 'none',
@@ -228,4 +129,4 @@ const Navbar = (props) => {
 
 }
 
-export default Navbar
+export default Navbar3

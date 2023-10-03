@@ -47,7 +47,8 @@ export default function Adminlogin (props123) {
           window.alert(res.data.msg);
         } else {
           window.alert(res.data.msg);
-          props123.details("admin")
+          const {setRole} = props123.details
+          setRole("admin")
           navigate("/adminDashboard");
         }
       } catch (error) {

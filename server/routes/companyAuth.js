@@ -276,8 +276,6 @@ router.post('/orderacceptance', async (req, res) => {
     }
 })
 
-router.get('/')
-
 router.post('/companylogout', (req, res) => {
     res.clearCookie('inv_man', {path:'/'})
     res.status(200).json({msg:"Logged out successfully"})

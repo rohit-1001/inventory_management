@@ -2,7 +2,7 @@ import './App.css';
 import './css_files/rohit.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar';
+// import Navbar from './components/Navbar';
 import Home from './components/Home';
 import Contact from './components/Contact';
 import About from './components/About';
@@ -15,6 +15,10 @@ import CDashboard from './Pages/CDashboard';
 import CProfile from './Pages/CProfile';
 import Orders from './components/Orders/Orders';
 import Products from './components/Products/Products';
+import Navbar from './components/Navbar';
+import Navbar2 from './components/Navbar2';
+import HomeAbout from './components/HomeAbout';
+import OrderHistory from './components/OrderHistory';
 // import { useContext, useReducer } from 'react';
 // import {reducer, initialState} from '../reducer/UserReducer'
 
@@ -179,6 +183,8 @@ const Routing = () => {
   return (
     <Routes>
       <Route exact path="/" element={<Home />} />
+      <Route path="/homeabout" element={<HomeAbout />} />
+
       <Route path="/home" element={<Home />} />
       <Route path="/about" element={<About />} />
       <Route path="/contact" element={<Contact />} />
@@ -186,6 +192,7 @@ const Routing = () => {
       <Route path="/signup" element={<Signup />} />
       <Route path="/codb" element={<CDashboard />} />
       <Route path="/copr" element={<CProfile />} />
+      <Route path="/order-history" element={<OrderHistory />} />
       <Route path="/admin" element={<Admin />} />
       <Route path="/orders" element={<Orders items={DUMMY_ORDERS} />} />
       <Route path="/products" element={<Products items={DUMMY_PRODUCTS} />} />
@@ -199,6 +206,7 @@ function App() {
     <>
       {/* <context.Provider value={{state, dispatch}}> */}
       <Navbar />
+      {/* <Navbar2 /> */}
       <Routing />
       {/* </context.Provider>       */}
     </>

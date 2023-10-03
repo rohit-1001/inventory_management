@@ -15,8 +15,7 @@ import { faTachometerAlt } from '@fortawesome/free-solid-svg-icons'; // Dashboar
 import { faBox } from '@fortawesome/free-solid-svg-icons'; // Products
 import { faHistory } from '@fortawesome/free-solid-svg-icons'; // History
 import { faClipboardList } from '@fortawesome/free-solid-svg-icons'; // Orders
-import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
-import { faUser } from '@fortawesome/free-solid-svg-icons';// Logout
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons'; // Logout
 import "./NavbarStyle.css";
 const Navbar = () => {
   const [showMediaIcons, setShowMediaIcons] = useState(false);
@@ -48,7 +47,7 @@ const Navbar = () => {
         <div className={showMediaIcons ? "inmobileview itemlist" : "itemlist"}>
           <ul className='List'>
 
-            <NavLink to="/codb"
+            <NavLink to="/"
               style={({ isActive }) => ({
                 color: isActive ? '#466bda' : '#545e6f',
                 textDecoration: 'none',
@@ -65,10 +64,10 @@ const Navbar = () => {
                 <li className='listItem' onClick={() => setShowMediaIcons(false)} style={{
                   fontWeight: '600',
                   marginLeft: window.innerWidth <= 768 ? "10px" : "0px",
-                }}>Dashboard</li>
+                }}>Home</li>
               </div>
             </NavLink>
-            <NavLink to="/products"
+            <NavLink to="/homeabout"
               style={({ isActive }) => ({
                 color: isActive ? '#466bda' : '#545e6f',
                 textDecoration: 'none',
@@ -81,14 +80,14 @@ const Navbar = () => {
                 flexDirection: window.innerWidth <= 768 ? "row" : "column",
                 alignItems: "center",
               }}>
-                <FontAwesomeIcon icon={faBox} />
+                <FontAwesomeIcon icon={faTachometerAlt} />
                 <li className='listItem' onClick={() => setShowMediaIcons(false)} style={{
                   fontWeight: '600',
                   marginLeft: window.innerWidth <= 768 ? "10px" : "0px",
-                }}>Products</li>
+                }}>About Us</li>
               </div>
             </NavLink>
-            <NavLink to="/order-history"
+            <NavLink to="/login"
               style={({ isActive }) => ({
                 color: isActive ? '#466bda' : '#545e6f',
                 textDecoration: 'none',
@@ -101,76 +100,13 @@ const Navbar = () => {
                 flexDirection: window.innerWidth <= 768 ? "row" : "column",
                 alignItems: "center",
               }}>
-                <FontAwesomeIcon icon={faHistory} />
+                <FontAwesomeIcon icon={faTachometerAlt} />
                 <li className='listItem' onClick={() => setShowMediaIcons(false)} style={{
                   fontWeight: '600',
                   marginLeft: window.innerWidth <= 768 ? "10px" : "0px",
-                }}>Order History</li>
+                }}>Signup/Login</li>
               </div>
             </NavLink>
-            <NavLink to="/orders"
-              style={({ isActive }) => ({
-                color: isActive ? '#466bda' : '#545e6f',
-                textDecoration: 'none',
-                fontWeight: '500',
-                // background: isActive ? '#7600dc' : '#f0f0f0',
-              })}
-            >
-              <div style={{
-                display: "flex",
-                flexDirection: window.innerWidth <= 768 ? "row" : "column",
-                alignItems: "center",
-              }}>
-                <FontAwesomeIcon icon={faClipboardList} />
-                <li className='listItem' onClick={() => setShowMediaIcons(false)} style={{
-                  fontWeight: '600',
-                  marginLeft: window.innerWidth <= 768 ? "10px" : "0px",
-                }}>Orders</li>
-              </div>
-            </NavLink>
-            <NavLink to="/copr"
-              style={({ isActive }) => ({
-                color: isActive ? '#466bda' : '#545e6f',
-                textDecoration: 'none',
-                fontWeight: '500',
-                // background: isActive ? '#7600dc' : '#f0f0f0',
-              })}
-            >
-              <div style={{
-                display: "flex",
-                flexDirection: window.innerWidth <= 768 ? "row" : "column",
-                alignItems: "center",
-
-              }}>
-                <FontAwesomeIcon icon={faUser} />
-                <li className='listItem' onClick={() => setShowMediaIcons(false)} style={{
-                  fontWeight: '600',
-                  marginLeft: window.innerWidth <= 768 ? "10px" : "0px",
-                }}>Profile</li>
-              </div>
-            </NavLink>
-            <NavLink to="/logout"
-              style={({ isActive }) => ({
-                color: isActive ? '#466bda' : '#545e6f',
-                textDecoration: 'none',
-                fontWeight: '500',
-                // background: isActive ? '#7600dc' : '#f0f0f0',
-              })}
-            >
-              <div style={{
-                display: "flex",
-                flexDirection: window.innerWidth <= 768 ? "row" : "column",
-                alignItems: "center",
-
-              }}>
-                <FontAwesomeIcon icon={faSignOutAlt} />
-                <li className='listItem' onClick={() => setShowMediaIcons(false)} style={{
-                  fontWeight: '600',
-                  marginLeft: window.innerWidth <= 768 ? "10px" : "0px",
-                }}>Logout</li>
-              </div>
-            </NavLink>
-
 
             {/* <a href="https://www.njindiaonline.in/cdesk/login.fin" target="_blank" rel="noreferrer"><li className='listItem login' onClick={() => setShowMediaIcons(false)}>LOG IN</li></a> */}
 

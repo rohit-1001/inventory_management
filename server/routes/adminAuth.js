@@ -9,6 +9,35 @@ const Order = require('../models/Order')
 const Vendor = require('../models/Vendor')
 
 
+router.post('/adminlogin', async (req, res) => {
+    const {email, password} = req.body;
+    if(!email || !password){
+        res.status(400).json({msg: "Please fill all required fields"})
+    }
+    try {
+        const emailExist = await Admin.findOne({email: email});
+        if(emailExist){
+            const isMatch = await bcrypt.compare(password, emailExist.password);
+            if(isMatch){
+                token = await emailExist.generateAuthToken();
+                res.cookie('inv_man', token, {
+                    expires: new Date(Date.now() + 604800),
+                    httpOnly: true
+                })
+                res.status(200).json({msg: "Admin login successful"})
+            }
+            else{
+                res.status(400).json({msg: "Admin login failed"})
+            }
+        }
+        else{
+            res.status(400).json({msg: "Invalid credentials"})
+        }
+    } catch (error) {
+        res.status(500).json({msg: "Some unexpected error occured"});
+    }
+})
+
 //get all companies
 router.get('/allcompanies', async (req, res) => {
     try {

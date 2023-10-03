@@ -4,7 +4,7 @@ import axios from "axios";
 import signin from "../assets/signin.png";
 import signup from "../assets/signup.png";
 
-const Login = () => {
+const Login = (props) => {
   const [userDataSignUp, setUserDataSignUp] = useState({
     name: "",
     email: "",
@@ -73,6 +73,7 @@ const Login = () => {
           window.alert(res.data.msg);
         } else {
           window.alert(res.data.msg);
+          props.details("company")
           navigate("/");
         }
       } catch (error) {
@@ -86,6 +87,7 @@ const Login = () => {
           window.alert(res.data.msg);
         } else {
           window.alert(res.data.msg);
+          props.details("vendor")
           navigate("/");
         }
       } catch (error) {

@@ -1,6 +1,7 @@
 import './App.css';
 import './css_files/rohit.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './components/Home';
@@ -12,6 +13,8 @@ import Signup from './components/Signup';
 import NotFound from './components/NotFound';
 import Admin from './components/Admin';
 import CDashboard from './Pages/CDashboard';
+import Requests from './components/Requests';
+import AdminLogin from './components/AdminLogin';
 import CProfile from './Pages/CProfile';
 import Orders from './components/Orders/Orders';
 import Products from './components/Products/Products';
@@ -19,6 +22,7 @@ import Products from './components/Products/Products';
 // import {reducer, initialState} from '../reducer/UserReducer'
 
 // export const context = createContext();
+
 
 const DUMMY_ORDERS = [
   {
@@ -175,34 +179,60 @@ const DUMMY_PRODUCTS = [
 ];
 
 
-const Routing = () => {
-  return (
-    <Routes>
-      <Route exact path="/" element={<Home />} />
-      <Route path="/home" element={<Home />} />
-      <Route path="/about" element={<About />} />
-      <Route path="/contact" element={<Contact />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<Signup />} />
-      <Route path="/codb" element={<CDashboard />} />
-      <Route path="/copr" element={<CProfile />} />
-      <Route path="/admin" element={<Admin />} />
-      <Route path="/orders" element={<Orders items={DUMMY_ORDERS} />} />
-      <Route path="/products" element={<Products items={DUMMY_PRODUCTS} />} />
-      <Route path="*" element={<NotFound />} />
-    </Routes>
-  );
-}
-function App() {
-  // const [state, dispatch] = useReducer(reducer, initialState);
-  return (
-    <>
-      {/* <context.Provider value={{state, dispatch}}> */}
-      <Navbar />
-      <Routing />
-      {/* </context.Provider>       */}
-    </>
-  );
+// const Routing = () => {
+//   return (
+    
+//     );
+//   }
+  function App() {
+    // const [state, dispatch] = useReducer(reducer, initialState);
+    const [role, setRole] = useState("visitor");
+    return (
+      <>
+        {/* <context.Provider value={{state, dispatch}}> */}
+        <Navbar />
+        <Routes>
+          {role === "visitor" && (
+            <>
+              <Route exact path="/" element={<Home />} />
+              <Route exact path="/home" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/login" element={<Login details={{setRole}} />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/admin" element={<AdminLogin details={{setRole}} />} />
+            </>
+          )}
+          {role === "vendor" && (
+            <>
+              <Route path="/codb" element={<CDashboard />} />
+              <Route path="/copr" element={<CProfile />} />
+              <Route path="/orders" element={<Orders items={DUMMY_ORDERS} />} />
+              <Route path="/products" element={<Products items={DUMMY_PRODUCTS} />} />
+              <Route path="/requests" element={<Requests />} />
+              <Route path="*" element={<NotFound />} />
+            </>
+          )}
+          {role === "company" && (
+            <>
+              <Route path="/codb" element={<CDashboard />} />
+              <Route path="/copr" element={<CProfile />} />
+              <Route path="/orders" element={<Orders items={DUMMY_ORDERS} />} />
+              <Route path="/products" element={<Products items={DUMMY_PRODUCTS} />} />
+              <Route path="/requests" element={<Requests />} />
+              <Route path="*" element={<NotFound />} />
+            </>
+          )}
+          {role === "admin" && (
+            <>
+              <Route path="/adminDashboard" element={<Admin />} />
+              <Route path="*" element={<NotFound />} />
+            </>
+          )}
+        </Routes>
+        {/* </context.Provider>       */}
+      </>
+    );
 }
 
 export default App;

@@ -15,7 +15,6 @@ const columns = [
     { field: 'productName', headerName: 'Product Name', width: 200 },
 ];
 
-
 function CustomToolbar() {
     return (
         <GridToolbarContainer>
@@ -36,20 +35,20 @@ export default function ProductTable(props) {
     };
 
     return (
-        <div style={{ height: 400, width: '100%' }}>
+        <div style={{ height: 700, width: '100%' }}>
             <DataGrid
                 rows={props.data}
                 columns={columns}
                 components={{
                     Toolbar: CustomToolbar,
                 }}
-                onSelectionModelChange={handleSelection}
-                selectionModel={selectionModel}
                 initialState={{
                     pagination: {
                         paginationModel: { page: 0, pageSize: 5 },
                     },
                 }}
+                onSelectionModelChange={handleSelection}
+                selectionModel={selectionModel}
                 pagination
                 pageSize={5}
                 pageSizeOptions={[5, 10]}

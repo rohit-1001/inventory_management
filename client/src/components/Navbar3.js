@@ -65,8 +65,11 @@ const Navbar3 = (props) => {
             // border: "2px solid red"
           }} /></div></NavLink>
         </div>
-        <div className={showMediaIcons ? "inmobileview itemlist" : "itemlist"}>
-          <ul className='List'>
+        <div className={showMediaIcons ? "inmobileview itemlist" : "itemlist"} style={{
+          width: "400px",
+          // border: "2px solid red"
+        }}>
+          <ul className='List' >
 
             <NavLink to="/adminDashboard"
               style={({ isActive }) => ({

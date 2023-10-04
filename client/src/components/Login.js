@@ -173,7 +173,7 @@ const Login = (props) => {
                 />
               </div>
               <div className="register-checkboxes">
-                <span>Register As: </span>
+                <span>Sign In as: </span>
                 <span>
                   <input type="radio" name="role" id="register-checkbox-11" value="company"/>
                   <label htmlFor="register-checkbox-11">Company</label>
@@ -186,7 +186,7 @@ const Login = (props) => {
               <button type="submit" value="Login" className="btn123">
                 Sign In
               </button>
-              <p className="social-text123">Or Sign in to our Inventory</p>
+              <p className="social-text123">Or Sign in to our Community</p>
               <div className="social-media123">
                 <a href="/" className="social-icon123">
                   <i className="fab fa-facebook"></i>
@@ -318,7 +318,7 @@ const Login = (props) => {
           <div className="panels-container">
             <div className="panel left-panel">
               <div className="content123">
-                <h3>Member of our Inventory?</h3>
+                <h3>Member of our Community?</h3>
                 <p>
                   By logging in, you become part of our mission to create a more efficient and sustainable supply chain. Together, we can make a lasting impact on the world.
                 </p>
@@ -334,7 +334,7 @@ const Login = (props) => {
             </div>
             <div className="panel right-panel">
               <div className="content123">
-                <h3>New to our NGO?</h3>
+                <h3>New to our Community?</h3>
                 <p>
                 Join our community and help us create a more efficient and sustainable world through better inventory management.
                 </p>

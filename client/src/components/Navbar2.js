@@ -16,6 +16,8 @@ import { faBox } from '@fortawesome/free-solid-svg-icons'; // Products
 import { faHistory } from '@fortawesome/free-solid-svg-icons'; // History
 import { faClipboardList } from '@fortawesome/free-solid-svg-icons'; // Orders
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons'; // Logout
+import {faInfoCircle} from '@fortawesome/free-solid-svg-icons'
+import {faHome} from '@fortawesome/free-solid-svg-icons'
 import "./NavbarStyle.css";
 const Navbar = () => {
   const [showMediaIcons, setShowMediaIcons] = useState(false);
@@ -60,7 +62,7 @@ const Navbar = () => {
                 flexDirection: window.innerWidth <= 768 ? "row" : "column",
                 alignItems: "center",
               }}>
-                <FontAwesomeIcon icon={faTachometerAlt} />
+                <FontAwesomeIcon icon={faHome} />
                 <li className='listItem' onClick={() => setShowMediaIcons(false)} style={{
                   fontWeight: '600',
                   marginLeft: window.innerWidth <= 768 ? "10px" : "0px",
@@ -80,7 +82,7 @@ const Navbar = () => {
                 flexDirection: window.innerWidth <= 768 ? "row" : "column",
                 alignItems: "center",
               }}>
-                <FontAwesomeIcon icon={faTachometerAlt} />
+                <FontAwesomeIcon icon={faInfoCircle } />
                 <li className='listItem' onClick={() => setShowMediaIcons(false)} style={{
                   fontWeight: '600',
                   marginLeft: window.innerWidth <= 768 ? "10px" : "0px",
@@ -100,7 +102,7 @@ const Navbar = () => {
                 flexDirection: window.innerWidth <= 768 ? "row" : "column",
                 alignItems: "center",
               }}>
-                <FontAwesomeIcon icon={faTachometerAlt} />
+                <FontAwesomeIcon icon={faSignOutAlt} />
                 <li className='listItem' onClick={() => setShowMediaIcons(false)} style={{
                   fontWeight: '600',
                   marginLeft: window.innerWidth <= 768 ? "10px" : "0px",

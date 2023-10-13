@@ -1,7 +1,18 @@
+
 import React from "react";
+// import Button from '@mui/material/Button';
+// import TextField from '@mui/material/TextField';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 import Card from "../UI/Card";
 import "./Products.css";
 import ProductTable from "./ProductTable";
+import { useState } from "react";
+import { TextField, Button, Select, MenuItem, FormControl,InputLabel } from '@mui/material';
+
 
 const rows = [
   { id: 1, date: '2019-09-09', vendor: 'Jon', productName: 'Shampoo' },
@@ -15,12 +26,176 @@ const rows = [
   { id: 9, date: '2023-05-14', vendor: 'Emma', productName: 'Perfume' },
 ];
 
+
 const Products = () => {
+  const [open, setOpen] = React.useState(false);
+  const [product, setProduct] = useState({
+    name: '',
+    quantity: '',
+    desc: '',
+    category: '',
+    pid: '',
+    manufacturer: '',
+    threshold: '',
+    s_price: '',
+    c_price: '',
+    sales: 0
+  });
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setProduct({
+      ...product,
+      [name]: value
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Handle form submission logic here, for example, sending the product data to an API.
+    console.log(product);
+  };
   return (
-    <div>
+    <div style={{
+      // border: "2px solid red",
+      display: "flex",
+      flexDirection: "column"
+    }}>
+
+        <div  className="products" style={{
+          // border: "2px solid red",
+          margin: "0em auto",
+          marginTop : "2em",
+          padding: "0em",
+          display: "flex",
+          justifyContent: "flex-end"
+        }}>
+       <Button variant="outlined" onClick={handleClickOpen} style={{
+
+       }}>
+       + Add Product 
+      </Button>
+      </div>
       <Card className="products">
        <ProductTable data={rows} />
       </Card>
+    <div>
+     
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Product Details</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Please add all the details of your product correctly.
+          </DialogContentText>
+          <form onSubmit={handleSubmit}>
+      <TextField
+        label="Name"
+        variant="outlined"
+        name="name"
+        value={product.name}
+        onChange={handleInputChange}
+        required
+        fullWidth
+              margin="normal"
+      />
+      <TextField
+        label="Quantity"
+        variant="outlined"
+        name="quantity"
+        type="number"
+        value={product.quantity}
+        onChange={handleInputChange}
+        required
+        fullWidth
+              margin="normal"
+      />
+      <TextField
+        label="Description"
+        variant="outlined"
+        name="desc"
+        value={product.desc}
+        onChange={handleInputChange}
+        required
+        fullWidth
+              margin="normal"
+      />
+      <TextField
+        label="Category"
+        variant="outlined"
+        name="category"
+        value={product.category}
+        onChange={handleInputChange}
+        required
+        fullWidth
+              margin="normal"
+      />
+      <TextField
+        label="Product ID"
+        variant="outlined"
+        name="pid"
+        value={product.pid}
+        onChange={handleInputChange}
+        required
+        fullWidth
+              margin="normal"
+      />
+      <TextField
+        label="Manufacturer"
+        variant="outlined"
+        name="manufacturer"
+        value={product.manufacturer}
+        onChange={handleInputChange}
+        fullWidth
+              margin="normal"
+      />
+      <TextField
+        label="Threshold"
+        variant="outlined"
+        name="threshold"
+        type="number"
+        value={product.threshold}
+        onChange={handleInputChange}
+        required
+        fullWidth
+              margin="normal"
+      />
+      <TextField
+        label="Selling Price"
+        variant="outlined"
+        name="s_price"
+        type="number"
+        value={product.s_price}
+        onChange={handleInputChange}
+        required
+        fullWidth
+              margin="normal"
+      />
+      <TextField
+        label="Cost Price"
+        variant="outlined"
+        name="c_price"
+        type="number"
+        value={product.c_price}
+        onChange={handleInputChange}
+        required
+        fullWidth
+        margin="normal"
+      />
+    </form>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleClose}>Add</Button>
+        </DialogActions>
+      </Dialog>
+    </div>
     </div>
   );
 };

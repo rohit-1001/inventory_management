@@ -48,7 +48,7 @@ router.post('/vendorsignin', async (req, res) => {
             const isMatch = await bcrypt.compare(password, emailExist.password);
             if (isMatch) {
                 token = await emailExist.generateAuthToken();
-                res.cookie('inv_man', {token, role:"vendor"}, {
+                res.cookie('inv_man', {token, role:"vendor", email:email}, {
                     expires: new Date(Date.now() + 604800),
                     httpOnly: true
                 })
@@ -68,7 +68,9 @@ router.post('/vendorsignin', async (req, res) => {
 
 // router.post('/addproducts', vendorAuthenticate, async (req, res) => {
 router.post('/addproducts', async (req, res) => {
-    const { email, name, desc, quantity, category, pid, threshold , c_price, s_price, manufacturer, month, year} = req.body;
+    const { name, desc, quantity, category, pid, threshold , c_price, s_price, manufacturer} = req.body;
+    const email=req.cookies.inv_man.email
+    // const { email, name, desc, quantity, category, pid, threshold , c_price, s_price, manufacturer, month, year} = req.body;
     // console.log("Request Body: ", req.body);
 
     try {
@@ -89,22 +91,22 @@ router.post('/addproducts', async (req, res) => {
         };
 
 
-        const dashboard = await Dashboard.findOne({ email: email });
-        if (!dashboard) {
-            const newDashboard = new Dashboard({
-                email: email,
-                data: [{
-                    month: month,
-                    year: year,
-                    monthly_data:{
+        // const dashboard = await Dashboard.findOne({ email: email });
+        // if (!dashboard) {
+        //     const newDashboard = new Dashboard({
+        //         email: email,
+        //         data: [{
+        //             month: month,
+        //             year: year,
+        //             monthly_data:{
                         
-                    }
-                }]
-                });
-        }
-        else{
+        //             }
+        //         }]
+        //         });
+        // }
+        // else{
             
-        }
+        // }
 
 
         vendor.products.push(newProduct); // Use push to add a newProduct to the products array

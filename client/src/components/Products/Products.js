@@ -12,6 +12,7 @@ import "./Products.css";
 import ProductTable from "./ProductTable";
 import { useState } from "react";
 import { TextField, Button, Select, MenuItem, FormControl,InputLabel } from '@mui/material';
+import axios from 'axios'
 
 
 const rows = [
@@ -31,15 +32,14 @@ const Products = () => {
   const [open, setOpen] = React.useState(false);
   const [product, setProduct] = useState({
     name: '',
-    quantity: '',
+    quantity: 0,
     desc: '',
     category: '',
     pid: '',
     manufacturer: '',
-    threshold: '',
-    s_price: '',
-    c_price: '',
-    sales: 0
+    threshold: 0,
+    s_price: 0,
+    c_price: 0
   });
   const handleClickOpen = () => {
     setOpen(true);
@@ -56,6 +56,38 @@ const Products = () => {
       [name]: value
     });
   };
+
+  const handleAddSubmit = async(e) => {
+    e.preventDefault();
+    console.log("product object : ",product)
+    try {
+      const res = await axios.post('/addproducts', product);
+      console.log("res.status : ",res.status)
+      console.log("res.message : ",res.message)
+
+      if(res.status===201){
+        window.alert(res.data.message)
+      }
+      else {
+        window.alert("Adding product failed")
+      }
+      setProduct({
+        name: '',
+        quantity: 0,
+        desc: '',
+        category: '',
+        pid: '',
+        manufacturer: '',
+        threshold: 0,
+        s_price: 0,
+        c_price: 0
+      })
+      handleClose()
+    } catch (error) {
+      alert('Internal server error');
+    }
+
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -192,7 +224,7 @@ const Products = () => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Add</Button>
+          <Button onClick={handleAddSubmit}>Add</Button>
         </DialogActions>
       </Dialog>
     </div>

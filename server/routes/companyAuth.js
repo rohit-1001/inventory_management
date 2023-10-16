@@ -323,6 +323,41 @@ router.post('/orderacceptance', async (req, res) => {
     }
 })
 
+
+
+// get all sales and profits for dashboard
+router.post('/getupfields', async (req, res) => {
+    try {
+        const email = req.cookies.inv_man.email
+        // const email = req.body.email // Assuming email is in the request body, you can change it if needed
+        // Find the company's data by email
+        const dashboard = await Dashboard.findOne({ email });
+        if (!dashboard) {
+            return res.status(404).json({ error: 'Company data not found' });
+        }
+        
+        // Calculate the total sales and profits for the company based on the monthly data
+        let tsales = 0;
+        let profit = 0;
+        
+        const date = new Date();
+        const month = date.getMonth().toString();;
+        const year = date.getFullYear().toString();
+        const monthData = dashboard.data.find((monthData) => monthData.month === month && monthData.year === year)
+        let sales = monthData.monthly_data.sales
+        dashboard.data.forEach((monthlyItem) => {
+            tsales += monthlyItem.monthly_data.sales;
+            profit += monthlyItem.monthly_data.profit;
+        });
+        
+        res.status(200).json({ sales, profit, tsales });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+
 router.post('/companylogout', (req, res) => {
     res.clearCookie('inv_man', {path:'/'})
     res.status(200).json({msg:"Logged out successfully"})

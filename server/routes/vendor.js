@@ -192,7 +192,7 @@ router.post('/subtractstock_v', async (req, res) => {
 
         const dashboard = await Dashboard.findOne({ email });
         const date = new Date();
-        const month = date.getMonth().toString();
+        const month = date.getMonth().toString();;
         const year = date.getFullYear().toString();
         if(dashboard){
             const monthData = dashboard.data.find((monthData) => monthData.month === month && monthData.year === year)

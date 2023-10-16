@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 router.use(cookieParser());
 const Company = require('../models/Company')
 const Vendor = require('../models/Vendor')
+const Dashboard = require('../models/Dashboard')
 
 router.post('/companyregister', async (req, res) => {
     const { name, email, phone, password, cpassword } = req.body;
@@ -42,7 +43,7 @@ router.post('/companysignin', async (req, res) => {
             const isMatch = await bcrypt.compare(password, emailExist.password);
             if (isMatch) {
                 token = await emailExist.generateAuthToken();
-                res.cookie('inv_man', {token, role:"company"}, {
+                res.cookie('inv_man', {token, role:"company", email:email}, {
                     expires: new Date(Date.now() + 604800),
                     httpOnly: true
                 })
@@ -61,12 +62,13 @@ router.post('/companysignin', async (req, res) => {
 })
 
 // router.post('/addproducts', vendorAuthenticate, async (req, res) => {
-router.post('/addproducts', async (req, res) => {
-    const { email, name, desc, quantity, category, pid, threshold, s_price, c_price } = req.body;
-    // console.log("Request Body: ", req.body);
-
+router.post('/addproducts_c', async (req, res) => {
+    const { name, desc, quantity, category, pid, threshold, s_price, c_price } = req.body;
+    const email=req.cookies.inv_man.email
+    
     try {
         const company = await Company.findOne({ email: email });
+
         if (!company) {
             return res.status(400).json({ error: "Company not found" });
         }
@@ -93,7 +95,7 @@ router.post('/addproducts', async (req, res) => {
 
 // addstock
 // router.post('/addstock', vendorAuthenticate, async (req, res) => {
-router.post('/addstock', async (req, res) => {
+router.post('/addstock_c', async (req, res) => {
     const { email, quantity, pid } = req.body;
     // console.log("Request Body: ", req.body);
 
@@ -117,16 +119,16 @@ router.post('/addstock', async (req, res) => {
         // await vendor.save(); // Save the updated vendor document
         await Company.replaceOne({ email: email }, company);
 
-        res.status(200).json({ message: "Stock added successfully" });
+        return res.status(200).json({ message: "Stock added successfully" });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: "Internal server error" }); // Handle errors properly
+        return res.status(500).json({ error: "Internal server error" }); // Handle errors properly
     }
 });
 
 // substock
 // router.post('/subtractstock', vendorAuthenticate, async (req, res) => {
-router.post('/subtractstock', async (req, res) => {
+router.post('/subtractstock_c', async (req, res) => {
     const { email, quantity, pid } = req.body;
     // console.log("Request Body: ", req.body);
 
@@ -149,16 +151,61 @@ router.post('/subtractstock', async (req, res) => {
         // Ensure the quantity is valid and subtract it from the product
         if (product.quantity >= quantity) {
             product.quantity -= quantity;
+            product.sales += (quantity * product.s_price)
+            // month 
+            // vendor _ dashboard  -> month + quantity * product.s_price
+            const date = new Date();
+            const month = date.getMonth().toString();;
+            const year = date.getFullYear().toString();
+
+            // Find or create a dashboard document based on the email
+            let dashboard = await Dashboard.findOne({ email: email });
+            if (!dashboard){
+                dashboard = new Dashboard({
+                    email: email,
+                    data: [{
+                        month: month,
+                        year: year,
+                        monthly_data: {
+                            // revenue: 0,
+                            profit: (quantity * product.s_price)  - (quantity * product.c_price),
+                            sales: quantity * product.s_price,
+                        },
+                    }],
+                });
+
+            }
+            else{
+                const monthData = dashboard.data.find((data) => data.month === month && data.year === year);
+
+                if (monthData) {
+                    // If a record for the current month exists, update its sales
+                    monthData.monthly_data.sales += quantity * product.s_price;
+                    monthData.monthly_data.profit += (quantity * product.s_price)-(quantity * product.c_price);
+                } else {
+                    // If a record for the current month doesn't exist, create a new one
+                    dashboard.data.push({
+                        month: month,
+                        year: year,
+                        monthly_data: {
+                            profit: (quantity * product.s_price)-(quantity * product.c_price),
+                            sales: quantity * product.s_price,
+                        },
+                    });
+                }
+            }
+            await dashboard.save();
+
         } else {
             return res.status(400).json({ error: "Insufficient stock quantity" });
         }
+       
         await Company.replaceOne({ email: email }, company);
         // await vendor.save()
-
-        res.status(200).json({ message: "Stock subtracted successfully" });
+        return res.status(200).json({ message: "Stock subtracted successfully" });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: "Internal server error" }); // Handle errors properly
+        return res.status(500).json({ error: "Internal server error" }); // Handle errors properly
     }
 });
 

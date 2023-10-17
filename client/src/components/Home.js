@@ -83,7 +83,7 @@ const Home = () => {
         <div class="container1111">
           <div class="testimonial-box999">
             <div class="testimonial123">
-              <i class="fas fa-quote-right"></i>
+              <i class="fas123 fa-quote-right"></i>
               <span class="testimonial-text123">"Efficient inventory management has been a game-changer for our business. A partnership with Sangrah has been one of our best decisions."</span>
               <div class="testimonial-user123">
                 <img src={testi1} alt="user-img" class="user-img123" />
@@ -101,7 +101,7 @@ const Home = () => {
         <div class="container1111">
           <div class="testimonial-box999">
             <div class="testimonial123">
-              <i class="fas fa-quote-right"></i>
+              <i class="fas123 fa-quote-right"></i>
               <span class="testimonial-text123">"Efficient inventory management has been a game-changer for our business. A partnership with Sangrah has been one of our best decisions."</span>
               <div class="testimonial-user123">
                 <img src={testi2} alt="user-img" class="user-img123" />
@@ -119,7 +119,7 @@ const Home = () => {
         <div class="container1111">
           <div class="testimonial-box999">
             <div class="testimonial123">
-              <i class="fas fa-quote-right"></i>
+              <i class="fas123 fa-quote-right"></i>
               <span class="testimonial-text123">"Efficient inventory management has been a game-changer for our business. A partnership with Sangrah has been one of our best decisions."</span>
               <div class="testimonial-user123">
                 <img src={testi3} alt="user-img" class="user-img123" />

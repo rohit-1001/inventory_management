@@ -1,11 +1,11 @@
-import React from 'react'
+import React from 'react';
 import Box from '@mui/material/Box';
-import image1 from '../assets/image_2.png'
+import image1 from '../assets/image_2.png';
 
 const UpperBoxes = () => {
     return (
         <div className="container">
-            <div className="row">
+            <div className="row justify-content-center"> {/* Added justify-content-center class */}
                 <div className="col-md-4">
                     <Box sx={{ border: '1px solid black', padding: '10px' }}>
                         <div>
@@ -59,7 +59,7 @@ const UpperBoxes = () => {
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
-export default UpperBoxes
+export default UpperBoxes;

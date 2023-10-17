@@ -1,0 +1,344 @@
+.mainFooter{
+    background-color: rgb(32, 33, 36);
+    text-align: center;
+    font-size: 1.05rem;
+    font-weight: normal;
+    padding: 2em 0.5em 0 0.5em;
+    color: white;
+}
+.footerimg{
+    width: 100%;
+    pointer-events: none;
+}
+.Rights{
+    /* border: 2px solid black; */
+    line-height:40%;
+    padding: 0.5em;
+}
+a{
+    /* color: rgb(51, 51, 51); */
+    color: white;
+}
+#footlink{
+    color: white;
+}
+.whatsapp{
+    /* border: 2px solid red; */
+    display: inline-block;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;  
+    height: 50px;
+    width: 50px;
+}
+.whatsapp:hover{
+    cursor: pointer;
+}
+.sticker{
+    /* border: 2px solid red; */
+    display: inline-block;
+    position: fixed;
+    bottom: 20px;
+    left: 0px; 
+    /* height: 250px; */
+    width: 150px;
+    /* padding: 1em; */
+}
+
+.icon{
+    max-width: 100%;
+}
+.icon2{
+    width: 100%;
+    border-top-right-radius: 40px;
+}
+.icon2:hover{
+   cursor: pointer;
+}
+
+.googlebtn{
+    /* border: 2px  solid red; */
+    width: 250px;
+    padding: 0em;
+    margin: 0 auto;
+}
+.applebtn{
+    /* border: 2px  solid rgb(47, 0, 255); */
+    width: 250px;
+    margin: 0 auto;
+}
+.address{
+    /* border: 2px solid black;  */
+    width: 100%;
+    text-align: center;
+}
+.contactDetails{
+    /* border: 2px solid black; */
+    text-align: center;
+    width: 100%;
+    margin-bottom: 1.5em;
+}
+.contactemail{
+    /* border: 2px solid hotpink; */
+    display: flex;
+    text-align: left;
+    /* padding: 0.5em 1em; */
+    align-items:center;
+    width: min-content;
+    margin: 0 auto;
+}
+.contactemail div{
+    display: flex;
+    /* border: 2px solid green; */
+    height: 35px;
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+    padding-right: 0.3em;
+}
+.contactemail div a{
+    /* border: 2px solid red; */
+    padding: 0;
+    height: min-content;
+    padding-bottom: 0.2em;
+}
+.fullAddress{
+    /* border: 2px solid hotpink; */
+    width: 90%;
+    padding: 0 1em;
+    text-align: center;
+    margin: 0 auto;
+    margin-bottom: 1.5em;
+
+}
+.implinks{
+    /* border: 2px solid blanchedalmond; */
+    text-align: center;
+    width: 70%;
+    /* color: rgb(51, 51, 51); */
+    color: white;
+    margin: 0 auto;
+    margin-bottom: 1em;
+}
+.implinks ul{
+    /* border: 2px solid green; */
+    padding: 0 1em;
+    color: white;
+}
+.implinks ul li{
+    /* border: 2px solid red; */
+    list-style: none;
+    padding: 0em ;
+    /* color: rgb(51, 51, 51); */
+    color: white;
+    width: max-content;
+    margin: 0 auto;
+}
+.Addresshead{
+    /* border: 2px solid hotpink; */
+    padding: 0.5em 1em;
+   
+}
+.linkshead{
+    /* border: 2px solid hotpink; */
+    padding: 0.5em 1em;
+}
+.block2head{
+    /* border: 2px solid red; */
+    padding: 0.5em 1em;
+}
+.contact1{
+    /* border: 2px solid red; */
+    padding: 0.5em 1em;
+}
+.blocks{
+    /* border: 2px solid red; */
+    display: flex;
+    /* width: 100%; */
+    align-items: top;
+    padding: 1em;
+    flex-direction: column;
+}
+.block1{
+    /* border: 2px solid green; */
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    width: 100%;
+    margin: 0 auto;
+}
+.block2{
+    /* border: 2px solid black; */
+    width: 100%;
+}
+/* .block2links{ */
+    /* border: 2px solid red; */
+/* } */
+.footerbelow{
+    display: flex;
+    /* border: 2px solid green; */
+    background-color: rgb(32, 33, 36);
+    /* width: 100%; */
+    text-align: center;
+    padding: 0em 0.5em;
+    color: white;
+    font-size: 0.7rem;
+    height: 33px;
+    font-weight: 500;
+    align-items: center; 
+}
+.footerbelowinside{
+    /* border: 2px solid violet; */
+    padding: 0 1.5em;
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+}
+@media only screen and (min-width: 1000px) {
+    .tab1{
+        /* border: 2px solid red; */
+        display: flex;
+        width: 100%;
+    }
+    .address{
+        /* border: 2px solid black; */
+        padding: 0.5em 0;
+        width: 50%;
+        text-align: left;
+    }
+    
+    .contactDetails{
+        /* border: 2px solid black; */
+        text-align: left;
+        width: 30%;
+    }
+    .fullAddress{
+        /* border: 2px solid hotpink; */
+        width: 70%;
+        padding: 0 1em;
+        text-align: left;
+        margin: 0;
+    }
+    .implinks{
+        /* border: 2px solid red; */
+        text-align: left;
+        width: 33%;
+        /* color: rgb(51, 51, 51); */
+        color: white;
+    }
+    .implinks ul{
+        /* border: 2px solid green; */
+        padding: 0 1em;
+        color: white;
+    }
+    .implinks ul li{
+        /* border: 2px solid red; */
+        list-style: none;
+        padding: 0em;
+        /* color: rgb(51, 51, 51); */
+        color: white;
+        width: max-content;
+        margin: 0;
+    }
+  
+    .Addresshead{
+        /* border: 2px solid hotpink; */
+        padding: 0.5em 1em;
+       
+    }
+    .linkshead{
+        /* border: 2px solid hotpink; */
+        padding: 0.5em 1em;
+    }
+    .block2head{
+        /* border: 2px solid red; */
+        padding: 0.5em 1em;
+    }
+    .contact1{
+        /* border: 2px solid red; */
+        padding: 0.5em 0em;
+    }
+    .contactemail{
+        /* border: 2px solid hotpink; */
+        display: flex;
+        text-align: left;
+        /* padding: 0.5em 1em; */
+        align-items:center;
+        width: 100%;
+    }
+    .contactemail div{
+        display: flex;
+        /* border: 2px solid green; */
+        height: 35px;
+        align-items: center;
+        justify-content: center;
+        justify-items: center;
+        padding-right: 0.3em;
+    }
+    .contactemail div a{
+        /* border: 2px solid red; */
+        padding: 0;
+        height: min-content;
+        padding-bottom: 0.2em;
+    }
+    .blocks{
+        /* border: 2px solid red; */
+        display: flex;
+        /* width: 100%; */
+        align-items: top;
+        padding: 2em 5em;
+        flex-direction: row;
+    }
+    .block1{
+        /* border: 2px solid green; */
+        display: flex;
+        justify-content: space-between;
+        width: 90%;
+        margin: 0 auto;
+        flex-direction: row;
+    }
+    .block2{
+        /* border: 2px solid black; */
+        width: 50%;
+    }
+    /* .block2links{ */
+        /* border: 2px solid red; */
+    /* } */
+    .icon2{
+        width: 100%;
+        border-top-right-radius: 40px;
+        border-bottom-right-radius: 40px;
+        /* border: 2px solid red; */
+
+    }
+    .sticker{
+        /* border: 2px solid red; */
+        display: inline-block;
+        position: fixed;
+        bottom: 20px;
+        left: 0px; 
+        /* height: 250px; */
+        width: 200px;
+        /* padding: 1em; */
+    }
+    .footerbelow{
+        display: flex;
+        /* border: 2px solid green; */
+        background-color: rgb(32, 33, 36);
+        /* width: 100%; */
+        text-align: center;
+        padding: 0em 0.5em;
+        color: white;
+        font-size: 0.9rem;
+        height: 33px;
+        font-weight: 500;
+        align-items: center; 
+    }
+    .footerbelowinside{
+        /* border: 2px solid violet; */
+        padding: 0 1.5em;
+        display: flex;
+        align-items: center;
+        margin: 0 auto;
+    }
+}

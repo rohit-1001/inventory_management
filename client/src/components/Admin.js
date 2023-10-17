@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect} from "react";
+import DonutChart from "./DonutChart";
+import image1 from '../assets/image_2.png'
 import axios from "axios";
 import { createRoot } from 'react-dom/client';
 import {
@@ -14,6 +16,7 @@ import {
   TableRow,
   TableCell,
   Button,
+  Box,
 } from "@mui/material";
 import ViewProductsPopup from "./ViewProductsPopup.js";
 
@@ -47,7 +50,7 @@ const Admin = () => {
     setActiveTab(tab);
   };
 
-  const handleShowProducts = async(email, role) => {
+  const handleShowProducts = async (email, role) => {
     setIsVisible(true);
     const param = {
       email: email,
@@ -55,11 +58,11 @@ const Admin = () => {
     };
     try {
       const p = await axios.post("/allproductsadmin", param);
-      if(p.data.length>0){
+      if (p.data.length > 0) {
         const root = createRoot(document.getElementById('forShowingProducts'));
-        root.render(<ViewProductsPopup details={{ products:p.data, setIsVisible:setIsVisible }} />);
+        root.render(<ViewProductsPopup details={{ products: p.data, setIsVisible: setIsVisible }} />);
       }
-      else{
+      else {
         const root = createRoot(document.getElementById('forShowingProducts'));
         root.render(alert("No product exists"));
       }
@@ -68,8 +71,101 @@ const Admin = () => {
     }
   };
 
+  const data = {
+    nvendors: 200,
+    ncompany: 100,
+    tsales: 1000,
+    tprods: 5000,
+  };
+
   return (
     <>
+    <br></br>
+      <div className="container" style={{ "width": "100%", "margin": "auto" }}>
+        <div className="row justify-content-center"> {/* Added justify-content-center class */}
+          <div className="col-md-5">
+            <Box sx={{ border: '1px solid black', padding: '10px' }}>
+              <div>
+                <div>
+                  Number of vendors
+                </div>
+                <div className='d-flex align-items-center'>
+                  <div>
+                    <img src={image1} alt="Image" className="img-fluid" />
+                  </div>
+                  <div className="ml-2">
+                    {data.nvendors}
+                  </div>
+                </div>
+              </div>
+            </Box>
+          </div>
+          <div className="col-md-5">
+            <Box sx={{ border: '1px solid black', padding: '10px' }}>
+              <div>
+                <div>
+                  Number of Companies
+                </div>
+                <div className='d-flex align-items-center'>
+                  <div>
+                    <img src={image1} alt="Image" className="img-fluid" />
+                  </div>
+                  <div className="ml-2">
+                    {data.ncompany}
+                  </div>
+                </div>
+              </div>
+            </Box>
+          </div>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <div className="col-md-5">
+            <Box sx={{ border: '1px solid black', padding: '10px' }}>
+              <div>
+                <div>
+                  Total Sales
+                </div>
+                <div className='d-flex align-items-center'>
+                  <div>
+                    <img src={image1} alt="Image" className="img-fluid" />
+                  </div>
+                  <div className="ml-2">
+                    {data.tsales}
+                  </div>
+                </div>
+              </div>
+            </Box>
+          </div>
+          <div className="col-md-5">
+            <Box sx={{ border: '1px solid black', padding: '10px' }}>
+              <div>
+                <div>
+                  Total Products
+                </div>
+                <div className='d-flex align-items-center'>
+                  <div>
+                    <img src={image1} alt="Image" className="img-fluid" />
+                  </div>
+                  <div className="ml-2">
+                    {data.tprods}
+                  </div>
+                </div>
+              </div>
+            </Box>
+          </div>
+        </div>
+      </div>
+      <br></br>
+      <br></br>
+      <br></br>
+      <div className="flex">
+        <DonutChart data={data} />
+      </div>
+      
+      <br></br>
+      <br></br>
       {/* {isVisible && p && <ViewProductsPopup details={{ products:p.data, setIsVisible:setIsVisible }} />} */}
       {isVisible && <div id="forShowingProducts"></div>}
       <br />
@@ -79,9 +175,8 @@ const Admin = () => {
             <ul className="nav nav-tabs">
               <li className="nav-item">
                 <a
-                  className={`nav-link ${
-                    activeTab === "vendors" ? "active" : ""
-                  }`}
+                  className={`nav-link ${activeTab === "vendors" ? "active" : ""
+                    }`}
                   href="#vendors"
                   onClick={() => handleTabClick("vendors")}
                 >
@@ -90,9 +185,8 @@ const Admin = () => {
               </li>
               <li className="nav-item">
                 <a
-                  className={`nav-link ${
-                    activeTab === "companies" ? "active" : ""
-                  }`}
+                  className={`nav-link ${activeTab === "companies" ? "active" : ""
+                    }`}
                   href="#companies"
                   onClick={() => handleTabClick("companies")}
                 >
@@ -104,9 +198,8 @@ const Admin = () => {
             <div className="tab-content">
               <div
                 id="vendors"
-                className={`tab-pane ${
-                  activeTab === "vendors" ? "active" : ""
-                }`}
+                className={`tab-pane ${activeTab === "vendors" ? "active" : ""
+                  }`}
               >
                 {!vendors ? (
                   <h1>No Vendors Found</h1>
@@ -149,7 +242,7 @@ const Admin = () => {
                                 <TableCell style={{ textAlign: "center" }}>
                                   <Button
                                     className="link_in_table"
-                                    onClick={() => handleShowProducts( vendor.email,"vendor")}
+                                    onClick={() => handleShowProducts(vendor.email, "vendor")}
                                   >
                                     View
                                   </Button>
@@ -166,9 +259,8 @@ const Admin = () => {
 
               <div
                 id="companies"
-                className={`tab-pane ${
-                  activeTab === "companies" ? "active" : ""
-                }`}
+                className={`tab-pane ${activeTab === "companies" ? "active" : ""
+                  }`}
               >
                 <Grid item xs={12}>
                   <Paper elevation={3} style={{ padding: "20px" }}>
@@ -206,12 +298,12 @@ const Admin = () => {
                                 {company.phone}
                               </TableCell>
                               <TableCell style={{ textAlign: "center" }}>
-                              <Button
-                                    className="link_in_table"
-                                    onClick={() => handleShowProducts(company.email, "company")}
-                                  >
-                                    View
-                                  </Button>
+                                <Button
+                                  className="link_in_table"
+                                  onClick={() => handleShowProducts(company.email, "company")}
+                                >
+                                  View
+                                </Button>
                               </TableCell>
                             </TableRow>
                           ))}

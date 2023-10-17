@@ -20,7 +20,7 @@ router.post('/adminlogin', async (req, res) => {
             const isMatch = await bcrypt.compare(password, emailExist.password);
             if(isMatch){
                 token = await emailExist.generateAuthToken();
-                res.cookie('inv_man', token, {
+                res.cookie('inv_man', {token, role:"admin", email:email}, {
                     expires: new Date(Date.now() + 604800),
                     httpOnly: true
                 })

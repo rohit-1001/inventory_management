@@ -61,7 +61,7 @@ const Products = () => {
     e.preventDefault();
     console.log("product object : ",product)
     try {
-      const res = await axios.post('/addproducts', product);
+      const res = await axios.post('/addproducts_c', product);
       console.log("res.status : ",res.status)
       console.log("res.message : ",res.message)
 
@@ -84,6 +84,7 @@ const Products = () => {
       })
       handleClose()
     } catch (error) {
+      console.log(error)
       alert('Internal server error');
     }
 

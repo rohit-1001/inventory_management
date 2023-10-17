@@ -16,11 +16,11 @@ const dashboardSchema = new mongoose.Schema({
                 required: true
             },
             monthly_data:{
-                revenue:{
-                    type: Number,
-                    required: true,
-                    default: 0
-                },	  
+                // revenue:{
+                //     type: Number,
+                //     required: true,
+                //     default: 0
+                // },	  
                 profit:{
                     type: Number,
                     required: true,

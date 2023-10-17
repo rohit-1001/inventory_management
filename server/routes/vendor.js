@@ -90,7 +90,9 @@ router.post('/addproducts', async (req, res) => {
             s_price : s_price
         };
 
-
+        // const date = new Date();
+        // const month = date.getMonth();
+        // const year = date.getFullYear();
         // const dashboard = await Dashboard.findOne({ email: email });
         // if (!dashboard) {
         //     const newDashboard = new Dashboard({
@@ -107,6 +109,8 @@ router.post('/addproducts', async (req, res) => {
         // else{
             
         // }
+
+        
 
 
         vendor.products.push(newProduct); // Use push to add a newProduct to the products array
@@ -155,7 +159,7 @@ router.post('/addstock', async (req, res) => {
 
 // substock
 // router.post('/subtractstock', vendorAuthenticate, async (req, res) => {
-router.post('/subtractstock', async (req, res) => {
+router.post('/subtractstock_v', async (req, res) => {
     const { email, quantity, pid } = req.body;
     // console.log("Request Body: ", req.body);
 
@@ -178,9 +182,59 @@ router.post('/subtractstock', async (req, res) => {
         // Ensure the quantity is valid and subtract it from the product
         if (product.quantity >= quantity) {
             product.quantity -= quantity;
+            product.sales += (quantity * product.s_price)
         } else {
             return res.status(400).json({ error: "Insufficient stock quantity" });
         }
+        // Get the c_price and s_price
+        const cPrice = product.c_price;
+        const sPrice = product.s_price;
+
+        const dashboard = await Dashboard.findOne({ email });
+        const date = new Date();
+        const month = date.getMonth().toString();;
+        const year = date.getFullYear().toString();
+        if(dashboard){
+            const monthData = dashboard.data.find((monthData) => monthData.month === month && monthData.year === year)
+            if(monthData){
+                // Update the monthly data
+                // monthData.monthly_data.revenue += ;
+                monthData.monthly_data.profit += quantity*(sPrice-cPrice);
+                monthData.monthly_data.sales += quantity*sPrice;
+        
+            }
+            else {
+                // If a record for the current month doesn't exist, create a new one
+                dashboard.data.push({
+                    month: month,
+                    year: year,
+                    monthly_data: {
+                        profit: quantity * (product.s_price-product.c_price),
+                        sales: quantity * product.s_price,
+                    },
+                });
+            }
+            // Save the dashboard
+            await dashboard.save();
+        }
+        else{
+            profit=quantity*(sPrice-cPrice)
+            sales=quantity*sPrice
+            const newDashboard = new Dashboard({
+                email:email,
+                data: [{
+                    month:month,
+                    year:year,
+                    monthly_data:{
+                        profit:profit,
+                        sales:sales
+                    }
+                }],
+              });
+          
+              await newDashboard.save();
+        }
+        // Find the month from variable month and year
         await Vendor.replaceOne({ email: email }, vendor);
         // await vendor.save()
 

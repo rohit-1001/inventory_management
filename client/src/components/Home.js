@@ -12,28 +12,28 @@ import Footer from './Footer'
 const Home = () => {
   return (
     <>
-      <div className="sec1">
-        <div className="leftsec">
+      <div className="sec1123">
+        <div className="leftsec123">
           <h2>Efficient Inventory Management at Your Fingertips</h2>
-          <div className="seewhy">Discover why businesses prefer Sangrah over other inventory management solutions.</div>
-          <div className="seewhyinfo">"Sangrah is my go-to inventory management platform. It allows me to streamline and optimize my inventory processes with ease, free from any hiccups. Sangrah's user-friendly interface simplifies the inventory management process, making it the ultimate choice for my business. Our company relies on Sangrah for all our inventory needs due to its efficiency and round-the-clock support."</div>
+          <div className="seewhy123">Discover why businesses prefer Sangrah over other inventory management solutions.</div>
+          <div className="seewhyinfo123">"Sangrah is my go-to inventory management platform. It allows me to streamline and optimize my inventory processes with ease, free from any hiccups. Sangrah's user-friendly interface simplifies the inventory management process, making it the ultimate choice for my business. Our company relies on Sangrah for all our inventory needs due to its efficiency and round-the-clock support."</div>
         </div>
-        <div className="rightsec">
-          <img src={rightsecimg} alt="" id="firstimg" />
+        <div className="rightsec123">
+          <img src={rightsecimg} alt="" id="firstimg123" />
         </div>
       </div>
 
       <div>
         <img src={homeimg1} alt="" className='footerimg' />
       </div>
-      <div className="outerhead">
-        <div id='heading1'>Efficient Inventory Management</div>
+      <div className="outerhead11">
+        <div id='heading111'>Efficient Inventory Management</div>
       </div>
-      <div className="sec2">
-        <div className="sec2div1">
-          <div className="left">
+      <div className="sec2111">
+        <div className="sec2div1222">
+          <div className="left123">
             <h3>Manage Inventory</h3>
-            <div className="leftinfo">
+            <div className="leftinfo123">
               <ul>
                 <li>Efficiently organize and track your inventory using our intuitive management tools.</li>
                 <li>Add and categorize your products, set stock levels, and keep an eye on restocking needs.</li>
@@ -41,19 +41,19 @@ const Home = () => {
               </ul>
             </div>
           </div>
-          <div className="right">
-            <img src={createexam} alt="" id="secondimg" />
+          <div className="right123">
+            <img src={createexam} alt="" id="secondimg123" />
           </div>
         </div>
 
 
-        <div className="sec2div1">
-          <div className="right">
-            <img src={verficiation} alt="" id="thirdimg" />
+        <div className="sec2div1222">
+          <div className="right123">
+            <img src={verficiation} alt="" id="thirdimg123" />
           </div>
-          <div className="left">
+          <div className="left123">
             <h3>Verify Inventory and Begin Management</h3>
-            <div className="leftinfo">
+            <div className="leftinfo123">
               <ul>
                 <li>Efficiently verify your inventory within 60 seconds.</li>
                 <li>Access 24/7/365 customer support for any assistance.</li>
@@ -62,34 +62,34 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <div className="sec2div1">
-          <div className="left">
+        <div className="sec2div1222">
+          <div className="left123">
             <h3>Review  Updates</h3>
-            <div className="leftinfo">
+            <div className="leftinfo123">
               <ul>
                 <li>Login to access your inventory updates on our platform.</li>
                 <li>Check stock levels and receive feedback or notifications.</li>
                 <li>Use these updates to guide your future inventory management and achieve your business goals.</li></ul>
             </div>
           </div>
-          <div className="right">
-            <img src={results} alt="" id="forthimg" />
+          <div className="right123">
+            <img src={results} alt="" id="forthimg123" />
           </div>
         </div>
 
       </div >
-      <div id='heading2'>Testimonials</div>
-      <div className="outertestimonials">
-        <div class="container">
-          <div class="testimonial-box">
-            <div class="testimonial">
+      <div id='heading211'>Testimonials</div>
+      <div className="outertestimonials123">
+        <div class="container1111">
+          <div class="testimonial-box999">
+            <div class="testimonial123">
               <i class="fas fa-quote-right"></i>
-              <span class="testimonial-text">"Efficient inventory management has been a game-changer for our business. A partnership with Sangrah has been one of our best decisions."</span>
-              <div class="testimonial-user">
-                <img src={testi1} alt="user-img" class="user-img" />
-                <div class="user-info">
-                  <span class="user-name">Brian Marchman</span>
-                  <div class="user-job-details">
+              <span class="testimonial-text123">"Efficient inventory management has been a game-changer for our business. A partnership with Sangrah has been one of our best decisions."</span>
+              <div class="testimonial-user123">
+                <img src={testi1} alt="user-img" class="user-img123" />
+                <div class="user-info123">
+                  <span class="user-name123">Brian Marchman</span>
+                  <div class="user-job-details123">
                     <span class="user-job">Business Owner</span>
                   </div>
                 </div>
@@ -98,16 +98,16 @@ const Home = () => {
           </div>
         </div>
 
-        <div class="container">
-          <div class="testimonial-box">
-            <div class="testimonial">
+        <div class="container1111">
+          <div class="testimonial-box999">
+            <div class="testimonial123">
               <i class="fas fa-quote-right"></i>
-              <span class="testimonial-text">"Efficient inventory management has been a game-changer for our business. A partnership with Sangrah has been one of our best decisions."</span>
-              <div class="testimonial-user">
-                <img src={testi2} alt="user-img" class="user-img" />
-                <div class="user-info">
-                  <span class="user-name">Brian Marchman</span>
-                  <div class="user-job-details">
+              <span class="testimonial-text123">"Efficient inventory management has been a game-changer for our business. A partnership with Sangrah has been one of our best decisions."</span>
+              <div class="testimonial-user123">
+                <img src={testi2} alt="user-img" class="user-img123" />
+                <div class="user-info123">
+                  <span class="user-name123">Brian Marchman</span>
+                  <div class="user-job-details123">
                     <span class="user-job">Business Owner</span>
                   </div>
                 </div>
@@ -116,16 +116,16 @@ const Home = () => {
           </div>
         </div>
 
-        <div class="container">
-          <div class="testimonial-box">
-            <div class="testimonial">
+        <div class="container1111">
+          <div class="testimonial-box999">
+            <div class="testimonial123">
               <i class="fas fa-quote-right"></i>
-              <span class="testimonial-text">"Efficient inventory management has been a game-changer for our business. A partnership with Sangrah has been one of our best decisions."</span>
-              <div class="testimonial-user">
-                <img src={testi3} alt="user-img" class="user-img" />
-                <div class="user-info">
-                  <span class="user-name">Brian Marchman</span>
-                  <div class="user-job-details">
+              <span class="testimonial-text123">"Efficient inventory management has been a game-changer for our business. A partnership with Sangrah has been one of our best decisions."</span>
+              <div class="testimonial-user123">
+                <img src={testi3} alt="user-img" class="user-img123" />
+                <div class="user-info123">
+                  <span class="user-name123">Brian Marchman</span>
+                  <div class="user-job-details123">
                     <span class="user-job">Business Owner</span>
                   </div>
                 </div>

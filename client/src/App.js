@@ -1,7 +1,7 @@
 import "./App.css";
 import "./css_files/rohit.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 // import Navbar from './components/Navbar';
 import Home from "./components/Home";
@@ -24,6 +24,7 @@ import HomeAbout from "./components/AboutUs/HomeAbout";
 import OrderHistory from "./components/OrderHistory";
 // import { useContext, useReducer } from 'react';
 // import {reducer, initialState} from '../reducer/UserReducer'
+import axios from 'axios'
 
 // export const context = createContext();
 
@@ -189,6 +190,15 @@ const DUMMY_PRODUCTS = [
 function App() {
   // const [state, dispatch] = useReducer(reducer, initialState);
   const [role, setRole] = useState("visitor");
+  const getRole = async() => {
+    const c = await axios.get('/getrole', {
+      withCredentials: true
+    });
+    setRole(c.data.role)
+  }
+  useEffect(() => {
+    getRole()
+  }, [])
   return (
     <>
       {/* <context.Provider value={{state, dispatch}}> */}

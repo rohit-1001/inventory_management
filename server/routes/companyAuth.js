@@ -365,6 +365,9 @@ router.get('/getrole', (req, res) => {
                 role=req.cookies.inv_man.role
             }
         }
+        else{
+            role="visitor"
+        }
     }
     else{
         role="visitor"

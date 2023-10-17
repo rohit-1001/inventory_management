@@ -6,7 +6,6 @@ import { Routes, Route } from "react-router-dom";
 // import Navbar from './components/Navbar';
 import Home from "./components/Home";
 import Contact from "./components/Contact";
-import About from "./components/About";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 // import Logout from './components/Logout';
@@ -21,7 +20,7 @@ import Products from "./components/Products/Products";
 import Navbar from "./components/Navbar";
 import Navbar2 from "./components/Navbar2";
 import Navbar3 from "./components/Navbar3";
-import HomeAbout from "./components/HomeAbout";
+import HomeAbout from "./components/AboutUs/HomeAbout";
 import OrderHistory from "./components/OrderHistory";
 // import { useContext, useReducer } from 'react';
 // import {reducer, initialState} from '../reducer/UserReducer'

@@ -80,17 +80,17 @@ const Home = () => {
       </div >
       <div id='heading211'>Testimonials</div>
       <div className="outertestimonials123">
-        <div class="container1111">
-          <div class="testimonial-box999">
-            <div class="testimonial123">
-              <i class="fas123 fa-quote-right"></i>
-              <span class="testimonial-text123">"Efficient inventory management has been a game-changer for our business. A partnership with Sangrah has been one of our best decisions."</span>
-              <div class="testimonial-user123">
-                <img src={testi1} alt="user-img" class="user-img123" />
-                <div class="user-info123">
-                  <span class="user-name123">Brian Marchman</span>
-                  <div class="user-job-details123">
-                    <span class="user-job">Business Owner</span>
+        <div className="container1111">
+          <div className="testimonial-box999">
+            <div className="testimonial123">
+              <i className="fas123 fa-quote-right"></i>
+              <span className="testimonial-text123">"Efficient inventory management has been a game-changer for our business. A partnership with Sangrah has been one of our best decisions."</span>
+              <div className="testimonial-user123">
+                <img src={testi1} alt="user-img" className="user-img123" />
+                <div className="user-info123">
+                  <span className="user-name123">Brian Marchman</span>
+                  <div className="user-job-details123">
+                    <span className="user-job">Business Owner</span>
                   </div>
                 </div>
               </div>
@@ -98,17 +98,17 @@ const Home = () => {
           </div>
         </div>
 
-        <div class="container1111">
-          <div class="testimonial-box999">
-            <div class="testimonial123">
-              <i class="fas123 fa-quote-right"></i>
-              <span class="testimonial-text123">"Efficient inventory management has been a game-changer for our business. A partnership with Sangrah has been one of our best decisions."</span>
-              <div class="testimonial-user123">
-                <img src={testi2} alt="user-img" class="user-img123" />
-                <div class="user-info123">
-                  <span class="user-name123">Brian Marchman</span>
-                  <div class="user-job-details123">
-                    <span class="user-job">Business Owner</span>
+        <div className="container1111">
+          <div className="testimonial-box999">
+            <div className="testimonial123">
+              <i className="fas123 fa-quote-right"></i>
+              <span className="testimonial-text123">"Efficient inventory management has been a game-changer for our business. A partnership with Sangrah has been one of our best decisions."</span>
+              <div className="testimonial-user123">
+                <img src={testi2} alt="user-img" className="user-img123" />
+                <div className="user-info123">
+                  <span className="user-name123">Brian Marchman</span>
+                  <div className="user-job-details123">
+                    <span className="user-job">Business Owner</span>
                   </div>
                 </div>
               </div>
@@ -116,17 +116,17 @@ const Home = () => {
           </div>
         </div>
 
-        <div class="container1111">
-          <div class="testimonial-box999">
-            <div class="testimonial123">
-              <i class="fas123 fa-quote-right"></i>
-              <span class="testimonial-text123">"Efficient inventory management has been a game-changer for our business. A partnership with Sangrah has been one of our best decisions."</span>
-              <div class="testimonial-user123">
-                <img src={testi3} alt="user-img" class="user-img123" />
-                <div class="user-info123">
-                  <span class="user-name123">Brian Marchman</span>
-                  <div class="user-job-details123">
-                    <span class="user-job">Business Owner</span>
+        <div className="container1111">
+          <div className="testimonial-box999">
+            <div className="testimonial123">
+              <i className="fas123 fa-quote-right"></i>
+              <span className="testimonial-text123">"Efficient inventory management has been a game-changer for our business. A partnership with Sangrah has been one of our best decisions."</span>
+              <div className="testimonial-user123">
+                <img src={testi3} alt="user-img" className="user-img123" />
+                <div className="user-info123">
+                  <span className="user-name123">Brian Marchman</span>
+                  <div className="user-job-details123">
+                    <span className="user-job">Business Owner</span>
                   </div>
                 </div>
               </div>

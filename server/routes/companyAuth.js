@@ -357,6 +357,20 @@ router.post('/getupfields', async (req, res) => {
     }
 });
 
+router.get('/getrole', (req, res) => {
+    let role
+    if(req.cookies){
+        if(req.cookies.inv_man){
+            if(req.cookies.inv_man.role){
+                role=req.cookies.inv_man.role
+            }
+        }
+    }
+    else{
+        role="visitor"
+    }
+    return res.json({role:role})
+})
 
 router.post('/companylogout', (req, res) => {
     res.clearCookie('inv_man', {path:'/'})

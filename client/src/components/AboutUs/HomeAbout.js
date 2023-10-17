@@ -1,24 +1,20 @@
 import React from 'react'
-import Picture from './Picture'
 import Navbar from './Navbar'
-import Hero from './Hero'
 import About from './About'
 import Testimonials from './Testimonials'
 import Demo from './Demo'
-import Footer from './Footer'
+import Picture from './Picture'
 
-const HomeAbout = () => {
-    return (
-        <div>
-            <Picture />
-            <Navbar />
-            <Hero />
-            <About />
-            <Testimonials />
-            <Demo />
-            <Footer />
-        </div>
-    )
+function HomeAbout() {
+  return (
+    <div>
+    <Picture/>
+      <Navbar />
+      <About />
+      <Testimonials />
+      <Demo />
+    </div>
+  );
 }
 
-export default HomeAbout
+export default HomeAbout;

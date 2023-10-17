@@ -1,15 +1,15 @@
-import styles from "./Picture.module.css";
+import adwaitStyles from "./Picture.module.css";
 
-import background from "../../assets/aboutUs.jpg";
+import adwaitBackground from "../../assets/aboutUs.jpg";
 
 const Picture = () => {
   return (
-    <article className={styles.article}>
-      <picture className={styles.picture}>
-        <source media="(min-width: 0px)" srcSet={background} />
-        <img src={background} alt="background" />
+    <article className={adwaitStyles.adwaitArticle}>
+      <picture className={adwaitStyles.adwaitPicture}>
+        <source media="(min-width: 0px)" srcSet={adwaitBackground} />
+        <img src={adwaitBackground} alt="background" />
       </picture>
-      <h1 className={styles.header}>About Us</h1>
+      <h1 className={adwaitStyles.adwaitHeader}>About Us</h1>
     </article>
   );
 };

@@ -1,15 +1,15 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import Box from '@mui/material/Box';
 import image1 from '../assets/image_2.png'
 import axios from 'axios'
 
 const UpperBoxes = () => {
     const [data, setData] = useState({
-        profit:0,
-        sales:0,
-        tsales:0
+        profit: 0,
+        sales: 0,
+        tsales: 0
     })
-    let profit=0, sales=0, tsales=0
+    let profit = 0, sales = 0, tsales = 0
     const getData = async () => {
         try {
             const c = await axios.post("/getupfields");
@@ -18,21 +18,21 @@ const UpperBoxes = () => {
             tsales=c.data.tsales
             setData({profit, sales, tsales})
         } catch (error) {
-          alert("Some error occurred");
+            alert("Some error occurred");
         }
-      };
-    
-      useEffect(() => {
+    };
+
+    useEffect(() => {
         getData();
-      }, []);
+    }, []);
     return (
-        <div className="container">
+        <div className="container" style={{ "width": "100%", "margin": "auto" }}>
             <div className="row justify-content-center"> {/* Added justify-content-center class */}
                 <div className="col-md-4">
                     <Box sx={{ border: '1px solid black', padding: '10px' }}>
                         <div>
                             <div>
-                            Total Sales
+                                Total Sales
                             </div>
                             <div className='d-flex align-items-center'>
                                 <div>
@@ -49,7 +49,7 @@ const UpperBoxes = () => {
                     <Box sx={{ border: '1px solid black', padding: '10px' }}>
                         <div>
                             <div>
-                            Profit
+                                Profit
                             </div>
                             <div className='d-flex align-items-center'>
                                 <div>

@@ -13,12 +13,10 @@ const UpperBoxes = () => {
     const getData = async () => {
         try {
             const c = await axios.post("/getupfields");
-            console.log(c)
-            profit = c.data.profit
-            sales = c.data.sales
-            tsales = c.data.tsales
-            setData({ profit, sales, tsales })
-            console.log(profit, sales, tsales)
+            profit=c.data.profit
+            sales=c.data.sales
+            tsales=c.data.tsales
+            setData({profit, sales, tsales})
         } catch (error) {
             alert("Some error occurred");
         }

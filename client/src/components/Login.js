@@ -5,6 +5,7 @@ import signin from "../assets/signin.png";
 import signup from "../assets/signup.png";
 
 const Login = (props) => {
+  
   const [userDataSignUp, setUserDataSignUp] = useState({
     name: "",
     email: "",
@@ -201,6 +202,7 @@ const Login = (props) => {
                   <i className="fab fa-linkedin-in"></i>
                 </a>
               </div>
+              
               <p className="account-text">
                 Don't have an account?{" "}
                 <Link

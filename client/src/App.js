@@ -25,6 +25,11 @@ import OrderHistory from "./components/OrderHistory";
 // import { useContext, useReducer } from 'react';
 // import {reducer, initialState} from '../reducer/UserReducer'
 import axios from 'axios'
+// import LoginButton from "./components/LoginButton";
+// import LogoutButton from "./components/LogoutButton";
+// import {gapi} from 'gapi-script'
+
+const clientId = "527841808497-gelcv9a1tom7l177ldu3632ve9aff60c.apps.googleusercontent.com"
 
 // export const context = createContext();
 
@@ -190,6 +195,13 @@ const DUMMY_PRODUCTS = [
 function App() {
   // const [state, dispatch] = useReducer(reducer, initialState);
   const [role, setRole] = useState("visitor");
+  function onSignIn(googleUser) {
+    var profile = googleUser.getBasicProfile();
+    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+    console.log('Name: ' + profile.getName());
+    console.log('Image URL: ' + profile.getImageUrl());
+    console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+  }
   const getRole = async() => {
     const c = await axios.get('/getrole', {
       withCredentials: true
@@ -198,6 +210,13 @@ function App() {
   }
   useEffect(() => {
     getRole()
+    // function start(){
+    //   gapi.clint.init({
+    //     clientId: clientId,
+    //     scope:""
+    //   })
+    // }
+    // gapi.load('client:auth2', start)
   }, [])
   return (
     <>
@@ -205,6 +224,8 @@ function App() {
         {role === "visitor" && (
           <>
             <Navbar2 />
+            {/* <LoginButton/>
+            <LogoutButton/> */}
             <Routes>
               <Route exact path="/" element={<Home />} />
               <Route exact path="/home" element={<Home />} />

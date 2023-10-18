@@ -6,7 +6,7 @@ const About = () => {
     return (
         <div className='adwaitAbout' id='about'>
             <div className='adwaitContainer'>
-                <img src={about} alt='adwaitAbout' />
+                <img className='img123' src={about} alt='adwaitAbout' />
                 <div className='adwaitCol-2'>
                     <h2>About</h2>
                     <span className='adwaitLine'></span>

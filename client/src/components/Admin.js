@@ -160,7 +160,13 @@ const Admin = () => {
       <br></br>
       <br></br>
       <br></br>
-      <div className="flex">
+      <div className="donutchart" style={{
+        // border: "2px solid red",
+        alignItems: "center",
+        justifyContent: "center",
+        width: "fit-content",
+        margin: "0 auto"
+      }}>
         <DonutChart data={data} />
       </div>
       

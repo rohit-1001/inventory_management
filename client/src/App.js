@@ -249,7 +249,7 @@ function App() {
               path="/products"
               element={<Products items={DUMMY_PRODUCTS} />}
             />
-            <Route path="/order-history" element={<OrderHistory />} />
+            <Route path="/order-history" element={<OrderHistory details={{role}}/>} />
             <Route path="/requests" element={<Requests />} />
             <Route path="/marketplace" element={<Marketplace />} />
             <Route path="*" element={<NotFound />} />

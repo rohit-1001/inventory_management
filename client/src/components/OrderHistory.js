@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Container, Grid, Paper, Avatar, Typography, Table, TableContainer, TableHead, TableBody, TableRow, TableCell } from '@mui/material';
 
-const OrderHistory = () => {
+const OrderHistory = (props) => {
     const pastOrders = [
         { orderID: 1, productName: 'Product A', dateOrdered: '2023-09-24', quantity: 10 },
         { orderID: 2, productName: 'Product B', dateOrdered: '2023-09-23', quantity: 5 },
@@ -18,7 +18,7 @@ const OrderHistory = () => {
         {/* Past Orders */}
         <Grid item xs={12}>
           <Paper elevation={3} style={{ padding: '20px' }}>
-            <Typography variant="h4" style={{ marginBottom: '20px' }}>Raised Orders / Received Orders</Typography>
+            <Typography variant="h4" style={{ marginBottom: '20px' }}>{props.details.role === "vendor" ? "Raised Orders" : "Received Orders"} </Typography>
             <TableContainer>
               <Table>
                 <TableHead>

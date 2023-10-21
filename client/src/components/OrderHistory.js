@@ -18,7 +18,7 @@ const OrderHistory = () => {
         {/* Past Orders */}
         <Grid item xs={12}>
           <Paper elevation={3} style={{ padding: '20px' }}>
-            <Typography variant="h4" style={{ marginBottom: '20px' }}>Past Orders</Typography>
+            <Typography variant="h4" style={{ marginBottom: '20px' }}>Raised Orders / Received Orders</Typography>
             <TableContainer>
               <Table>
                 <TableHead>

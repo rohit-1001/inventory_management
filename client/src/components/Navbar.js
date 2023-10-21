@@ -143,7 +143,7 @@ const Navbar = (props) => {
                 <li className='listItem' onClick={() => setShowMediaIcons(false)} style={{
                   fontWeight: '600',
                   marginLeft: window.innerWidth <= 768 ? "10px" : "0px",
-                }}>Order History</li>
+                }}>My Orders</li>
               </div>
             </NavLink>
             <NavLink to="/orders"
@@ -163,7 +163,7 @@ const Navbar = (props) => {
                 <li className='listItem' onClick={() => setShowMediaIcons(false)} style={{
                   fontWeight: '600',
                   marginLeft: window.innerWidth <= 768 ? "10px" : "0px",
-                }}>Orders</li>
+                }}>Orders History</li>
               </div>
             </NavLink>
             <NavLink to="/copr"

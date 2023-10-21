@@ -23,6 +23,8 @@ const Navbar = (props) => {
   const navigate = useNavigate()
   const [showMediaIcons, setShowMediaIcons] = useState(false);
   let menuRef = useRef();
+  const { role, setRole } = props.details;
+
   useEffect(() => {
     let handler = (e) => {
       if (!menuRef.current.contains(e.target)) {
@@ -39,14 +41,13 @@ const Navbar = (props) => {
   const logout = async () => {
     let confirmLogout = window.confirm('Are you sure, you want to log out?');
     if (confirmLogout) {
-      const { role, setRole } = props.details;
-      
-      if(role==="vendor"){
+
+      if (role === "vendor") {
         try {
-          const res = await axios.post('/vendorlogout',{
-              withCredentials: true
+          const res = await axios.post('/vendorlogout', {
+            withCredentials: true
           });
-    
+
           if (res.status === 200) {
             window.alert(res.data.msg);
             setRole("visitor")
@@ -56,12 +57,12 @@ const Navbar = (props) => {
           window.alert('Some error occurred');
         }
       }
-      else if(role==="company"){
+      else if (role === "company") {
         try {
-          const res = await axios.post('/companylogout',{
-              withCredentials: true
+          const res = await axios.post('/companylogout', {
+            withCredentials: true
           });
-    
+
           if (res.status === 200) {
             window.alert(res.data.msg);
             setRole("visitor")
@@ -126,6 +127,29 @@ const Navbar = (props) => {
                 }}>Products</li>
               </div>
             </NavLink>
+
+            {
+              role === "vendor" ? <NavLink to="/marketplace"
+                style={({ isActive }) => ({
+                  color: isActive ? '#466bda' : '#545e6f',
+                  textDecoration: 'none',
+                  fontWeight: '500',
+                  // background: isActive ? '#7600dc' : '#f0f0f0',
+                })}
+              >
+                <div style={{
+                  display: "flex",
+                  flexDirection: window.innerWidth <= 768 ? "row" : "column",
+                  alignItems: "center",
+                }}>
+                  <FontAwesomeIcon icon={faBox} />
+                  <li className='listItem' onClick={() => setShowMediaIcons(false)} style={{
+                    fontWeight: '600',
+                    marginLeft: window.innerWidth <= 768 ? "10px" : "0px",
+                  }}>Marketplace</li>
+                </div>
+              </NavLink> : null
+            }
             <NavLink to="/order-history"
               style={({ isActive }) => ({
                 color: isActive ? '#466bda' : '#545e6f',

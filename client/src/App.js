@@ -22,6 +22,7 @@ import Navbar2 from "./components/Navbar2";
 import Navbar3 from "./components/Navbar3";
 import HomeAbout from "./components/AboutUs/HomeAbout";
 import OrderHistory from "./components/OrderHistory";
+import Marketplace from "./Pages/Marketplace";
 // import { useContext, useReducer } from 'react';
 // import {reducer, initialState} from '../reducer/UserReducer'
 import axios from 'axios'
@@ -190,7 +191,7 @@ const DUMMY_PRODUCTS = [
 function App() {
   // const [state, dispatch] = useReducer(reducer, initialState);
   const [role, setRole] = useState("visitor");
-  const getRole = async() => {
+  const getRole = async () => {
     const c = await axios.get('/getrole', {
       withCredentials: true
     });
@@ -202,68 +203,69 @@ function App() {
   return (
     <>
       {/* <context.Provider value={{state, dispatch}}> */}
-        {role === "visitor" && (
-          <>
-            <Navbar2 />
-            <Routes>
-              <Route exact path="/" element={<Home />} />
-              <Route exact path="/home" element={<Home />} />
-              <Route path="/homeabout" element={<HomeAbout />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/login" element={<Login details={{ setRole }} />} />
-              <Route path="/signup" element={<Signup />} />
-              <Route
-                path="/admin"
-                element={<AdminLogin details={{ setRole }} />}
-              />
+      {role === "visitor" && (
+        <>
+          <Navbar2 />
+          <Routes>
+            <Route exact path="/" element={<Home />} />
+            <Route exact path="/home" element={<Home />} />
+            <Route path="/homeabout" element={<HomeAbout />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/login" element={<Login details={{ setRole }} />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route
+              path="/admin"
+              element={<AdminLogin details={{ setRole }} />}
+            />
             <Route path="*" element={<NotFound />} />
-            </Routes>
-          </>
-        )}
-        {role === "company" && (
-          <>
-            <Navbar details={{ role, setRole }}/>
-            <Routes>
-              <Route path="/codb" element={<CDashboard />} />
-              <Route path="/copr" element={<CProfile />} />
-              <Route path="/orders" element={<Orders items={DUMMY_ORDERS} />} />
-              <Route
-                path="/products"
-                element={<Products items={DUMMY_PRODUCTS} />}
-              />
-              <Route path="/order-history" element={<OrderHistory />} />
-              <Route path="/requests" element={<Requests />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </>
-        )}
-        {role === "vendor" && (
-          <>
-            <Navbar details={{ role, setRole }}/>
-            <Routes>
-              <Route path="/codb" element={<CDashboard />} />
-              <Route path="/copr" element={<CProfile />} />
-              <Route path="/orders" element={<Orders items={DUMMY_ORDERS} />} />
-              <Route
-                path="/products"
-                element={<Products items={DUMMY_PRODUCTS} />}
-              />
-              <Route path="/order-history" element={<OrderHistory />} />
-              <Route path="/requests" element={<Requests />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </>
-        )}
-        
-        {role === "admin" && (
-          <>
-          <Navbar3 details={{ setRole }}/>
-            <Routes>
-              <Route path="/adminDashboard" element={<Admin />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </>
-        )}
+          </Routes>
+        </>
+      )}
+      {role === "company" && (
+        <>
+          <Navbar details={{ role, setRole }} />
+          <Routes>
+            <Route path="/codb" element={<CDashboard />} />
+            <Route path="/copr" element={<CProfile />} />
+            <Route path="/orders" element={<Orders items={DUMMY_ORDERS} />} />
+            <Route
+              path="/products"
+              element={<Products items={DUMMY_PRODUCTS} />}
+            />
+            <Route path="/order-history" element={<OrderHistory />} />
+            <Route path="/requests" element={<Requests />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </>
+      )}
+      {role === "vendor" && (
+        <>
+          <Navbar details={{ role, setRole }} />
+          <Routes>
+            <Route path="/codb" element={<CDashboard />} />
+            <Route path="/copr" element={<CProfile />} />
+            <Route path="/orders" element={<Orders items={DUMMY_ORDERS} />} />
+            <Route
+              path="/products"
+              element={<Products items={DUMMY_PRODUCTS} />}
+            />
+            <Route path="/order-history" element={<OrderHistory />} />
+            <Route path="/requests" element={<Requests />} />
+            <Route path="/marketplace" element={<Marketplace />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </>
+      )}
+
+      {role === "admin" && (
+        <>
+          <Navbar3 details={{ setRole }} />
+          <Routes>
+            <Route path="/adminDashboard" element={<Admin />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </>
+      )}
       {/* </context.Provider>       */}
     </>
   );

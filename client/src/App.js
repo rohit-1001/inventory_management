@@ -23,6 +23,7 @@ import Navbar3 from "./components/Navbar3";
 import HomeAbout from "./components/AboutUs/HomeAbout";
 import OrderHistory from "./components/OrderHistory";
 import Marketplace from "./Pages/Marketplace";
+import SearchResult from './Pages/SearchResult';
 // import { useContext, useReducer } from 'react';
 // import {reducer, initialState} from '../reducer/UserReducer'
 import axios from 'axios'
@@ -249,9 +250,10 @@ function App() {
               path="/products"
               element={<Products items={DUMMY_PRODUCTS} />}
             />
-            <Route path="/order-history" element={<OrderHistory details={{role}}/>} />
+            <Route path="/order-history" element={<OrderHistory details={{ role }} />} />
             <Route path="/requests" element={<Requests />} />
             <Route path="/marketplace" element={<Marketplace />} />
+            <Route path='/search/:id' element={<SearchResult></SearchResult>}></Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
         </>

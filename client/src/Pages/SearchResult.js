@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
+import axios from 'axios';
 import SearchIcon from '@mui/icons-material/Search';
 import { Card, CardContent, CardMedia, Typography, Container, Grid } from '@mui/material';
 import { makeStyles } from '@mui/styles';
@@ -14,7 +15,6 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
-import axios from 'axios';
 const useStyles = makeStyles((theme) => ({
     card: {
         maxWidth: 345,
@@ -23,82 +23,10 @@ const useStyles = makeStyles((theme) => ({
         height: 140,
     },
 }));
-
-// const companies = [
-//     {
-//         name: 'Company A',
-//         description: 'A company description goes here.',
-//         logo: 'https://via.placeholder.com/150',
-//         products: [
-//             { name: 'Product A', price: 10 },
-//             { name: 'Product B', price: 15 },
-//         ],
-//     },
-//     {
-//         name: 'Company B',
-//         description: 'Another company description goes here.',
-//         logo: 'https://via.placeholder.com/150',
-//         products: [
-//             { name: 'Soap', price: 10 },
-//             { name: 'table', price: 15 },
-//         ],
-//     },
-//     {
-//         name: 'Company C',
-//         description: 'Company C description.',
-//         logo: 'https://via.placeholder.com/150',
-//         products: [
-//             { name: 'Product A', price: 10 },
-//             { name: 'Product B', price: 15 },
-//         ],
-//     },
-//     {
-//         name: 'Company C',
-//         description: 'Company C description.',
-//         logo: 'https://via.placeholder.com/150',
-//         products: [
-//             { name: 'Product A', price: 10 },
-//             { name: 'Product B', price: 15 },
-//         ],
-//     },
-//     {
-//         name: 'Company C',
-//         description: 'Company C description.',
-//         logo: 'https://via.placeholder.com/150',
-//         products: [
-//             { name: 'Product A', price: 10 },
-//             { name: 'Product B', price: 15 },
-//         ],
-//     },
-//     {
-//         name: 'Company C',
-//         description: 'Company C description.',
-//         logo: 'https://via.placeholder.com/150',
-//         products: [
-//             { name: 'Product A', price: 10 },
-//             { name: 'Product B', price: 15 },
-//         ],
-//     },
-//     {
-//         name: 'Company C',
-//         description: 'Company C description.',
-//         logo: 'https://via.placeholder.com/150',
-//         products: [
-//             { name: 'Product A', price: 10 },
-//             { name: 'Product B', price: 15 },
-//         ],
-//     },
-// ];
-
-// function orderProduct(company) {
-//     alert(`You have ordered ${company.name}`)
-// }
-
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
-
-const Marketplace = () => {
+const SearchResult = () => {
     const cardColorsList = [
         'rgba(250, 243, 240, 0.5)',
         'rgba(212, 226, 212, 0.5)',
@@ -106,16 +34,17 @@ const Marketplace = () => {
         'rgba(219, 196, 240, 0.5)',
         'rgba(255, 244, 210, 0.5)',
     ];
-
-    const [search, setSearch] = useState('');
     const classes = useStyles();
     const [currcompany, setcurrcompany] = useState('undefined');
     const [open, setOpen] = React.useState(false);
     const [cardColors, setCardColors] = useState([]);
     const [selectedProducts, setSelectedProducts] = useState([]);
     const [companies, setCompanies] = useState([]);
-
-
+    const [search, setSearch] = useState('');
+    const handleSearch = (e) => {
+        e.preventDefault();
+        setSearch(e.target.value);
+    }
     useEffect(() => {
         // Initialize the previousColor as an invalid color to start
         let previousColor = null;
@@ -126,18 +55,7 @@ const Marketplace = () => {
         setCardColors(colors);
     }, [companies]);
 
-    useEffect(() => {
-        axios.get('http://localhost:8000/allcompanies').then((res) => {
-            console.log(res.data);
-            setCompanies(res.data);
-        }).catch((err) => {
-            console.log(err);
-        })
-    }, []);
 
-    // useEffect(() => {
-    //     console.log("SET COMPANIES", companies)
-    // }, [companies])
     const addProduct = (product, quantity) => {
         setSelectedProducts([...selectedProducts, { product, quantity }]);
     };
@@ -161,10 +79,32 @@ const Marketplace = () => {
         setSelectedProducts([]);
     };
 
-    const handleSearch = (e) => {
-        e.preventDefault();
-        setSearch(e.target.value);
+
+    const getFilteredCompanies = async (det) => {
+        console.log("Inside getFilteredCompanies")
+        const search = det;
+        const endpoint = `http://localhost:8000/getFilteredCompanies`;
+        const payload = {
+            search: search,
+        }
+        console.log("Payload : ", payload)
+        try {
+            await axios
+                .post(endpoint, payload)
+                .then((response) => {
+                    console.log("Response Data: ", response.data)
+                    setCompanies(response.data);
+                })
+        } catch (err) {
+            console.log(err);
+        }
     }
+
+    useEffect(() => {
+        const searchquery = window.location.href.split(":")[3];
+        console.log("Search Query : ", searchquery);
+        getFilteredCompanies(searchquery);
+    }, [])
     return (
         <div>
             <form style={{
@@ -375,4 +315,4 @@ const Marketplace = () => {
     )
 }
 
-export default Marketplace
+export default SearchResult

@@ -65,8 +65,8 @@ const Login = (props) => {
   const navigate = useNavigate();
   const loginForm = async (event) => {
     event.preventDefault();
-    const {role} = event.target
-    if(role.value==="company"){
+    const { role } = event.target
+    if (role.value === "company") {
       try {
         const res = await axios.post("/companysignin", userData);
         if (res.status !== 200) {
@@ -81,7 +81,7 @@ const Login = (props) => {
         window.alert("Invalid Credentials");
       }
     }
-    else if(role.value==="vendor"){
+    else if (role.value === "vendor") {
       try {
         const res = await axios.post("/vendorsignin", userData);
         if (res.status !== 200) {
@@ -99,11 +99,11 @@ const Login = (props) => {
   };
   const signupForm = async (event) => {
     event.preventDefault();
-    const {role} = event.target
-    if(role.value==="company"){
+    const { role } = event.target
+    if (role.value === "company") {
       try {
         const res = await axios.post("/companyregister", userDataSignUp);
-  
+
         if (res.status === 200) {
           window.alert("User registered successfully");
         } else {
@@ -115,10 +115,10 @@ const Login = (props) => {
         window.alert("Vendor registration unsuccessful ");
       }
     }
-    else if(role.value==="vendor"){
+    else if (role.value === "vendor") {
       try {
         const res = await axios.post("/vendorregister", userDataSignUp);
-  
+
         if (res.status === 200) {
           window.alert("User registered successfully");
         } else {
@@ -175,11 +175,11 @@ const Login = (props) => {
               <div className="register-checkboxes">
                 <span>Sign In as: </span>
                 <span>
-                  <input type="radio" name="role" id="register-checkbox-11" value="company"/>
+                  <input type="radio" name="role" id="register-checkbox-11" value="company" />
                   <label htmlFor="register-checkbox-11">Company</label>
                 </span>
                 <span>
-                  <input type="radio" name="role" id="register-checkbox-22" value="vendor"/>
+                  <input type="radio" name="role" id="register-checkbox-22" value="vendor" />
                   <label htmlFor="register-checkbox-22">Vendor</label>
                 </span>
               </div>
@@ -277,11 +277,11 @@ const Login = (props) => {
               <div className="register-checkboxes">
                 <span>Register As: </span>
                 <span>
-                  <input type="radio" name="role" id="register-checkbox-1" value="company"/>
+                  <input type="radio" name="role" id="register-checkbox-1" value="company" />
                   <label htmlFor="register-checkbox-1">Company</label>
                 </span>
                 <span>
-                  <input type="radio" name="role" id="register-checkbox-2" value="vendor"/>
+                  <input type="radio" name="role" id="register-checkbox-2" value="vendor" />
                   <label htmlFor="register-checkbox-2">Vendor</label>
                 </span>
               </div>
@@ -336,7 +336,7 @@ const Login = (props) => {
               <div className="content123">
                 <h3>New to our Community?</h3>
                 <p>
-                Join our community and help us create a more efficient and sustainable world through better inventory management.
+                  Join our community and help us create a more efficient and sustainable world through better inventory management.
                 </p>
                 <button
                   className="btn123"

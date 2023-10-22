@@ -27,6 +27,10 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 const SearchResult = () => {
+    useEffect(() => {
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+        document.title = 'Sangrah | Marketplace';
+    }, [])
     const cardColorsList = [
         'rgba(250, 243, 240, 0.5)',
         'rgba(212, 226, 212, 0.5)',
@@ -40,6 +44,9 @@ const SearchResult = () => {
     const [cardColors, setCardColors] = useState([]);
     const [selectedProducts, setSelectedProducts] = useState([]);
     const [companies, setCompanies] = useState([]);
+    const [selectedProductPrice, setSelectedProductPrice] = useState('NaN');
+    const [selectedProductQuantity, setSelectedProductQuantity] = useState('NaN');
+    const [selectedProduct, setSelectedProduct] = useState('NaN');
     const [search, setSearch] = useState('');
     const handleSearch = (e) => {
         e.preventDefault();
@@ -55,9 +62,25 @@ const SearchResult = () => {
         setCardColors(colors);
     }, [companies]);
 
+    const handleProductSelect = (e) => {
+        const selectedProduct = e.target.value;
+        const product = currcompany.products.find((p) => p.name === selectedProduct);
+        if (product) {
+            setSelectedProduct(product.name);
+            setSelectedProductPrice(product.s_price);
+        } else {
+            setSelectedProduct('NaN');
+            setSelectedProductPrice('');
+        }
+    };
 
-    const addProduct = (product, quantity) => {
-        setSelectedProducts([...selectedProducts, { product, quantity }]);
+    const handleQuantitySelect = (e) => {
+        const selectedQuantity = e.target.value;
+        setSelectedProductQuantity(selectedQuantity);
+    }
+
+    const addProduct = (product, quantity, totalPrice) => {
+        setSelectedProducts([...selectedProducts, { product, quantity, totalPrice }]);
     };
     function getRandomColor(previousColor) {
         let newColor;
@@ -77,6 +100,9 @@ const SearchResult = () => {
         console.log("Selected Company", currcompany)
         setcurrcompany('undefined');
         setSelectedProducts([]);
+        setSelectedProductPrice('NaN');
+        setSelectedProduct('NaN');
+        setSelectedProductQuantity('NaN');
     };
 
 
@@ -176,7 +202,7 @@ const SearchResult = () => {
                 </Grid>
             </Container>
 
-            <div>
+            {/* <div>
                 <Dialog
                     fullScreen
                     open={open}
@@ -300,6 +326,183 @@ const SearchResult = () => {
 
                                         // Add the product to the order
                                         addProduct(selectedProduct, quantity);
+                                        document.querySelector('#quan').value = '';
+                                    }}
+                                >
+                                    Add to Order
+                                </Button>
+                            </ListItem>
+                        </div>
+                    </List>
+
+                </Dialog>
+            </div> */}
+
+            <div>
+                <Dialog
+                    fullScreen
+                    open={open}
+                    onClose={handleClose}
+                    TransitionComponent={Transition}
+                >
+                    <AppBar sx={{ position: 'relative' }}>
+                        <Toolbar>
+                            <IconButton
+                                edge="start"
+                                color="inherit"
+                                onClick={handleClose}
+                                aria-label="close"
+                            >
+                                <CloseIcon onClick={
+                                    () => {
+                                        handleClose();
+                                        setcurrcompany('undefined');
+                                        setSelectedProducts([]);
+                                    }
+                                } />
+                            </IconButton>
+                            <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+                                Order Details
+                            </Typography>
+                            <Button autoFocus color="inherit" onClick={handleClose}>
+                                Order
+                            </Button>
+                        </Toolbar>
+                    </AppBar>
+                    <List>
+                        <ListItem>
+                            <ListItemText primary="Company Name" secondary={currcompany.name} />
+                        </ListItem>
+                        <Divider />
+                        <ListItem>
+                            <ListItemText primary="Company Email" secondary={currcompany.email} />
+                        </ListItem>
+                        <Divider />
+                        {selectedProducts.length === 0 ? <ListItemText primary="No Products Selected" style={{
+                            textAlign: 'left',
+                            marginLeft: '1rem',
+                            fontSize: '1.5rem',
+                        }} /> : <><List>
+                            <ListItemText primary="Products Selected" style={{
+                                textAlign: 'left',
+                                marginLeft: '1rem',
+                                fontSize: '1.5rem',
+                            }} />
+
+                            {selectedProducts.map((item, index) => (
+                                <div key={index}>
+                                    <ListItem>
+                                        <ListItemText primary={`Product Name: ${item.product}`} secondary={`Quantity: ${item.quantity}   Total Price: ₹ ${item.totalPrice}`} />
+                                        <IconButton
+                                            edge="end"
+                                            color="inherit"
+                                            onClick={() => {
+                                                // Remove the selected product
+                                                const updatedProducts = [...selectedProducts];
+                                                updatedProducts.splice(index, 1);
+                                                setSelectedProducts(updatedProducts);
+                                            }}
+                                        >
+                                            <CloseIcon />
+                                        </IconButton>
+                                    </ListItem>
+                                    <Divider />
+                                </div>
+                            ))}
+                        </List></>}
+
+                        <Divider />
+                        <div style={{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            justifyContent: 'space-around',
+                            alignItems: 'center',
+                            width: '100%',
+                            backgroundColor: '#f5f5f5',
+                        }}>
+                            <div style={{
+                                // backgroundColor: '#f5f5f5',
+                                width: '400px',
+                            }}>
+                                <ListItem style={{
+                                    width: '300px',
+                                }}>
+                                    <ListItemText primary="Select Product" />
+                                    {currcompany === 'undefined' ? <></> :
+                                        <select
+                                            value={selectedProduct}
+                                            onChange={handleProductSelect}>
+                                            <option value={selectedProduct} disabled hidden>
+                                                {selectedProduct}
+                                            </option>
+                                            {currcompany.products.map((product, index) => (
+                                                <option key={index} value={product.name}>
+                                                    {product.name}
+                                                </option>
+                                            ))}
+                                        </select>}
+                                </ListItem>
+                            </div>
+                            <Divider />
+                            <div style={{
+                                // backgroundColor: '#f5f5f5',
+                                width: '400px',
+                            }}>
+                                <ListItem style={{
+                                    width: '100%',
+                                }}>
+                                    <ListItemText primary="Price:" />
+                                    {selectedProductPrice && (
+                                        <ListItemText>
+                                            ₹ {selectedProductPrice}
+                                        </ListItemText>
+                                    )}
+                                </ListItem>
+                            </div>
+                            <Divider />
+                            <div style={{
+                                // backgroundColor: '#f5f5f5',
+                                width: '500px',
+                            }}>
+                                <ListItem style={{
+                                    width: '100%',
+                                }}>
+                                    <ListItemText primary="Quantity:" />
+                                    <input type="number" min="1" id="quan" onChange={handleQuantitySelect} style={{
+                                        width: '100px',
+                                    }} />
+                                </ListItem>
+                            </div>
+                            <Divider />
+                            <div style={{
+                                // backgroundColor: '#f5f5f5',
+                                width: '400px',
+                            }}>
+                                <ListItem style={{
+                                    width: '300px',
+                                }}>
+                                    <ListItemText primary="Total Price:" />
+                                    {selectedProductPrice && (
+                                        <ListItemText>
+                                            ₹ {selectedProductPrice * parseInt(selectedProductQuantity)}
+                                        </ListItemText>
+                                    )}
+                                </ListItem>
+                            </div>
+
+                            <Divider />
+                            <ListItem>
+                                <Button
+                                    variant="outlined"
+                                    onClick={() => {
+                                        // Get the selected product and quantity
+                                        const selectedProduct = document.querySelector('select').value;
+                                        const quantity = parseInt(document.querySelector('#quan').value);
+
+                                        // Add the product to the order
+                                        addProduct(selectedProduct, quantity, selectedProductPrice * quantity);
+                                        setSelectedProduct('NaN');
+                                        setSelectedProductPrice('NaN');
                                         document.querySelector('#quan').value = '';
                                     }}
                                 >

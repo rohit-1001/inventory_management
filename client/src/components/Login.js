@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import signin from "../assets/signin.png";
 import signup from "../assets/signup.png";
 
 const Login = (props) => {
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    document.title = 'Sangrah | Login';
+  }, [])
   const [userDataSignUp, setUserDataSignUp] = useState({
     name: "",
     email: "",

@@ -31,8 +31,12 @@ import whatisdownimg from "./images/whatisdownimg.png"
 import founders from "./images/founders.png"
 import homeimg1 from "./images/homeimg1.png"
 import Footer from "../../components/Footer"
-
+import { useEffect } from 'react'
 export default function HomeAbout() {
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    document.title = 'Sangrah | About';
+  }, [])
   return (
     <>
       <div>

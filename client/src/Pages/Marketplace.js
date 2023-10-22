@@ -24,81 +24,15 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-// const companies = [
-//     {
-//         name: 'Company A',
-//         description: 'A company description goes here.',
-//         logo: 'https://via.placeholder.com/150',
-//         products: [
-//             { name: 'Product A', price: 10 },
-//             { name: 'Product B', price: 15 },
-//         ],
-//     },
-//     {
-//         name: 'Company B',
-//         description: 'Another company description goes here.',
-//         logo: 'https://via.placeholder.com/150',
-//         products: [
-//             { name: 'Soap', price: 10 },
-//             { name: 'table', price: 15 },
-//         ],
-//     },
-//     {
-//         name: 'Company C',
-//         description: 'Company C description.',
-//         logo: 'https://via.placeholder.com/150',
-//         products: [
-//             { name: 'Product A', price: 10 },
-//             { name: 'Product B', price: 15 },
-//         ],
-//     },
-//     {
-//         name: 'Company C',
-//         description: 'Company C description.',
-//         logo: 'https://via.placeholder.com/150',
-//         products: [
-//             { name: 'Product A', price: 10 },
-//             { name: 'Product B', price: 15 },
-//         ],
-//     },
-//     {
-//         name: 'Company C',
-//         description: 'Company C description.',
-//         logo: 'https://via.placeholder.com/150',
-//         products: [
-//             { name: 'Product A', price: 10 },
-//             { name: 'Product B', price: 15 },
-//         ],
-//     },
-//     {
-//         name: 'Company C',
-//         description: 'Company C description.',
-//         logo: 'https://via.placeholder.com/150',
-//         products: [
-//             { name: 'Product A', price: 10 },
-//             { name: 'Product B', price: 15 },
-//         ],
-//     },
-//     {
-//         name: 'Company C',
-//         description: 'Company C description.',
-//         logo: 'https://via.placeholder.com/150',
-//         products: [
-//             { name: 'Product A', price: 10 },
-//             { name: 'Product B', price: 15 },
-//         ],
-//     },
-// ];
-
-// function orderProduct(company) {
-//     alert(`You have ordered ${company.name}`)
-// }
-
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
 const Marketplace = () => {
+    useEffect(() => {
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+        document.title = 'Sangrah | Marketplace';
+    }, [])
     const cardColorsList = [
         'rgba(250, 243, 240, 0.5)',
         'rgba(212, 226, 212, 0.5)',
@@ -114,7 +48,9 @@ const Marketplace = () => {
     const [cardColors, setCardColors] = useState([]);
     const [selectedProducts, setSelectedProducts] = useState([]);
     const [companies, setCompanies] = useState([]);
-
+    const [selectedProductPrice, setSelectedProductPrice] = useState('NaN');
+    const [selectedProductQuantity, setSelectedProductQuantity] = useState('NaN');
+    const [selectedProduct, setSelectedProduct] = useState('NaN');
 
     useEffect(() => {
         // Initialize the previousColor as an invalid color to start
@@ -134,12 +70,28 @@ const Marketplace = () => {
             console.log(err);
         })
     }, []);
+    
+    const handleProductSelect = (e) => {
+        const selectedProduct = e.target.value;
+        const product = currcompany.products.find((p) => p.name === selectedProduct);
+        if (product) {
+            setSelectedProduct(product.name);
+            setSelectedProductPrice(product.s_price);
+        } else {
+            setSelectedProduct('NaN');
+            setSelectedProductPrice('');
+        }
+    };
 
+    const handleQuantitySelect = (e) => {
+        const selectedQuantity = e.target.value;
+        setSelectedProductQuantity(selectedQuantity);
+    }
     // useEffect(() => {
     //     console.log("SET COMPANIES", companies)
     // }, [companies])
-    const addProduct = (product, quantity) => {
-        setSelectedProducts([...selectedProducts, { product, quantity }]);
+    const addProduct = (product, quantity, totalPrice) => {
+        setSelectedProducts([...selectedProducts, { product, quantity, totalPrice }]);
     };
     function getRandomColor(previousColor) {
         let newColor;
@@ -159,6 +111,9 @@ const Marketplace = () => {
         console.log("Selected Company", currcompany)
         setcurrcompany('undefined');
         setSelectedProducts([]);
+        setSelectedProductPrice('NaN');
+        setSelectedProduct('NaN');
+        setSelectedProductQuantity('NaN');
     };
 
     const handleSearch = (e) => {
@@ -290,7 +245,7 @@ const Marketplace = () => {
                             {selectedProducts.map((item, index) => (
                                 <div key={index}>
                                     <ListItem>
-                                        <ListItemText primary={`Product Name: ${item.product}`} secondary={`Quantity: ${item.quantity}`} />
+                                        <ListItemText primary={`Product Name: ${item.product}`} secondary={`Quantity: ${item.quantity}   Total Price: ₹ ${item.totalPrice}`} />
                                         <IconButton
                                             edge="end"
                                             color="inherit"
@@ -323,16 +278,22 @@ const Marketplace = () => {
                                 width: '400px',
                             }}>
                                 <ListItem style={{
-                                    width: '100%',
+                                    width: '300px',
                                 }}>
                                     <ListItemText primary="Select Product" />
-                                    {currcompany === 'undefined' ? <></> : <select>
-                                        {currcompany.products.map((product, index) => (
-                                            <option key={index} value={product.name}>
-                                                {product.name}
+                                    {currcompany === 'undefined' ? <></> :
+                                        <select
+                                            value={selectedProduct}
+                                            onChange={handleProductSelect}>
+                                            <option value={selectedProduct} disabled hidden>
+                                                {selectedProduct}
                                             </option>
-                                        ))}
-                                    </select>}
+                                            {currcompany.products.map((product, index) => (
+                                                <option key={index} value={product.name}>
+                                                    {product.name}
+                                                </option>
+                                            ))}
+                                        </select>}
                                 </ListItem>
                             </div>
                             <Divider />
@@ -343,12 +304,45 @@ const Marketplace = () => {
                                 <ListItem style={{
                                     width: '100%',
                                 }}>
-                                    <ListItemText primary="Quantity" />
-                                    <input type="number" min="1" id="quan" style={{
+                                    <ListItemText primary="Price:" />
+                                    {selectedProductPrice && (
+                                        <ListItemText>
+                                            ₹ {selectedProductPrice}
+                                        </ListItemText>
+                                    )}
+                                </ListItem>
+                            </div>
+                            <Divider />
+                            <div style={{
+                                // backgroundColor: '#f5f5f5',
+                                width: '500px',
+                            }}>
+                                <ListItem style={{
+                                    width: '100%',
+                                }}>
+                                    <ListItemText primary="Quantity:" />
+                                    <input type="number" min="1" id="quan" onChange={handleQuantitySelect} style={{
                                         width: '100px',
                                     }} />
                                 </ListItem>
                             </div>
+                            <Divider />
+                            <div style={{
+                                // backgroundColor: '#f5f5f5',
+                                width: '400px',
+                            }}>
+                                <ListItem style={{
+                                    width: '300px',
+                                }}>
+                                    <ListItemText primary="Total Price:" />
+                                    {selectedProductPrice && (
+                                        <ListItemText>
+                                            ₹ {selectedProductPrice * parseInt(selectedProductQuantity)}
+                                        </ListItemText>
+                                    )}
+                                </ListItem>
+                            </div>
+
                             <Divider />
                             <ListItem>
                                 <Button
@@ -359,7 +353,9 @@ const Marketplace = () => {
                                         const quantity = parseInt(document.querySelector('#quan').value);
 
                                         // Add the product to the order
-                                        addProduct(selectedProduct, quantity);
+                                        addProduct(selectedProduct, quantity, selectedProductPrice * quantity);
+                                        setSelectedProduct('NaN');
+                                        setSelectedProductPrice('NaN');
                                         document.querySelector('#quan').value = '';
                                     }}
                                 >

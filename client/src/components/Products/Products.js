@@ -10,7 +10,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Card from "../UI/Card";
 import "./Products.css";
 import ProductTable from "./ProductTable";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { TextField, Button, Select, MenuItem, FormControl,InputLabel } from '@mui/material';
 import axios from 'axios'
 
@@ -29,6 +29,10 @@ const rows = [
 
 
 const Products = () => {
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    document.title = 'Sangrah | Products';
+  }, [])
   const [open, setOpen] = React.useState(false);
   const [product, setProduct] = useState({
     name: '',

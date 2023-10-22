@@ -52,8 +52,8 @@ const DonutChart = ({ data }) => {
   }, [data]);
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', width: '1000px' }}>
-      <div style={{ margin: 'auto', textAlign: 'center', width:"300px",margin:"1em", height:"100%" }}>
+    <div style={{  width: '1000px' }}>
+      <div style={{ display: 'flex', justifyContent: 'center', margin: 'auto', textAlign: 'center', width:"300px",margin:"0 8em", height:"500%" }}>
         <h4>Company vs Vendor</h4>
         <canvas ref={companyVsVendorRef} />
       </div>

@@ -67,7 +67,7 @@ router.post('/vendorsignin', async (req, res) => {
 })
 
 // router.post('/addproducts', vendorAuthenticate, async (req, res) => {
-router.post('/addproducts', async (req, res) => {
+router.post('/addproducts_v', async (req, res) => {
     const { name, desc, quantity, category, pid, threshold , c_price, s_price, manufacturer} = req.body;
     const email=req.cookies.inv_man.email
     // const { email, name, desc, quantity, category, pid, threshold , c_price, s_price, manufacturer, month, year} = req.body;
@@ -119,7 +119,7 @@ router.post('/addproducts', async (req, res) => {
         res.status(201).json({ message: "Product added successfully" });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: "Internal server error" }); // Handle errors properly
+        return res.status(500).json({ error: "Internal server error" }); // Handle errors properly
     }
 });
 
@@ -127,128 +127,235 @@ router.post('/addproducts', async (req, res) => {
 // addstock
 // router.post('/addstock', vendorAuthenticate, async (req, res) => {
 router.post('/addstock', async (req, res) => {
-    const { email, quantity, pid } = req.body;
+    let { quantity, pid } = req.body;
     // console.log("Request Body: ", req.body);
-
+    quantity = parseInt(quantity);
+    const email = req.cookies.inv_man.email
+    const role = req.cookies.inv_man.role
     if(isNaN(quantity)){
-        res.status(422).json({ msg: "Invalid request made" });
+        return res.status(422).json({ msg: "Invalid request made" });
     }
-
-    try {
-        const vendor = await Vendor.findOne({ email: email });
-        if (!vendor) {
-            return res.status(400).json({ error: "Vendor not found" });
+    if(role==="vendor"){
+        try {
+            const vendor = await Vendor.findOne({ email: email });
+            if (!vendor) {
+                return res.status(400).json({ error: "Vendor not found" });
+            }
+            const product = vendor.products.find((product) => product.pid === pid);
+            if (!product) {
+                return res.status(400).json({ error: "Product not found" });
+            }
+    
+            // Ensure the quantity is valid and subtract it from the product
+            product.quantity += quantity;
+            // vendor.find(product).quantity += quantity;
+            // await vendor.save(); // Save the updated vendor document
+            await Vendor.replaceOne({ email: email }, vendor);
+    
+            return res.status(200).json({ message: "Stock added successfully" });
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({ error: "Internal server error" }); // Handle errors properly
         }
-        const product = vendor.products.find((product) => product.pid === pid);
-        if (!product) {
-            return res.status(400).json({ error: "Product not found" });
+    }
+    else if(role==="company"){
+        try {
+            const company = await Company.findOne({ email: email });
+            if (!company) {
+                return res.status(400).json({ error: "Company not found" });
+            }
+            const product = company.products.find((product) => product.pid === pid);
+            if (!product) {
+                return res.status(400).json({ error: "Product not found" });
+            }
+    
+            // Ensure the quantity is valid and subtract it from the product
+            product.quantity += quantity;
+            // vendor.find(product).quantity += quantity;
+            // await vendor.save(); // Save the updated vendor document
+            await Company.replaceOne({ email: email }, company);
+    
+            return res.status(200).json({ message: "Stock added successfully" });
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({ error: "Internal server error" }); // Handle errors properly
         }
-
-        // Ensure the quantity is valid and subtract it from the product
-        product.quantity += quantity;
-        // vendor.find(product).quantity += quantity;
-        // await vendor.save(); // Save the updated vendor document
-        await Vendor.replaceOne({ email: email }, vendor);
-
-        res.status(200).json({ message: "Stock added successfully" });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: "Internal server error" }); // Handle errors properly
     }
 });
 
 // substock
 // router.post('/subtractstock', vendorAuthenticate, async (req, res) => {
-router.post('/subtractstock_v', async (req, res) => {
-    const { email, quantity, pid } = req.body;
+router.post('/subtractstock', async (req, res) => {
+    let { quantity, pid } = req.body;
+    quantity = parseInt(quantity);
     // console.log("Request Body: ", req.body);
-
+    const email = req.cookies.inv_man.email
+    const role = req.cookies.inv_man.role
     if(isNaN(quantity)){
-        res.status(422).json({ msg: "Invalid request made" });
+        return res.status(422).json({ msg: "Invalid request made" });
     }
-
-    try {
-        const vendor = await Vendor.findOne({ email: email });
-        if (!vendor) {
-            return res.status(400).json({ error: "Vendor not found" });
-        }
-
-        // Find the product with the matching pid
-        const product = vendor.products.find((product) => product.pid === pid);
-        if (!product) {
-            return res.status(400).json({ error: "Product not found" });
-        }
-
-        // Ensure the quantity is valid and subtract it from the product
-        if (product.quantity >= quantity) {
-            product.quantity -= quantity;
-            product.sales += (quantity * product.s_price)
-        } else {
-            return res.status(400).json({ error: "Insufficient stock quantity" });
-        }
-        // Get the c_price and s_price
-        const cPrice = product.c_price;
-        const sPrice = product.s_price;
-
-        const dashboard = await Dashboard.findOne({ email });
-        const date = new Date();
-        const month = date.getMonth().toString();;
-        const year = date.getFullYear().toString();
-        if(dashboard){
-            const monthData = dashboard.data.find((monthData) => monthData.month === month && monthData.year === year)
-            if(monthData){
-                // Update the monthly data
-                // monthData.monthly_data.revenue += ;
-                monthData.monthly_data.profit += quantity*(sPrice-cPrice);
-                monthData.monthly_data.sales += quantity*sPrice;
-        
+    if(role==="vendor"){
+        try {
+            const vendor = await Vendor.findOne({ email: email });
+            if (!vendor) {
+                return res.status(400).json({ error: "Vendor not found" });
             }
-            else {
-                // If a record for the current month doesn't exist, create a new one
-                dashboard.data.push({
-                    month: month,
-                    year: year,
-                    monthly_data: {
-                        profit: quantity * (product.s_price-product.c_price),
-                        sales: quantity * product.s_price,
-                    },
-                });
+    
+            // Find the product with the matching pid
+            const product = vendor.products.find((product) => product.pid === pid);
+            if (!product) {
+                return res.status(400).json({ error: "Product not found" });
             }
-            // Save the dashboard
-            await dashboard.save();
+    
+            // Ensure the quantity is valid and subtract it from the product
+            if (product.quantity >= quantity) {
+                product.quantity -= quantity;
+                product.sales += (quantity * product.s_price)
+            } else {
+                return res.status(400).json({ error: "Insufficient stock quantity" });
+            }
+            // Get the c_price and s_price
+            const cPrice = product.c_price;
+            const sPrice = product.s_price;
+    
+            const dashboard = await Dashboard.findOne({ email });
+            const date = new Date();
+            const month = date.getMonth().toString();;
+            const year = date.getFullYear().toString();
+            if(dashboard){
+                const monthData = dashboard.data.find((monthData) => monthData.month === month && monthData.year === year)
+                if(monthData){
+                    // Update the monthly data
+                    // monthData.monthly_data.revenue += ;
+                    monthData.monthly_data.profit += quantity*(sPrice-cPrice);
+                    monthData.monthly_data.sales += quantity*sPrice;
+            
+                }
+                else {
+                    // If a record for the current month doesn't exist, create a new one
+                    dashboard.data.push({
+                        month: month,
+                        year: year,
+                        monthly_data: {
+                            profit: quantity * (product.s_price-product.c_price),
+                            sales: quantity * product.s_price,
+                        },
+                    });
+                }
+                // Save the dashboard
+                await dashboard.save();
+            }
+            else{
+                profit=quantity*(sPrice-cPrice)
+                sales=quantity*sPrice
+                const newDashboard = new Dashboard({
+                    email:email,
+                    data: [{
+                        month:month,
+                        year:year,
+                        monthly_data:{
+                            profit:profit,
+                            sales:sales
+                        }
+                    }],
+                  });
+              
+                  await newDashboard.save();
+            }
+            // Find the month from variable month and year
+            await Vendor.replaceOne({ email: email }, vendor);
+            // await vendor.save()
+    
+            return res.status(200).json({ message: "Stock subtracted successfully" });
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({ error: "Internal server error" }); // Handle errors properly
         }
-        else{
-            profit=quantity*(sPrice-cPrice)
-            sales=quantity*sPrice
-            const newDashboard = new Dashboard({
-                email:email,
-                data: [{
-                    month:month,
-                    year:year,
-                    monthly_data:{
-                        profit:profit,
-                        sales:sales
-                    }
-                }],
-              });
-          
-              await newDashboard.save();
+    }
+    else if(role==="company"){
+        try {
+            const company = await Company.findOne({ email: email });
+            if (!company) {
+                return res.status(400).json({ error: "Company not found" });
+            }
+    
+            // Find the product with the matching pid
+            const product = company.products.find((product) => product.pid === pid);
+            if (!product) {
+                return res.status(400).json({ error: "Product not found" });
+            }
+    
+            // Ensure the quantity is valid and subtract it from the product
+            if (product.quantity >= quantity) {
+                product.quantity -= quantity;
+                product.sales += (quantity * product.s_price)
+            } else {
+                return res.status(400).json({ error: "Insufficient stock quantity" });
+            }
+            // Get the c_price and s_price
+            const cPrice = product.c_price;
+            const sPrice = product.s_price;
+    
+            const dashboard = await Dashboard.findOne({ email });
+            const date = new Date();
+            const month = date.getMonth().toString();;
+            const year = date.getFullYear().toString();
+            if(dashboard){
+                const monthData = dashboard.data.find((monthData) => monthData.month === month && monthData.year === year)
+                if(monthData){
+                    // Update the monthly data
+                    // monthData.monthly_data.revenue += ;
+                    monthData.monthly_data.profit += quantity*(sPrice-cPrice);
+                    monthData.monthly_data.sales += quantity*sPrice;
+            
+                }
+                else {
+                    // If a record for the current month doesn't exist, create a new one
+                    dashboard.data.push({
+                        month: month,
+                        year: year,
+                        monthly_data: {
+                            profit: quantity * (product.s_price-product.c_price),
+                            sales: quantity * product.s_price,
+                        },
+                    });
+                }
+                // Save the dashboard
+                await dashboard.save();
+            }
+            else{
+                profit=quantity*(sPrice-cPrice)
+                sales=quantity*sPrice
+                const newDashboard = new Dashboard({
+                    email:email,
+                    data: [{
+                        month:month,
+                        year:year,
+                        monthly_data:{
+                            profit:profit,
+                            sales:sales
+                        }
+                    }],
+                  });
+              
+                  await newDashboard.save();
+            }
+            // Find the month from variable month and year
+            await Company.replaceOne({ email: email }, company);
+            // await company.save()
+    
+            return res.status(200).json({ message: "Stock subtracted successfully" });
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({ error: "Internal server error" }); // Handle errors properly
         }
-        // Find the month from variable month and year
-        await Vendor.replaceOne({ email: email }, vendor);
-        // await vendor.save()
-
-        res.status(200).json({ message: "Stock subtracted successfully" });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: "Internal server error" }); // Handle errors properly
     }
 });
 
 
 // getallproductsofvendor
 // router.post('/getallproducts_v', vendorAuthenticate, async (req, res) => {
-router.post('/getallproducts_v', async (req, res) => {
+router.get('/getallproducts_v', async (req, res) => {
     const email = req.body.email;
     // console.log("Request Body: ", req.body);
     try {
@@ -270,7 +377,7 @@ router.post('/getallproducts_v', async (req, res) => {
 
 // getallproductsofcompany
 // router.post('/getallproducts_c', vendorAuthenticate, async (req, res) => {
-router.post('/getallproducts_c', async (req, res) => {
+router.get('/getallproducts_c', async (req, res) => {
     const email = req.body.email;
     // console.log("Request Body: ", req.body);
     try {
@@ -391,6 +498,45 @@ router.post('/orders',  async (req, res) => {
         console.error(error);
         res.status(500).json({ error: "Internal server error" });
 
+    }
+})
+
+router.get('/getallproducts', async(req, res) => {
+    const email = req.cookies.inv_man.email
+    const role = req.cookies.inv_man.role
+
+    if(role==="vendor"){
+        try {
+            const vendor = await Vendor.findOne({ email: email });
+            if (!vendor) {
+                return res.status(400).json({ error: "Vendor not found" });
+            }
+            const products = vendor.products;
+            if (!products) {
+                return res.status(400).json({ error: "No products found" });
+            }
+            res.status(200).json(products);
+        }
+        catch (error) {
+            res.status(500).json({ error: "Internal server error" });
+        }
+    }
+    else if(role==="company"){
+        try {
+            const company = await Company.findOne({ email: email });
+            if (!company) {
+                return res.status(400).json({ error: "Company not found" });
+            }
+            const products = company.products;
+            if (!products) {
+                return res.status(400).json({ error: "No products found" });
+            }
+            res.status(200).json(products);
+        }
+        catch (error) {
+            console.error(error);
+            res.status(500).json({ error: "Internal server error" });
+        }
     }
 })
 

@@ -2,8 +2,13 @@ import React from 'react'
 import UpperBoxes from '../components/UpperBoxes';
 import StockAlert from '../components/StockAlert';
 import Compchta from '../components/Compchta';
+import { useEffect } from 'react';
 import BarChart from '../components/BarChart';
 const CDashboard = () => {
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    document.title = 'Sangrah | Dashboard';
+  }, [])
   const chartData = {
     labels: ['Product A', 'Product B', 'Product C'],
     datasets: [
@@ -26,12 +31,12 @@ const CDashboard = () => {
   const name = "Prices";
   return (
     <div>
-    <br></br>
-      <UpperBoxes/>
+      <br></br>
+      <UpperBoxes />
       <BarChart data={chartData} name={name} />
-      <StockAlert/>
-      <Compchta/>
-    </div> 
+      <StockAlert />
+      <Compchta />
+    </div>
   )
 }
 

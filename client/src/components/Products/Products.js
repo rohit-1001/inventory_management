@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -8,7 +8,6 @@ import Card from "../UI/Card";
 import "./Products.css";
 import ProductTable from "./ProductTable";
 import UpdateStockPopUp from "../UpdateStockPopUp";
-import { useState } from "react";
 import { TextField, Button } from "@mui/material";
 import axios from "axios";
 import { createRoot } from 'react-dom/client';
@@ -22,6 +21,8 @@ import Divider from "@mui/material/Divider";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Slide from "@mui/material/Slide";
+
+
 const rows = [
   { id: 1, date: "2019-09-09", vendor: "Jon", productName: "Shampoo" },
   { id: 2, date: "2020-03-15", vendor: "Alice", productName: "Soap" },
@@ -44,6 +45,10 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const Products = (props) => {
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    document.title = 'Sangrah | Products';
+  }, [])
   // ======================================================
   const [isVisible, setIsVisible] = useState(false);
   const [currInput, setCurrInput] = useState("");
@@ -158,9 +163,7 @@ const Products = (props) => {
     e.preventDefault();
     if (props.items.role === "vendor") {
       try {
-        const res = await axios.post("/addproducts_c", product);
-        console.log("res.status : ", res.status);
-        console.log("res.message : ", res.message);
+        const res = await axios.post("/addproducts_v", product);
 
         if (res.status === 201) {
           window.alert(res.data.message);
@@ -185,9 +188,7 @@ const Products = (props) => {
       }
     } else if (props.items.role === "company") {
       try {
-        const res = await axios.post("/addproducts_v", product);
-        console.log("res.status : ", res.status);
-        console.log("res.message : ", res.message);
+        const res = await axios.post("/addproducts_c", product);
 
         if (res.status === 201) {
           window.alert(res.data.message);
@@ -211,6 +212,7 @@ const Products = (props) => {
         alert("Internal server error");
       }
     }
+    getAllProducts();
   };
 
   return (

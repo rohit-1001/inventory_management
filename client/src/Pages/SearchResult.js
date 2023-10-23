@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
+import axios from 'axios';
 import SearchIcon from '@mui/icons-material/Search';
 import { Card, CardContent, CardMedia, Typography, Container, Grid } from '@mui/material';
 import { makeStyles } from '@mui/styles';
@@ -14,7 +15,6 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
-import axios from 'axios';
 const useStyles = makeStyles((theme) => ({
     card: {
         maxWidth: 345,
@@ -23,12 +23,10 @@ const useStyles = makeStyles((theme) => ({
         height: 140,
     },
 }));
-
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
-
-const Marketplace = () => {
+const SearchResult = () => {
     useEffect(() => {
         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
         document.title = 'Sangrah | Marketplace';
@@ -40,8 +38,6 @@ const Marketplace = () => {
         'rgba(219, 196, 240, 0.5)',
         'rgba(255, 244, 210, 0.5)',
     ];
-
-    const [search, setSearch] = useState('');
     const classes = useStyles();
     const [currcompany, setcurrcompany] = useState('undefined');
     const [open, setOpen] = React.useState(false);
@@ -51,7 +47,11 @@ const Marketplace = () => {
     const [selectedProductPrice, setSelectedProductPrice] = useState('NaN');
     const [selectedProductQuantity, setSelectedProductQuantity] = useState('NaN');
     const [selectedProduct, setSelectedProduct] = useState('NaN');
-
+    const [search, setSearch] = useState('');
+    const handleSearch = (e) => {
+        e.preventDefault();
+        setSearch(e.target.value);
+    }
     useEffect(() => {
         // Initialize the previousColor as an invalid color to start
         let previousColor = null;
@@ -62,15 +62,6 @@ const Marketplace = () => {
         setCardColors(colors);
     }, [companies]);
 
-    useEffect(() => {
-        axios.get('http://localhost:8000/allcompanies').then((res) => {
-            console.log(res.data);
-            setCompanies(res.data);
-        }).catch((err) => {
-            console.log(err);
-        })
-    }, []);
-    
     const handleProductSelect = (e) => {
         const selectedProduct = e.target.value;
         const product = currcompany.products.find((p) => p.name === selectedProduct);
@@ -87,9 +78,7 @@ const Marketplace = () => {
         const selectedQuantity = e.target.value;
         setSelectedProductQuantity(selectedQuantity);
     }
-    // useEffect(() => {
-    //     console.log("SET COMPANIES", companies)
-    // }, [companies])
+
     const addProduct = (product, quantity, totalPrice) => {
         setSelectedProducts([...selectedProducts, { product, quantity, totalPrice }]);
     };
@@ -116,10 +105,32 @@ const Marketplace = () => {
         setSelectedProductQuantity('NaN');
     };
 
-    const handleSearch = (e) => {
-        e.preventDefault();
-        setSearch(e.target.value);
+
+    const getFilteredCompanies = async (det) => {
+        console.log("Inside getFilteredCompanies")
+        const search = det;
+        const endpoint = `http://localhost:8000/getFilteredCompanies`;
+        const payload = {
+            search: search,
+        }
+        console.log("Payload : ", payload)
+        try {
+            await axios
+                .post(endpoint, payload)
+                .then((response) => {
+                    console.log("Response Data: ", response.data)
+                    setCompanies(response.data);
+                })
+        } catch (err) {
+            console.log(err);
+        }
     }
+
+    useEffect(() => {
+        const searchquery = window.location.href.split(":")[3];
+        console.log("Search Query : ", searchquery);
+        getFilteredCompanies(searchquery);
+    }, [])
     return (
         <div>
             <form style={{
@@ -190,6 +201,142 @@ const Marketplace = () => {
                     ))}
                 </Grid>
             </Container>
+
+            {/* <div>
+                <Dialog
+                    fullScreen
+                    open={open}
+                    onClose={handleClose}
+                    TransitionComponent={Transition}
+                >
+                    <AppBar sx={{ position: 'relative' }}>
+                        <Toolbar>
+                            <IconButton
+                                edge="start"
+                                color="inherit"
+                                onClick={handleClose}
+                                aria-label="close"
+                            >
+                                <CloseIcon onClick={
+                                    () => {
+                                        handleClose();
+                                        setcurrcompany('undefined');
+                                        setSelectedProducts([]);
+                                    }
+                                } />
+                            </IconButton>
+                            <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+                                Order Details
+                            </Typography>
+                            <Button autoFocus color="inherit" onClick={handleClose}>
+                                Order
+                            </Button>
+                        </Toolbar>
+                    </AppBar>
+                    <List>
+                        <ListItem>
+                            <ListItemText primary="Company Name" secondary={currcompany.name} />
+                        </ListItem>
+                        <Divider />
+                        <ListItem>
+                            <ListItemText primary="Company Email" secondary={currcompany.email} />
+                        </ListItem>
+                        <Divider />
+                        {selectedProducts.length === 0 ? <ListItemText primary="No Products Selected" style={{
+                            textAlign: 'left',
+                            marginLeft: '1rem',
+                            fontSize: '1.5rem',
+                        }} /> : <><List>
+                            <ListItemText primary="Products Selected" style={{
+                                textAlign: 'left',
+                                marginLeft: '1rem',
+                                fontSize: '1.5rem',
+                            }} />
+
+                            {selectedProducts.map((item, index) => (
+                                <div key={index}>
+                                    <ListItem>
+                                        <ListItemText primary={`Product Name: ${item.product}`} secondary={`Quantity: ${item.quantity}`} />
+                                        <IconButton
+                                            edge="end"
+                                            color="inherit"
+                                            onClick={() => {
+                                                // Remove the selected product
+                                                const updatedProducts = [...selectedProducts];
+                                                updatedProducts.splice(index, 1);
+                                                setSelectedProducts(updatedProducts);
+                                            }}
+                                        >
+                                            <CloseIcon />
+                                        </IconButton>
+                                    </ListItem>
+                                    <Divider />
+                                </div>
+                            ))}
+                        </List></>}
+
+                        <Divider />
+                        <div style={{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            justifyContent: 'space-around',
+                            alignItems: 'center',
+                            width: '100%',
+                            backgroundColor: '#f5f5f5',
+                        }}>
+                            <div style={{
+                                // backgroundColor: '#f5f5f5',
+                                width: '400px',
+                            }}>
+                                <ListItem style={{
+                                    width: '100%',
+                                }}>
+                                    <ListItemText primary="Select Product" />
+                                    {currcompany === 'undefined' ? <></> : <select>
+                                        {currcompany.products.map((product, index) => (
+                                            <option key={index} value={product.name}>
+                                                {product.name}
+                                            </option>
+                                        ))}
+                                    </select>}
+                                </ListItem>
+                            </div>
+                            <Divider />
+                            <div style={{
+                                // backgroundColor: '#f5f5f5',
+                                width: '400px',
+                            }}>
+                                <ListItem style={{
+                                    width: '100%',
+                                }}>
+                                    <ListItemText primary="Quantity" />
+                                    <input type="number" min="1" id="quan" style={{
+                                        width: '100px',
+                                    }} />
+                                </ListItem>
+                            </div>
+                            <Divider />
+                            <ListItem>
+                                <Button
+                                    variant="outlined"
+                                    onClick={() => {
+                                        // Get the selected product and quantity
+                                        const selectedProduct = document.querySelector('select').value;
+                                        const quantity = parseInt(document.querySelector('#quan').value);
+
+                                        // Add the product to the order
+                                        addProduct(selectedProduct, quantity);
+                                        document.querySelector('#quan').value = '';
+                                    }}
+                                >
+                                    Add to Order
+                                </Button>
+                            </ListItem>
+                        </div>
+                    </List>
+
+                </Dialog>
+            </div> */}
 
             <div>
                 <Dialog
@@ -371,4 +518,4 @@ const Marketplace = () => {
     )
 }
 
-export default Marketplace
+export default SearchResult

@@ -1,5 +1,6 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import DonutChart from "./DonutChart";
+import LineChart from "./LineChart";
 import image1 from '../assets/image_2.png'
 import axios from "axios";
 import { createRoot } from 'react-dom/client';
@@ -80,7 +81,7 @@ const Admin = () => {
 
   return (
     <>
-    <br></br>
+      <br></br>
       <div className="container" style={{ "width": "100%", "margin": "auto" }}>
         <div className="row justify-content-center"> {/* Added justify-content-center class */}
           <div className="col-md-5">
@@ -160,16 +161,29 @@ const Admin = () => {
       <br></br>
       <br></br>
       <br></br>
-      <div className="donutchart" style={{
-        // border: "2px solid red",
-        alignItems: "center",
+      <div style={{
+        display: "flex",
         justifyContent: "center",
-        width: "fit-content",
-        margin: "0 auto"
+        alignItems: "center",
       }}>
-        <DonutChart data={data} />
+        <div className="donutchart" style={{
+          // border: "2px solid red",
+          flex: "1",
+          maxWidth: "50%",
+          marginRight: "30px", // Add margin to create space
+        }}>
+          <DonutChart data={data} />
+        </div>
+        <div style={{
+          // border: "2px solid red",
+          flex: "1",
+          maxWidth: "50%",
+        }}>
+          <LineChart />
+        </div>
       </div>
-      
+
+
       <br></br>
       <br></br>
       {/* {isVisible && p && <ViewProductsPopup details={{ products:p.data, setIsVisible:setIsVisible }} />} */}

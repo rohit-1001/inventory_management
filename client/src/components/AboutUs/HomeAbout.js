@@ -31,72 +31,69 @@ import whatisdownimg from "./images/whatisdownimg.png"
 import founders from "./images/founders.png"
 import homeimg1 from "./images/homeimg1.png"
 import Footer from "../../components/Footer"
-
+import { useEffect } from 'react'
 export default function HomeAbout() {
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    document.title = 'Sangrah | About';
+  }, [])
   return (
     <>
-    <div>
-      <div className="sec1" id='aboutsec1'>
-        <div className="rightsec">
-          <img src={leftimg} alt="" id="firstimg" />
-        </div>
-        <div className="leftsec">
-          <h2>Who is Examix?</h2>
-          <div className="seewhy">We make online proctoring simple, easy, and human.</div>
-          <div className="seewhyinfo">There’s a notion that online proctoring services are simply out to catch students who are cheating on tests. But our mission is much bigger than that. We know there’s a better way to protect academic integrity. Our approach to online proctoring is to do what’s good for the institution and good for the learner.
-            <br />That’s why we’ve dedicated ourselves to taking the technical online proctoring experience and making it human. The result is a solution that brings integrity, humanity, confidence, and positive outcomes to the proctored testing experience.</div>
-        </div>
-
-      </div>
       <div>
-                <img src={homeimg1} alt="" className='footerimg'/>
-            </div>
-      <div className="sec1" id='aboutsec2'>
-
-        <div className="leftsec">
-          <h2>What is Examix?</h2>
-          {/* <div className="seewhy">We make online proctoring simple, easy, and human.</div> */}
-          <div className="seewhyinfo" id='absec2left'>
-          Examix is an online platform that allows teachers to create multiple-choice question (MCQ) tests for
-their students. Our platform includes a user-friendly exam creation tool and a proctoring feature
-that ensures academic integrity. Our detailed analytics provide teachers with insights into students&#39;
-performance, helping them to assess their students&#39; knowledge, identify areas of improvement, and
-track their progress. Examix is a comprehensive solution that helps teachers to create, proctor, and
-evaluate MCQ tests in a secure and efficient way.
+        <div className="sec1" id='aboutsec1'>
+          <div className="rightsec">
+            <img src={leftimg} alt="" id="firstimg" />
           </div>
+          <div className="leftsec">
+            <h2>Who is Sangrah?</h2>
+            <div className="seewhy">We simplify inventory management, making it efficient and hassle-free.</div>
+            <div className="seewhyinfo">There’s a belief that inventory management solutions are simply there to track products and materials. But our mission is much broader than that. We understand that there's a better way to handle inventory.
+              Our approach to inventory management is to do what’s good for businesses and their growth.
+              <br />That's why we've dedicated ourselves to simplifying the inventory management process, making it efficient and straightforward. The result is a solution that brings organization, efficiency, confidence, and positive outcomes to the inventory management experience.</div>
+          </div>
+
         </div>
-        <div className="rightsec" id='absec2right'>
-          <img src={whatis} alt="" id="thirdimg" />
+        <div>
+          <img src={homeimg1} alt="" className='footerimg' />
+        </div>
+        <div className="sec1" id='aboutsec2'>
+
+          <div className="leftsec">
+            <h2>What is Sangrah?</h2>
+            {/* <div className="seewhy">We make online proctoring simple, easy, and human.</div> */}
+            <div className="seewhyinfo" id='absec2left'>
+              Sangrah is an innovative platform designed to help businesses efficiently manage their inventory. Our platform provides intuitive inventory management tools, allowing you to organize your products, set stock levels, and monitor restocking requirements with ease. Detailed reports and analytics offer valuable insights into inventory trends, enabling data-driven decision-making for your business. Sangrah is a comprehensive solution that empowers businesses to streamline and optimize their inventory management securely and efficiently.
+            </div>
+          </div>
+          <div className="rightsec" id='absec2right'>
+            <img src={whatis} alt="" id="thirdimg" />
+          </div>
+
+        </div>
+        <div>
+          <img src={homeimg1} alt="" className='footerimg' style={{ transform: "rotateX(180deg)" }} />
         </div>
 
-      </div>
-      <div>
-                <img src={homeimg1} alt="" className='footerimg' style={{transform: "rotateX(180deg)"}}/>
+        <div className="outerhead" id='ourstoryhead'>
+          <div id='heading1'>Our Story</div>
+        </div>
+        <div className="sec1" id='ourstory'>
+          <div className="rightsec">
+            <img src={founders} alt="" id="firstimg" />
+          </div>
+          <div className="leftsec" id='founders'>
+            <h2>Our Founders</h2>
+            <div className="seewhyinfo">
+              Sangrah was founded by four dedicated individuals: Akash, Adwait, Mahesh, and Rohit. As students, they recognized the complexities of managing inventory and identified the need for a platform that could simplify and optimize the process. Despite facing challenges and having limited experience in inventory management software, they wholeheartedly committed to creating a user-friendly and efficient platform.
+              Their dedication to innovation, business, and customer satisfaction continues to drive Sangrah's mission. They aspire to keep refining and enhancing the platform to meet the evolving needs of businesses in the future.
             </div>
 
-      <div className="outerhead" id='ourstoryhead'>
-        <div id='heading1'>Our Story</div>
-      </div>
-      <div className="sec1" id='ourstory'>
-        <div className="rightsec">
-          <img src={founders} alt="" id="firstimg" />
-        </div>
-        <div className="leftsec" id='founders'>
-          <h2>Our Founders</h2>
-          {/* <div className="seewhy">We make online proctoring simple, easy, and human.</div> */}
-          <div className="seewhyinfo">Examix was created by three passionate students Akash, Mahesh and Rohit. As students, they
-recognized the challenges of traditional paper-based exams and saw the need for a platform that
-would allow teachers to create and proctor multiple-choice question (MCQ) tests online in a secure
-and reliable way. Despite having limited resources and no prior experience in software development,
-they dedicated themselves to creating a functional and user-friendly platform. Their commitment to
-innovation, education, and integrity remains at the core of Examix, and they hope to continue
-refining and improving the platform in the future.</div>
-        </div>
+          </div>
 
 
+        </div>
       </div>
-    </div>
-    <Footer />
+      <Footer />
     </>
   )
 }

@@ -82,85 +82,50 @@ const Admin = () => {
   return (
     <>
       <br></br>
-      <div className="container" style={{ "width": "100%", "margin": "auto" }}>
-        <div className="row justify-content-center"> {/* Added justify-content-center class */}
-          <div className="col-md-5">
-            <Box sx={{ border: '1px solid black', padding: '10px' }}>
-              <div>
-                <div>
-                  Number of vendors
-                </div>
-                <div className='d-flex align-items-center'>
-                  <div>
-                    <img src={image1} alt="Image" className="img-fluid" />
-                  </div>
-                  <div className="ml-2">
-                    {data.nvendors}
-                  </div>
-                </div>
+      <div className="container-fluid pt-4 px-4">
+        <div className="row g-4">
+          <div className="col-sm-6 col-xl-3">
+            <div className="bg-light rounded d-flex align-items-center justify-content-between p-4">
+              <i className="fa fa-chart-line fa-3x text-primary" />
+              <div className="ms-3">
+                <p className="mb-2">Vendor Count</p>
+                <h6 className="mb-0">{data.nvendors}</h6>
               </div>
-            </Box>
+            </div>
           </div>
-          <div className="col-md-5">
-            <Box sx={{ border: '1px solid black', padding: '10px' }}>
-              <div>
-                <div>
-                  Number of Companies
-                </div>
-                <div className='d-flex align-items-center'>
-                  <div>
-                    <img src={image1} alt="Image" className="img-fluid" />
-                  </div>
-                  <div className="ml-2">
-                    {data.ncompany}
-                  </div>
-                </div>
+          <div className="col-sm-6 col-xl-3">
+            <div className="bg-light rounded d-flex align-items-center justify-content-between p-4">
+              <i className="fa fa-chart-bar fa-3x text-primary" />
+              <div className="ms-3">
+                <p className="mb-2">Companies  Count</p>
+                <h6 className="mb-0">{data.ncompany}</h6>
               </div>
-            </Box>
+            </div>
           </div>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <div className="col-md-5">
-            <Box sx={{ border: '1px solid black', padding: '10px' }}>
-              <div>
-                <div>
-                  Total Sales
-                </div>
-                <div className='d-flex align-items-center'>
-                  <div>
-                    <img src={image1} alt="Image" className="img-fluid" />
-                  </div>
-                  <div className="ml-2">
-                    {data.tsales}
-                  </div>
-                </div>
+          <div className="col-sm-6 col-xl-3">
+            <div className="bg-light rounded d-flex align-items-center justify-content-between p-4">
+              <i className="fa fa-chart-area fa-3x text-primary" />
+              <div className="ms-3">
+                <p className="mb-2">Today Sales</p>
+                <h6 className="mb-0">{data.tsales}</h6>
               </div>
-            </Box>
+            </div>
           </div>
-          <div className="col-md-5">
-            <Box sx={{ border: '1px solid black', padding: '10px' }}>
-              <div>
-                <div>
-                  Total Products
-                </div>
-                <div className='d-flex align-items-center'>
-                  <div>
-                    <img src={image1} alt="Image" className="img-fluid" />
-                  </div>
-                  <div className="ml-2">
-                    {data.tprods}
-                  </div>
-                </div>
+          <div className="col-sm-6 col-xl-3">
+            <div className="bg-light rounded d-flex align-items-center justify-content-between p-4">
+              <i className="fa fa-chart-pie fa-3x text-primary" />
+              <div className="ms-3">
+                <p className="mb-2">Total Products</p>
+                <h6 className="mb-0">{data.tprods}</h6>
               </div>
-            </Box>
+            </div>
           </div>
         </div>
       </div>
       <br></br>
       <br></br>
       <br></br>
+
       <div style={{
         display: "flex",
         justifyContent: "center",
@@ -342,3 +307,80 @@ const Admin = () => {
 };
 
 export default Admin;
+// Backup of Boxes 
+{/* <div className="container" style={{ "width": "100%", "margin": "auto" }}>
+        <div className="row justify-content-center"> 
+          <div className="col-md-5">
+            <Box sx={{ border: '1px solid black', padding: '10px' }}>
+              <div>
+                <div>
+                  Number of vendors
+                </div>
+                <div className='d-flex align-items-center'>
+                  <div>
+                    <img src={image1} alt="Image" className="img-fluid" />
+                  </div>
+                  <div className="ml-2">
+                    {data.nvendors}
+                  </div>
+                </div>
+              </div>
+            </Box>
+          </div>
+          <div className="col-md-5">
+            <Box sx={{ border: '1px solid black', padding: '10px' }}>
+              <div>
+                <div>
+                  Number of Companies
+                </div>
+                <div className='d-flex align-items-center'>
+                  <div>
+                    <img src={image1} alt="Image" className="img-fluid" />
+                  </div>
+                  <div className="ml-2">
+                    {data.ncompany}
+                  </div>
+                </div>
+              </div>
+            </Box>
+          </div>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <div className="col-md-5">
+            <Box sx={{ border: '1px solid black', padding: '10px' }}>
+              <div>
+                <div>
+                  Total Sales
+                </div>
+                <div className='d-flex align-items-center'>
+                  <div>
+                    <img src={image1} alt="Image" className="img-fluid" />
+                  </div>
+                  <div className="ml-2">
+                    {data.tsales}
+                  </div>
+                </div>
+              </div>
+            </Box>
+          </div>
+          <div className="col-md-5">
+            <Box sx={{ border: '1px solid black', padding: '10px' }}>
+              <div>
+                <div>
+                  Total Products
+                </div>
+                <div className='d-flex align-items-center'>
+                  <div>
+                    <img src={image1} alt="Image" className="img-fluid" />
+                  </div>
+                  <div className="ml-2">
+                    {data.tprods}
+                  </div>
+                </div>
+              </div>
+            </Box>
+          </div>
+        </div>
+      </div> */}

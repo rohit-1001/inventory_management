@@ -8,9 +8,9 @@ const dummyData = {
       label: 'Example Data',
       fill: false,
       lineTension: 0.1,
-      backgroundColor: 'rgba(255, 99, 71, 0.4)', // Red
-      borderColor: 'rgba(255, 99, 71, 1)', // Red
-      pointBorderColor: 'rgba(255, 99, 71, 1)', // Red
+      backgroundColor: 'rgba(30, 144, 255, 0.4)', // A shade of blue
+      borderColor: 'rgba(30, 144, 255, 1)', // A shade of blue
+      pointBorderColor: 'rgba(30, 144, 255, 1)', // A shade of blue
       borderCapStyle: 'butt',
       borderDash: [],
       borderDashOffset: 0.0,
@@ -19,7 +19,7 @@ const dummyData = {
       pointBackgroundColor: '#fff',
       pointBorderWidth: 1,
       pointHoverRadius: 5,
-      pointHoverBackgroundColor: 'rgba(255, 99, 71, 1)', // Red
+      pointHoverBackgroundColor: 'rgba(30, 144, 255, 1)', // A shade of blue
       pointHoverBorderColor: 'rgba(220,220,220,1)',
       pointHoverBorderWidth: 2,
       pointRadius: 1,

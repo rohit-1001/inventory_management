@@ -48,9 +48,10 @@ const Marketplace = () => {
     const [cardColors, setCardColors] = useState([]);
     const [selectedProducts, setSelectedProducts] = useState([]);
     const [companies, setCompanies] = useState([]);
-    const [selectedProductPrice, setSelectedProductPrice] = useState('NaN');
-    const [selectedProductQuantity, setSelectedProductQuantity] = useState('NaN');
+    const [selectedProductPrice, setSelectedProductPrice] = useState(0);
+    const [selectedProductQuantity, setSelectedProductQuantity] = useState(0);
     const [selectedProduct, setSelectedProduct] = useState('NaN');
+    const [selectedProductPid, setSelectedProductPid] = useState('NaN');
 
     useEffect(() => {
         // Initialize the previousColor as an invalid color to start
@@ -63,7 +64,7 @@ const Marketplace = () => {
     }, [companies]);
 
     useEffect(() => {
-        axios.get('http://localhost:8000/allcompanies').then((res) => {
+        axios.get('/allcompanies').then((res) => {
             console.log(res.data);
             setCompanies(res.data);
         }).catch((err) => {
@@ -75,11 +76,13 @@ const Marketplace = () => {
         const selectedProduct = e.target.value;
         const product = currcompany.products.find((p) => p.name === selectedProduct);
         if (product) {
-            setSelectedProduct(product.name);
+            setSelectedProduct(product.name,);
+            setSelectedProductPid(product.pid);
             setSelectedProductPrice(product.s_price);
         } else {
             setSelectedProduct('NaN');
-            setSelectedProductPrice('');
+            setSelectedProductPid('NaN');
+            setSelectedProductPrice(0);
         }
     };
 
@@ -90,8 +93,8 @@ const Marketplace = () => {
     // useEffect(() => {
     //     console.log("SET COMPANIES", companies)
     // }, [companies])
-    const addProduct = (product, quantity, totalPrice) => {
-        setSelectedProducts([...selectedProducts, { product, quantity, totalPrice }]);
+    const addProduct = (name, quantity, totalPrice, pid) => {
+        setSelectedProducts([...selectedProducts, { name, quantity, totalPrice, pid }]);
     };
     function getRandomColor(previousColor) {
         let newColor;
@@ -105,15 +108,34 @@ const Marketplace = () => {
         setOpen(true);
     };
 
-    const handleClose = () => {
+    const handleClose = async() => {
+        if(selectedProducts.length!=0){
+            try {
+                const c = await axios.post('/request', {
+                    c_email:currcompany.email,
+                    product:selectedProducts
+                })
+                if(c.status===200){
+                    alert(c.data.msg)
+                }
+                else if(c.status===422){
+                    alert(c.data.error)
+                }
+            } catch (error) {
+                if(error.response){
+                    alert(error.response.data.error)
+                }
+            }
+        }
         setOpen(false);
         console.log("Selected Products", selectedProducts)
         console.log("Selected Company", currcompany)
         setcurrcompany('undefined');
         setSelectedProducts([]);
-        setSelectedProductPrice('NaN');
+        setSelectedProductPrice(0);
         setSelectedProduct('NaN');
-        setSelectedProductQuantity('NaN');
+        setSelectedProductPid('NaN');
+        setSelectedProductQuantity(0);
     };
 
     const handleSearch = (e) => {
@@ -245,7 +267,7 @@ const Marketplace = () => {
                             {selectedProducts.map((item, index) => (
                                 <div key={index}>
                                     <ListItem>
-                                        <ListItemText primary={`Product Name: ${item.product}`} secondary={`Quantity: ${item.quantity}   Total Price: ₹ ${item.totalPrice}`} />
+                                        <ListItemText  primary={`PID: ${item.pid}`} secondary={`Product Name: ${item.name}   Quantity: ${item.quantity}   Total Price: ₹ ${item.totalPrice}`} />
                                         <IconButton
                                             edge="end"
                                             color="inherit"
@@ -285,7 +307,7 @@ const Marketplace = () => {
                                         <select
                                             value={selectedProduct}
                                             onChange={handleProductSelect}>
-                                            <option value={selectedProduct} disabled hidden>
+                                            <option value={selectedProduct} disabled hidden >
                                                 {selectedProduct}
                                             </option>
                                             {currcompany.products.map((product, index) => (
@@ -293,7 +315,8 @@ const Marketplace = () => {
                                                     {product.name}
                                                 </option>
                                             ))}
-                                        </select>}
+                                        </select>
+                                        }
                                 </ListItem>
                             </div>
                             <Divider />
@@ -351,12 +374,20 @@ const Marketplace = () => {
                                         // Get the selected product and quantity
                                         const selectedProduct = document.querySelector('select').value;
                                         const quantity = parseInt(document.querySelector('#quan').value);
-
-                                        // Add the product to the order
-                                        addProduct(selectedProduct, quantity, selectedProductPrice * quantity);
-                                        setSelectedProduct('NaN');
-                                        setSelectedProductPrice('NaN');
-                                        document.querySelector('#quan').value = '';
+                                        if(selectedProduct=='NaN'){
+                                            alert("Product not selected")
+                                        }
+                                        else if(quantity===0){
+                                            alert("Product quantity not mentioned")
+                                        }
+                                        else{
+                                            // Add the product to the order
+                                            addProduct(selectedProduct, quantity, selectedProductPrice * quantity, selectedProductPid);
+                                            setSelectedProduct('NaN');
+                                            setSelectedProductPid('NaN');
+                                            setSelectedProductPrice(0);
+                                            document.querySelector('#quan').value = 0;
+                                        }
                                     }}
                                 >
                                     Add to Order

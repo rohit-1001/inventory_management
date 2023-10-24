@@ -403,7 +403,6 @@ router.get('/getallproducts_c', async (req, res) => {
 router.get('/allcompanies', async (req, res) => {
     try {
         // Use the Company model to find all companies in the database
-        console.log("Inside all companies");
         const companies = await Company.find();
         if (!companies || companies.length === 0) {
             return res.status(404).json({ message: 'No companies found' });
@@ -421,17 +420,32 @@ router.get('/allcompanies', async (req, res) => {
 // order_request
 // router.post('/request',vendorAuthenticate,  async (req, res) => {
 router.post('/request', async (req, res) => {
-    console.log("Request Body: ", req.body);
     const product = req.body.product;
     const c_email = req.body.c_email;
-    const v_email = req.body.v_email;
+    const v_email = req.cookies.inv_man.email;
 
-    if (!product || !c_email || !v_email) {
-        res.status(422).json({ msg: "Invalid request made" });
+    const products = [];
+    product.forEach(pro => {
+        const name = pro.name;
+        const quantity = pro.quantity;
+        const pid = pro.pid;
+
+        products.push({
+        name: name,
+        quantity: quantity,
+        pid: pid,
+        });
+    });
+    // for (const pro of products) {
+        
+    // }
+
+    if (!products || !c_email || !v_email) {
+        res.status(422).json({ error: "Invalid request made" });
     }
 
     try {
-        const venreq = new Order({ c_email, v_email, product });
+        const venreq = new Order({ c_email, v_email, products });
         await venreq.save();
         res.status(200).json({ msg: "Request sent successfully" });
 

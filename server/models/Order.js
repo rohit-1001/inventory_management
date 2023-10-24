@@ -9,7 +9,7 @@ const orderSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    products: 
+    products:[ 
         {
             name:{
                 type:String,
@@ -23,7 +23,8 @@ const orderSchema = new mongoose.Schema({
                 type:String,
                 required: true
             }
-        },
+        }
+    ],
     status:{
         type: String,
         default: "Requested",

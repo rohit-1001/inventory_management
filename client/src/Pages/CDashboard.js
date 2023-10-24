@@ -24,14 +24,30 @@ const CDashboard = () => {
     ],
   };
   const name = "Prices";
+  const parentContainerStyle = {
+    display: "flex",
+    justifyContent: "space-between",
+    margin: "0 10rem",
+  };
+
+  const chartContainerStyle = {
+    margin: "auto",
+    padding: "40px  0",
+  };
   return (
     <div>
-    <br></br>
-      <UpperBoxes/>
-      <BarChart data={chartData} name={name} />
-      <StockAlert/>
-      <Compchta/>
-    </div> 
+      <br></br>
+      <div style={parentContainerStyle}>
+        <div>
+          <UpperBoxes />
+        </div>
+        <div style={chartContainerStyle}>
+          <BarChart data={chartData} name={name} />
+        </div>
+      </div>
+      <StockAlert />
+      <Compchta />
+    </div>
   )
 }
 

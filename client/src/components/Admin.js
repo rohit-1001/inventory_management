@@ -73,8 +73,8 @@ const Admin = () => {
   };
 
   const data = {
-    nvendors: 200,
-    ncompany: 100,
+    nvendors: vendors ? vendors.length : 0,
+    ncompany: companies ? companies.length : 0,
     tsales: 1000,
     tprods: 5000,
   };

@@ -8,11 +8,14 @@ function CProfile() {
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     document.title = 'Sangrah | Profile';
-  }, [])
+  }, []);
+  
   const [companyInfo, setCompanyInfo] = useState({
     name: 'Sample Company',
     email: 'sample@email.com',
     contactNumber: '+1234567890',
+    address: '123 Main St, City, Country', // Add address
+    companyGenre: 'Food', // Add company genre
     logo: image1,
     password: '123',
   });
@@ -51,7 +54,8 @@ function CProfile() {
               <Typography variant="h5">{companyInfo.name}</Typography>
               <Typography variant="subtitle1">Email: {companyInfo.email}</Typography>
               <Typography variant="subtitle1">Contact Number: {companyInfo.contactNumber}</Typography>
-              <Typography variant="subtitle1">Password: {companyInfo.password}</Typography>
+              <Typography variant="subtitle1">Address: {companyInfo.address}</Typography> {/* Display Address */}
+              <Typography variant="subtitle1">Company Genre: {companyInfo.companyGenre}</Typography> {/* Display Company Genre */}
               <Button variant="contained" color="primary" onClick={handleOpenModal} startIcon={<EditIcon />}>
                 Edit
               </Button>
@@ -90,6 +94,7 @@ function CProfile() {
               fullWidth
               value={companyInfo.email}
               onChange={(e) => setCompanyInfo({ ...companyInfo, email: e.target.value })}
+              disabled
             />
             <br></br>
             <br></br>
@@ -100,6 +105,21 @@ function CProfile() {
               onChange={(e) => setCompanyInfo({ ...companyInfo, contactNumber: e.target.value })}
             />
             <br></br>
+            <br></br>
+            <TextField
+              label="Address"
+              fullWidth
+              value={companyInfo.address}
+              onChange={(e) => setCompanyInfo({ ...companyInfo, address: e.target.value })}
+            />
+            <br></br>
+            <br></br>
+            <TextField
+              label="Company Genre"
+              fullWidth
+              value={companyInfo.companyGenre}
+              onChange={(e) => setCompanyInfo({ ...companyInfo, companyGenre: e.target.value })}
+            />
             <br></br>
             <br></br>
             <Button variant="contained" color="primary" onClick={handleSubmit}>

@@ -47,10 +47,11 @@ const StockAlert = () => {
     datasets: [
       {
         data: sampleData.map(item => item.quantity),
-        backgroundColor: ['blue', 'green', 'red', 'yellow'], // Colors for each segment (optional)
+        backgroundColor: ['blue', 'lightblue', 'deepskyblue', 'dodgerblue', 'royalblue'],
       },
     ],
   };
+  
   
   const [chartData, setChartData] = useState(initialChartData);
   

@@ -15,19 +15,19 @@ const CDashboard = () => {
       {
         label: 'Selling Price',
         data: [50, 60, 40],
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        borderColor: 'rgba(75, 192, 192, 1)',
+        backgroundColor: 'rgba(54, 162, 235, 0.2)', // A shade of blue
+        borderColor: 'rgba(54, 162, 235, 1)', // A shade of blue
         borderWidth: 1,
       },
       {
         label: 'Manufacturing Price',
         data: [30, 40, 25],
-        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-        borderColor: 'rgba(255, 99, 132, 1)',
+        backgroundColor: 'rgba(75, 192, 192, 0.2)', // Another shade of blue
+        borderColor: 'rgba(75, 192, 192, 1)', // Another shade of blue
         borderWidth: 1,
       },
     ],
-  };
+  };  
   const name = "Prices";
   const parentContainerStyle = {
     display: "flex",

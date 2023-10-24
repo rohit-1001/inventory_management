@@ -40,7 +40,7 @@ const Compchta = () => {
         datasets: [
             {
                 data: sampleData.map(item => item.quantity),
-                backgroundColor: ['blue', 'green', 'red', 'yellow','purple'],
+                backgroundColor: ['blue', 'lightblue', 'deepskyblue', 'dodgerblue', 'royalblue'],
             },
         ],
     };

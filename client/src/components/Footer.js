@@ -3,12 +3,12 @@ import "./FooterStyle.css";
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import CallOutlinedIcon from '@mui/icons-material/CallOutlined';
 import footerimg from "../assets/footerdiv.png"
-import { NavLink } from 'react-router-dom'; 
+import { NavLink } from 'react-router-dom';
 const Footer = () => {
     return (
-        <>  
+        <>
             <div>
-                <img src={footerimg} alt="" className='footerimg'/>
+                <img src={footerimg} alt="" className='footerimg' />
             </div>
             <div className="mainFooter123">
 
@@ -23,12 +23,12 @@ const Footer = () => {
                             <div className="implinks123">
                                 <p className="linkshead123"><b>IMPORTANT LINKS</b></p>
                                 <ul>
-                                    <li><NavLink to="/" style={({ isActive }) => ({ color: isActive ? 'black' : 'black', })}><p id='footlink123'>Home</p></NavLink></li>
-                                    <li><NavLink to="/app/about" style={({ isActive }) => ({ color: isActive ? 'black' : 'black', })}><p id='footlink123'>About Us</p></NavLink></li>
-                                    <li><NavLink to="/app/features" style={({ isActive }) => ({ color: isActive ? 'black' : 'black', })}><p id='footlink123'>Features</p></NavLink></li>
+                                    <li><NavLink to="/home" style={({ isActive }) => ({ color: isActive ? 'black' : 'black', })}><p id='footlink123'>Home</p></NavLink></li>
+                                    <li><NavLink to="/homeabout" style={({ isActive }) => ({ color: isActive ? 'black' : 'black', })}><p id='footlink123'>About Us</p></NavLink></li>
+                                    <li><NavLink to="/login" style={({ isActive }) => ({ color: isActive ? 'black' : 'black', })}><p id='footlink123'>Log In</p></NavLink></li>
                                 </ul>
                             </div>
-                        {/* </div>
+                            {/* </div>
                         <div className="tab1"> */}
                             <div className="contactDetails123">
                                 <p className="contact1123"><b>CONTACT US</b></p>
@@ -37,7 +37,7 @@ const Footer = () => {
                                         <MailOutlineIcon></MailOutlineIcon>
                                     </div>
                                     <div>
-                                        <a className = "iamemail123" href="mailto: contact@sangrah.com" target="_blank" rel="noreferrer">contact@sangrah.com</a>
+                                        <a className="iamemail123" href="mailto: contact@sangrah.com" target="_blank" rel="noreferrer">contact@sangrah.com</a>
                                     </div>
                                 </div>
                                 <div className="contactemail123">
@@ -45,7 +45,7 @@ const Footer = () => {
                                         <CallOutlinedIcon></CallOutlinedIcon>
                                     </div>
                                     <div>
-                                        <a className = "iamemail123" href="tel: +91-992-034-1878">1234567890</a>
+                                        <a className="iamemail123" href="tel: +91-992-034-1878">1234567890</a>
                                     </div>
                                 </div>
                             </div>

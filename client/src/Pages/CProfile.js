@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Grid, Paper, Typography, Button, Modal, Box, TextField } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import image1 from '../assets/testi1.jpg';
 
 function CProfile() {
   // Sample data for company info
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    document.title = 'Sangrah | Profile';
+  }, [])
   const [companyInfo, setCompanyInfo] = useState({
     name: 'Sample Company',
     email: 'sample@email.com',

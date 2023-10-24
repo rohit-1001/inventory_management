@@ -9,7 +9,12 @@ import testi1 from "../assets/testi1.jpg"
 import testi2 from "../assets/testi2.jpg"
 import testi3 from "../assets/testi3.jpg"
 import Footer from './Footer'
+import { useEffect } from 'react'
 const Home = () => {
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    document.title = 'Sangrah | Home';
+  }, [])
   return (
     <>
       <div className="sec1123">

@@ -2,6 +2,7 @@ import React from "react";
 import Card from "../UI/Card";
 import "./Orders.css";
 import OrderTable from "./OrderTable";
+import { useEffect } from "react";
 
 const rows = [
   { id: 1, date: '2019-09-09', customer: 'Jon', saleschannel: 'Flame cells', count: '30', status: 'success' },
@@ -20,6 +21,10 @@ const rows = [
 
 
 const Orders = () => {
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    document.title = 'Sangrah | Orders';
+  }, [])
   return (
     <div>
       <Card className="expenses">

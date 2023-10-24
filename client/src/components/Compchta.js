@@ -1,4 +1,4 @@
-import {React,useState} from 'react'
+import { React, useState } from 'react'
 import StockPieChart from './StockPieChart';
 import EnhancedTable from './complasttable';
 const Compchta = () => {
@@ -48,11 +48,18 @@ const Compchta = () => {
     const [chartData, setChartData] = useState(initialChartData);
     return (
         <div>
-            <div className="flex" style={{ display: 'flex', flexDirection: 'row', margin: '0rem 8rem'}}>
-                <div className='flex-item'>
+            <div className="flex" style={{ display: 'flex', flexDirection: 'row', margin: "3rem auto", width: "75%", justifyContent: "space-between" }}>
+                <div className='flex-item' style={{
+                    // border: "2px solid black"
+                }}>
                     <EnhancedTable data={sampleData} />
                 </div>
-                <div className='flex-item' >
+                <div className='flex-item' style={{
+                    display: "flex",
+                    // border: "2px solid blue",
+                    justifyContent: "top",
+                    margin: "0 0 0 2em"
+                }}>
                     <StockPieChart chartData={chartData} />
 
                 </div>

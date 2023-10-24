@@ -23,22 +23,22 @@ import Toolbar from "@mui/material/Toolbar";
 import Slide from "@mui/material/Slide";
 
 
-const rows = [
-  { id: 1, date: "2019-09-09", vendor: "Jon", productName: "Shampoo" },
-  { id: 2, date: "2020-03-15", vendor: "Alice", productName: "Soap" },
-  { id: 3, date: "2020-06-22", vendor: "Bob", productName: "Toothpaste" },
-  { id: 4, date: "2020-11-18", vendor: "Emily", productName: "Body Lotion" },
-  { id: 5, date: "2021-02-05", vendor: "David", productName: "Conditioner" },
-  { id: 6, date: "2021-08-30", vendor: "Sophia", productName: "Face Wash" },
-  {
-    id: 7,
-    date: "2022-12-10",
-    vendor: "Olivia",
-    productName: "Hand Sanitizer",
-  },
-  { id: 8, date: "2023-07-25", vendor: "Liam", productName: "Shower Gel" },
-  { id: 9, date: "2023-05-14", vendor: "Emma", productName: "Perfume" },
-];
+// const rows = [
+//   { id: 1, date: "2019-09-09", vendor: "Jon", productName: "Shampoo" },
+//   { id: 2, date: "2020-03-15", vendor: "Alice", productName: "Soap" },
+//   { id: 3, date: "2020-06-22", vendor: "Bob", productName: "Toothpaste" },
+//   { id: 4, date: "2020-11-18", vendor: "Emily", productName: "Body Lotion" },
+//   { id: 5, date: "2021-02-05", vendor: "David", productName: "Conditioner" },
+//   { id: 6, date: "2021-08-30", vendor: "Sophia", productName: "Face Wash" },
+//   {
+//     id: 7,
+//     date: "2022-12-10",
+//     vendor: "Olivia",
+//     productName: "Hand Sanitizer",
+//   },
+//   { id: 8, date: "2023-07-25", vendor: "Liam", productName: "Shower Gel" },
+//   { id: 9, date: "2023-05-14", vendor: "Emma", productName: "Perfume" },
+// ];
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -64,7 +64,13 @@ const Products = (props) => {
   useEffect(() => {
     getAllProducts();
   }, []);
-
+  useEffect(() => {
+    console.log("All Products: ", allProducts);
+  }, [allProducts]);
+  const productsWithId = allProducts.map((product) => ({
+    ...product,
+    id: product._id, // Assigning _id as the id property
+  }));
   const [open, setOpen] = React.useState(false);
   const [openUpdateBox, setOpenUpdateBox] = React.useState(false);
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -97,7 +103,7 @@ const Products = (props) => {
   //     }
   //   }
   // }, [isVisible])
-  
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -135,7 +141,7 @@ const Products = (props) => {
     event.preventDefault();
     searchPro();
   };
-  const onClickUpdate = async(name, quantity, category, pid) => {
+  const onClickUpdate = async (name, quantity, category, pid) => {
     setIsVisible(true);
     try {
       const c = await axios.get("/getallproducts", {
@@ -217,225 +223,225 @@ const Products = (props) => {
 
   return (
     <>
-    <div
-      style={{
-        // border: "2px solid red",
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
       <div
-        className="products"
         style={{
           // border: "2px solid red",
-          margin: "0em auto",
-          marginTop: "2em",
-          padding: "0em",
           display: "flex",
-          justifyContent: "flex-end",
+          flexDirection: "column",
         }}
       >
-        <Button
-          variant="outlined"
-          onClick={handleClickUpdateStock}
+        <div
+          className="products"
           style={{
-            margin: "10px",
+            // border: "2px solid red",
+            margin: "0em auto",
+            marginTop: "2em",
+            padding: "0em",
+            display: "flex",
+            justifyContent: "flex-end",
           }}
-          >
-          🔄 Update Stock
-        </Button>
-        <Button
-          variant="outlined"
-          onClick={handleClickOpen}
-          style={{
-            margin: "10px",
-          }}
-          >
-          + Add Product
-        </Button>
-      </div>
-      <Card className="products">
-        <ProductTable data={rows} />
-      </Card>
-      <div>
-        <Dialog open={open} onClose={handleClose}>
-          <DialogTitle>Product Details</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              Please add all the details of your product correctly.
-            </DialogContentText>
-            <form>
-              <TextField
-                label="Name"
-                variant="outlined"
-                name="name"
-                value={product.name}
-                onChange={handleInputChange}
-                required
-                fullWidth
-                margin="normal"
-              />
-              <TextField
-                label="Quantity"
-                variant="outlined"
-                name="quantity"
-                type="number"
-                value={product.quantity}
-                onChange={handleInputChange}
-                required
-                fullWidth
-                margin="normal"
-              />
-              <TextField
-                label="Description"
-                variant="outlined"
-                name="desc"
-                value={product.desc}
-                onChange={handleInputChange}
-                required
-                fullWidth
-                margin="normal"
-              />
-              <TextField
-                label="Category"
-                variant="outlined"
-                name="category"
-                value={product.category}
-                onChange={handleInputChange}
-                required
-                fullWidth
-                margin="normal"
-              />
-              <TextField
-                label="Product ID"
-                variant="outlined"
-                name="pid"
-                value={product.pid}
-                onChange={handleInputChange}
-                required
-                fullWidth
-                margin="normal"
-              />
-              <TextField
-                label="Manufacturer"
-                variant="outlined"
-                name="manufacturer"
-                value={product.manufacturer}
-                onChange={handleInputChange}
-                fullWidth
-                margin="normal"
-              />
-              <TextField
-                label="Threshold"
-                variant="outlined"
-                name="threshold"
-                type="number"
-                value={product.threshold}
-                onChange={handleInputChange}
-                required
-                fullWidth
-                margin="normal"
-              />
-              <TextField
-                label="Selling Price"
-                variant="outlined"
-                name="s_price"
-                type="number"
-                value={product.s_price}
-                onChange={handleInputChange}
-                required
-                fullWidth
-                margin="normal"
-              />
-              <TextField
-                label="Cost Price"
-                variant="outlined"
-                name="c_price"
-                type="number"
-                value={product.c_price}
-                onChange={handleInputChange}
-                required
-                fullWidth
-                margin="normal"
-              />
-            </form>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
-            <Button onClick={handleAddSubmit}>Add</Button>
-          </DialogActions>
-        </Dialog>
-      </div>
-      {/* =========================================================================== */}
-      <div>
-        <Dialog
-          fullScreen
-          open={openUpdateBox}
-          onClose={handleCloseUpdateBox}
-          TransitionComponent={Transition}
         >
-          <AppBar sx={{ position: "relative" }}>
-            <Toolbar>
-              <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-                Update Stock
-              </Typography>
-              <Button autoFocus color="inherit" onClick={handleCloseUpdateBox}>
-                Close
-              </Button>
-            </Toolbar>
-          </AppBar>
-          <div className="d-flex justify-content-center">
-            <form className="row g-10 m-5" onSubmit={onSubmitSearch}>
-              <div className="col-auto">
-                <input
-                  type="text"
-                  readOnly
-                  className="form-control-plaintext"
-                  value="Enter Product ID / Name "
-                />
-              </div>
-              <div className="col-auto">
-                <input
-                  type="text"
-                  className="form-control"
-                  id="inputPassword2"
-                  placeholder="Product ID / Name"
-                  value={currInput}
-                  onChange={handleInputChange2}
+          <Button
+            variant="outlined"
+            onClick={handleClickUpdateStock}
+            style={{
+              margin: "10px",
+            }}
+          >
+            🔄 Update Stock
+          </Button>
+          <Button
+            variant="outlined"
+            onClick={handleClickOpen}
+            style={{
+              margin: "10px",
+            }}
+          >
+            + Add Product
+          </Button>
+        </div>
+        <Card className="products">
+          <ProductTable data={productsWithId} />
+        </Card>
+        <div>
+          <Dialog open={open} onClose={handleClose}>
+            <DialogTitle>Product Details</DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                Please add all the details of your product correctly.
+              </DialogContentText>
+              <form>
+                <TextField
+                  label="Name"
+                  variant="outlined"
+                  name="name"
+                  value={product.name}
+                  onChange={handleInputChange}
                   required
+                  fullWidth
+                  margin="normal"
                 />
-              </div>
-              <div className="col-auto">
-                <button type="submit" className="btn btn-primary mb-3">
-                  Search
-                </button>
-              </div>
-            </form>
-          </div>
-          <List>
-            <Divider />
-            {filteredProducts.length === 0 && currInput.length !== 0 ? (
-              <ListItemText
-                primary="No products found"
-                style={{
-                  textAlign: "left",
-                  marginLeft: "1rem",
-                  fontSize: "1.5rem",
-                }}
-              />
-            ) : filteredProducts.length === 0 ? (
-              <ListItemText
-                primary=""
-                style={{
-                  textAlign: "left",
-                  marginLeft: "1rem",
-                  fontSize: "1.5rem",
-                }}
-              />
-            ) : (
-              <>
-                <List>
-                  {/* <ListItemText
+                <TextField
+                  label="Quantity"
+                  variant="outlined"
+                  name="quantity"
+                  type="number"
+                  value={product.quantity}
+                  onChange={handleInputChange}
+                  required
+                  fullWidth
+                  margin="normal"
+                />
+                <TextField
+                  label="Description"
+                  variant="outlined"
+                  name="desc"
+                  value={product.desc}
+                  onChange={handleInputChange}
+                  required
+                  fullWidth
+                  margin="normal"
+                />
+                <TextField
+                  label="Category"
+                  variant="outlined"
+                  name="category"
+                  value={product.category}
+                  onChange={handleInputChange}
+                  required
+                  fullWidth
+                  margin="normal"
+                />
+                <TextField
+                  label="Product ID"
+                  variant="outlined"
+                  name="pid"
+                  value={product.pid}
+                  onChange={handleInputChange}
+                  required
+                  fullWidth
+                  margin="normal"
+                />
+                <TextField
+                  label="Manufacturer"
+                  variant="outlined"
+                  name="manufacturer"
+                  value={product.manufacturer}
+                  onChange={handleInputChange}
+                  fullWidth
+                  margin="normal"
+                />
+                <TextField
+                  label="Threshold"
+                  variant="outlined"
+                  name="threshold"
+                  type="number"
+                  value={product.threshold}
+                  onChange={handleInputChange}
+                  required
+                  fullWidth
+                  margin="normal"
+                />
+                <TextField
+                  label="Selling Price"
+                  variant="outlined"
+                  name="s_price"
+                  type="number"
+                  value={product.s_price}
+                  onChange={handleInputChange}
+                  required
+                  fullWidth
+                  margin="normal"
+                />
+                <TextField
+                  label="Cost Price"
+                  variant="outlined"
+                  name="c_price"
+                  type="number"
+                  value={product.c_price}
+                  onChange={handleInputChange}
+                  required
+                  fullWidth
+                  margin="normal"
+                />
+              </form>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose}>Cancel</Button>
+              <Button onClick={handleAddSubmit}>Add</Button>
+            </DialogActions>
+          </Dialog>
+        </div>
+        {/* =========================================================================== */}
+        <div>
+          <Dialog
+            fullScreen
+            open={openUpdateBox}
+            onClose={handleCloseUpdateBox}
+            TransitionComponent={Transition}
+          >
+            <AppBar sx={{ position: "relative" }}>
+              <Toolbar>
+                <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+                  Update Stock
+                </Typography>
+                <Button autoFocus color="inherit" onClick={handleCloseUpdateBox}>
+                  Close
+                </Button>
+              </Toolbar>
+            </AppBar>
+            <div className="d-flex justify-content-center">
+              <form className="row g-10 m-5" onSubmit={onSubmitSearch}>
+                <div className="col-auto">
+                  <input
+                    type="text"
+                    readOnly
+                    className="form-control-plaintext"
+                    value="Enter Product ID / Name "
+                  />
+                </div>
+                <div className="col-auto">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="inputPassword2"
+                    placeholder="Product ID / Name"
+                    value={currInput}
+                    onChange={handleInputChange2}
+                    required
+                  />
+                </div>
+                <div className="col-auto">
+                  <button type="submit" className="btn btn-primary mb-3">
+                    Search
+                  </button>
+                </div>
+              </form>
+            </div>
+            <List>
+              <Divider />
+              {filteredProducts.length === 0 && currInput.length !== 0 ? (
+                <ListItemText
+                  primary="No products found"
+                  style={{
+                    textAlign: "left",
+                    marginLeft: "1rem",
+                    fontSize: "1.5rem",
+                  }}
+                />
+              ) : filteredProducts.length === 0 ? (
+                <ListItemText
+                  primary=""
+                  style={{
+                    textAlign: "left",
+                    marginLeft: "1rem",
+                    fontSize: "1.5rem",
+                  }}
+                />
+              ) : (
+                <>
+                  <List>
+                    {/* <ListItemText
                     primary="Matching Results"
                     style={{
                       textAlign: "left",
@@ -443,54 +449,53 @@ const Products = (props) => {
                       fontSize: "1.5rem",
                     }}
                   /> */}
-                  <Typography variant="h5" style={{ margin: "10px" }}>
-                    Matching Results
-                  </Typography>
-                  <Divider />
-                  {filteredProducts.map((item, index) => (
-                    <div key={index}>
-                      <ListItem>
-                        <ListItemText primary={`Product ID: ${item.pid}`} />
-                        <ListItemText
-                          secondary={`Product Name: ${item.name}`}
-                        />
-                        <ListItemText
-                          secondary={`Category: ${item.category}`}
-                        />
-                        <ListItemText
-                          secondary={`Quantity: ${item.quantity}`}
-                        />
-                        <Button
-                          className="link_in_table"
-                          onClick={() =>
-                            {
+                    <Typography variant="h5" style={{ margin: "10px" }}>
+                      Matching Results
+                    </Typography>
+                    <Divider />
+                    {filteredProducts.map((item, index) => (
+                      <div key={index}>
+                        <ListItem>
+                          <ListItemText primary={`Product ID: ${item.pid}`} />
+                          <ListItemText
+                            secondary={`Product Name: ${item.name}`}
+                          />
+                          <ListItemText
+                            secondary={`Category: ${item.category}`}
+                          />
+                          <ListItemText
+                            secondary={`Quantity: ${item.quantity}`}
+                          />
+                          <Button
+                            className="link_in_table"
+                            onClick={() => {
                               onClickUpdate(item.name, item.quantity, item.category, item.pid)
                             }
-                          }
-                        >
-                          Update
-                        </Button>
-                      </ListItem>
-                      <Divider />
-                    </div>
-                  ))}
-                </List>
-              </>
-            )}
-          </List>
-      {isVisible && <div id="forShowingUpdateStockPopup"></div>}
-        </Dialog>
-      </div>
-      {/* =========================================================================== */}
-      {/* <Dialog
+                            }
+                          >
+                            Update
+                          </Button>
+                        </ListItem>
+                        <Divider />
+                      </div>
+                    ))}
+                  </List>
+                </>
+              )}
+            </List>
+            {isVisible && <div id="forShowingUpdateStockPopup"></div>}
+          </Dialog>
+        </div>
+        {/* =========================================================================== */}
+        {/* <Dialog
           open={isVisible}
           onClose={handleCloseUpdateBox}
           TransitionComponent={Transition}
         >
         <div id="forShowingUpdateStockPopup"></div>
         </Dialog> */}
-    </div>
-  </>
+      </div>
+    </>
   );
 };
 

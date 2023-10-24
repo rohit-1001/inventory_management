@@ -4,15 +4,12 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 const columns = [
-    { field: 'id', headerName: 'ID', width: 70 },
-    {
-        field: 'date',
-        headerName: 'Date',
-        type: 'numeric',
-        width: 200,
-    },
-    { field: 'vendor', headerName: 'Vendor', width: 200 },
-    { field: 'productName', headerName: 'Product Name', width: 200 },
+    { field: 'pid', headerName: 'ID', width: 70 },
+    { field: 'name', headerName: 'Product Name', width: 200 },
+    { field: 'category', headerName: 'Category', width: 200 },
+    { field: 'quantity', headerName: 'Quantity', width: 200 },
+    { field: 'c_price', headerName: 'Cost Price', width: 200 },
+    { field: 's_price', headerName: 'Selling Price', width: 200 },
 ];
 
 function CustomToolbar() {

@@ -18,6 +18,7 @@ const UpperBoxes = () => {
     backgroundColor: 'rgb(0, 104, 252)', // Lighter shade of blue
     color: 'white',
     margin: '10px',
+    boxShadow: "rgba(0, 0, 0, 0.1) 0px 10px 50px"
   };
 
   const titleStyle = {
@@ -127,32 +128,35 @@ const UpperBoxes = () => {
           </div>
         </Box>
       </div> */}
-      <div className="container-fluid pt-4 px-4">
+      <div className="container-fluid pt-4 px-4" style={{
+        // border: "2px solid black",
+        width: "100%",
+      }}>
         <div className="row g-4 flex-column">
           <div className="col-12">
-            <div className="text-dark  rounded d-flex align-items-center p-4" style={{ background: "rgba(125, 248, 255, 1)" }}>
-              <i className="fa fa-chart-line fa-4x text-primary" />
+            <div className="text-dark  rounded d-flex align-items-center p-4" style={{ background: "rgb(72, 104, 223, 0.7)", boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px" }}>
+              <i className="fa fa-chart-line fa-4x text-tertiary" />
               <div className="ms-4 justify-content-center">
                 <p className="mb-2">Today Sales</p>
-                <h6 className="mb-0">${data.tsales}</h6>
+                <h6 className="mb-0">₹{data.tsales}</h6>
               </div>
             </div>
           </div>
           <div className="col-12">
-            <div className="text-dark  rounded d-flex align-items-center p-4" style={{ background: "rgba(125, 248, 255, 1)" }}>
-              <i className="fa fa-chart-bar fa-4x text-primary" />
+            <div className="text-dark  rounded d-flex align-items-center p-4" style={{ background: "rgb(178, 211, 53, 0.7)", boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px" }}>
+              <i className="fa fa-chart-bar fa-4x text-tertiary" />
               <div className="ms-4 justify-content-center">
-                <p className="mb-2">Profit</p>
-                <h6 className="mb-0">${data.profit}</h6>
+                <p className="mb-2" >Profit</p>
+                <h6 className="mb-0">₹{data.profit}</h6>
               </div>
             </div>
           </div>
           <div className="col-12">
-            <div className="text-dark  rounded d-flex align-items-center p-4" style={{ background: "rgba(125, 248, 255, 1)" }}>
-              <i className="fa fa-chart-area fa-4x text-primary" />
+            <div className="text-dark  rounded d-flex align-items-center p-4" style={{ background: "rgb(72, 104, 223, 0.7)", boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px" }}>
+              <i className="fa fa-chart-area fa-4x text-tertiary" />
               <div className="ms-4 justify-content-center">
                 <p className="mb-2 ">Sales</p>
-                <h6 className="mb-0">${data.sales}</h6>
+                <h6 className="mb-0">₹{data.sales}</h6>
               </div>
             </div>
           </div>

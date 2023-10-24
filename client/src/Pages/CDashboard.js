@@ -27,20 +27,31 @@ const CDashboard = () => {
         borderWidth: 1,
       },
     ],
-  };  
+  };
   const name = "Prices";
   const parentContainerStyle = {
     display: "flex",
-    justifyContent: "space-between",
-    margin: "0 10rem",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "fit-content",
+    height: "fit-content",
+    margin: "auto",
+    paddingBottom: "2.5em",
+
   };
 
   const chartContainerStyle = {
     margin: "auto",
-    padding: "40px  0",
+    padding: "1em 0em 0 6em",
+    // border: "1px solid black",
+    width: "fit-content"
   };
   return (
-    <div>
+    <div style={{
+      width: "100%",
+      backgroundColor: "rgb(244, 244, 245)"
+    }}>
       <br></br>
       <div style={parentContainerStyle}>
         <div>

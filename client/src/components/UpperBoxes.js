@@ -8,7 +8,7 @@ import { Avatar, Card, CardContent, Stack, SvgIcon, Typography, Paper } from '@m
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import PointOfSaleSharpIcon from '@mui/icons-material/PointOfSaleSharp';
 
-const UpperBoxes = () => {
+const UpperBoxes = (props) => {
   const boxStyle = {
     width: '30%',
     // padding: 'px',
@@ -41,12 +41,14 @@ const UpperBoxes = () => {
   });
 
   const getData = async () => {
-    try {
-      const response = await axios.post("/getupfields");
-      const { profit, sales, tsales } = response.data;
-      setData({ profit, sales, tsales });
-    } catch (error) {
-      alert("Some error occurred");
+    if(props.details.role!=='admin'){
+      try {
+        const response = await axios.post("/getupfields");
+        const { profit, sales, tsales } = response.data;
+        setData({ profit, sales, tsales });
+      } catch (error) {
+        alert("Some error occurred");
+      }
     }
   };
 

@@ -21,7 +21,7 @@ import Navbar from "./components/Navbar";
 import Navbar2 from "./components/Navbar2";
 import Navbar3 from "./components/Navbar3";
 import HomeAbout from "./components/AboutUs/HomeAbout";
-import OrderHistory from "./components/OrderHistory";
+// import OrderHistory from "./components/OrderHistory";
 import Marketplace from "./Pages/Marketplace";
 import SearchResult from './Pages/SearchResult';
 // import { useContext, useReducer } from 'react';
@@ -226,14 +226,14 @@ function App() {
         <>
           <Navbar details={{ role, setRole }} />
           <Routes>
-            <Route path="/codb" element={<CDashboard />} />
+            <Route path="/codb" element={<CDashboard details={{role}}/>} />
             <Route path="/copr" element={<CProfile />} />
-            <Route path="/orders" element={<Orders items={DUMMY_ORDERS} />} />
+            <Route path="/orders" element={<Orders details={{role}} />} />
             <Route
               path="/products"
               element={<Products items={{DUMMY_PRODUCTS, role}} />}
             />
-            <Route path="/order-history" element={<OrderHistory details={role}/>} />
+            {/* <Route path="/order-history" element={<OrderHistory details={role}/>} /> */}
             <Route path="/requests" element={<Requests />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
@@ -243,14 +243,14 @@ function App() {
         <>
           <Navbar details={{ role, setRole }} />
           <Routes>
-            <Route path="/codb" element={<CDashboard />} />
+            <Route path="/codb" element={<CDashboard details={{role}}/>} />
             <Route path="/copr" element={<CProfile />} />
-            <Route path="/orders" element={<Orders items={DUMMY_ORDERS} />} />
+            <Route path="/orders" element={<Orders details={{role}} />} />
             <Route
               path="/products"
               element={<Products items={{DUMMY_PRODUCTS, role}} />}
             />
-            <Route path="/order-history" element={<OrderHistory details={{ role }} />} />
+            {/* <Route path="/order-history" element={<OrderHistory details={{ role }} />} /> */}
             <Route path="/requests" element={<Requests />} />
             <Route path="/marketplace" element={<Marketplace />} />
             <Route path='/search/:id' element={<SearchResult></SearchResult>}></Route>

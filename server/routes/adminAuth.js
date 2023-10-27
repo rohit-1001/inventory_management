@@ -113,6 +113,8 @@ router.post('/allproductsadmin', async (req, res) => {
     }
 });
 
+// router.get('/totalsales', ())
+
 router.post('/adminlogout', (req, res) => {
     res.clearCookie('inv_man', {path:'/'})
     res.status(200).json({msg:"Logged out successfully"})

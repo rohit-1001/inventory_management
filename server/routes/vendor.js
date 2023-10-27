@@ -500,8 +500,8 @@ router.post('/profile', async (req, res) => {
 
 
 //orders by vendors
-router.post('/orders', async (req, res) => {
-    const email = req.body.email;
+router.get('/orders_v', async (req, res) => {
+    const email = req.cookies.inv_man.email;
     try {
         const orders = await Order.find({ v_email: email });
         if (!orders) {
@@ -581,7 +581,6 @@ router.post('/vendorlogout', (req, res) => {
 router.post('/getFilteredCompanies', async (req, res) => {
     try {
         const searchQuery = req.body.search;
-        console.log("Search Query is : ", searchQuery);
 
         // Find companies that match the search query in their names
         const companies = await Company.find({
@@ -597,5 +596,73 @@ router.post('/getFilteredCompanies', async (req, res) => {
     }
 })
 
+router.post('/confirmDelivery', async (req, res) => {
+    const email = req.cookies.inv_man.email
+    const id = req.body.id
+    try{
+        const order = await Order.findOne({_id: id});
+        const vendor = await Vendor.findOne({email: email});
+        if(!order){
+            return res.status(400).json({error: "No order found"});
+        }
+        for (const product of order.products) {
+            const vendorProduct = vendor.products.find(item => item.pid === product.pid);
+            if (!vendorProduct) {
+                const c_email = order.c_email
+                const company = await Company.findOne({ email: c_email });
+                const pro = company.products.find(item => item.pid === product.pid);
+                const newProduct = {
+                  name:product.name,
+                  quantity: product.quantity,
+                  desc:pro.desc,
+                  category:pro.desc,
+                  pid: product.pid,
+                  name: product.name,
+                  c_price:pro.s_price
+                };
+              
+                // Add the new product to the vendor's products
+                vendor.products.push(newProduct);
+            }
+            else{
+                vendorProduct.quantity+=product.quantity;
+            }
+        }
+
+        order.status = 'Delivered';
+        await Order.replaceOne({ _id: id }, order);
+        await Vendor.replaceOne({ email: email }, vendor);
+        res.status(200).json({msg: "Order delivery confirmed"})
+    }
+    catch(error){
+        console.error(error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+})
+
+router.post('/declineConfirmation', async (req, res) => {
+    const id = req.body.id
+    try{
+        const order = await Order.findOne({_id: id});
+        const email = order.c_email
+        const company = await Company.findOne({email: email});
+        if(!order){
+            return res.status(400).json({error: "No order found"});
+        }
+        for (const product of order.products) {
+            const companyProduct = company.products.find(item => item.pid === product.pid);
+            companyProduct.quantity+=product.quantity;
+        }
+
+        order.status = 'Declined';
+        await Order.replaceOne({ _id: id }, order);
+        await Company.replaceOne({ email: email }, company);
+        res.status(200).json({msg: "Order declined"})
+    }
+    catch(error){
+        console.error(error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+})
 
 module.exports = router;

@@ -151,7 +151,7 @@ const Navbar = (props) => {
                 </div>
               </NavLink> : null
             }
-            <NavLink to="/order-history"
+            {/* <NavLink to="/order-history"
               style={({ isActive }) => ({
                 color: isActive ? '#466bda' : '#545e6f',
                 textDecoration: 'none',
@@ -170,7 +170,7 @@ const Navbar = (props) => {
                   marginLeft: window.innerWidth <= 768 ? "10px" : "0px",
                 }}>My Orders</li>
               </div>
-            </NavLink>
+            </NavLink> */}
             <NavLink to="/orders"
               style={({ isActive }) => ({
                 color: isActive ? '#466bda' : '#545e6f',
@@ -188,7 +188,7 @@ const Navbar = (props) => {
                 <li className='listItem' onClick={() => setShowMediaIcons(false)} style={{
                   fontWeight: '600',
                   marginLeft: window.innerWidth <= 768 ? "10px" : "0px",
-                }}>Orders History</li>
+                }}>Orders</li>
               </div>
             </NavLink>
             <NavLink to="/copr"

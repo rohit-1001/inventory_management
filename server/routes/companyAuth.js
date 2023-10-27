@@ -7,6 +7,7 @@ router.use(cookieParser());
 const Company = require('../models/Company')
 const Vendor = require('../models/Vendor')
 const Dashboard = require('../models/Dashboard')
+const Order = require('../models/Order')
 
 router.post('/companyregister', async (req, res) => {
     const { name, email, phone, password, cpassword } = req.body;
@@ -247,8 +248,8 @@ router.post('/profile',  async (req, res) => {
 
 
 //orders by vendors
-router.post('/orders',  async (req, res) => {
-    const email = req.body.email;
+router.get('/orders_c',  async (req, res) => {
+    const email = req.cookies.inv_man.email;
     try{
         const orders = await Order.find({c_email: email});
         if(!orders){
@@ -373,6 +374,109 @@ router.get('/getrole', (req, res) => {
         role="visitor"
     }
     return res.json({role:role})
+})
+
+router.post('/acceptRequest', async (req, res) => {
+    const email = req.cookies.inv_man.email
+    const {id} = req.body
+    try{
+        const order = await Order.findOne({_id: id});
+        const company = await Company.findOne({email: email});
+        if(!order){
+            return res.status(400).json({error: "No order found"});
+        }
+        for (const product of order.products) {
+            const companyProduct = company.products.find(item => item.pid === product.pid);
+            if (companyProduct.quantity < product.quantity) {
+                return res.status(400).json({error: "Could not accept order now. Some items not in sufficient quantity"})
+            }
+        }
+        for (const product of order.products) {
+            const companyProduct = company.products.find(item => item.pid === product.pid);
+            companyProduct.quantity-=product.quantity;
+        }
+        
+        order.status = 'Accepted';
+        await Order.replaceOne({ _id: id }, order);
+        await Company.replaceOne({ email: email }, company);
+        res.status(200).json({msg: "Order accepted successfully"})
+    }
+    catch(error){
+        console.error(error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+})
+
+router.post('/rejectRequest', async (req, res) => {
+    const id = req.body.id
+    try{
+        const order = await Order.findOne({_id: id});
+        if(!order){
+            return res.status(400).json({error: "No order found"});
+        }
+
+        order.status = 'Rejected';
+        await Order.replaceOne({ _id: id }, order);
+        res.status(200).json({msg: "Order rejected"})
+    }
+    catch(error){
+        console.error(error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+})
+
+router.post('/dispatchRequest', async (req, res) => {
+    const id = req.body.id
+    try{
+        const order = await Order.findOne({_id: id});
+        if(!order){
+            return res.status(400).json({error: "No order found"});
+        }
+
+        order.status = 'Dispatched';
+        await Order.replaceOne({ _id: id }, order);
+        res.status(200).json({msg: "Order dispatched"})
+    }
+    catch(error){
+        console.error(error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+})
+
+router.post('/confirmationPending', async (req, res) => {
+    const id = req.body.id
+    try{
+        const order = await Order.findOne({_id: id});
+        if(!order){
+            return res.status(400).json({error: "No order found"});
+        }
+
+        order.status = 'Confirmation pending';
+        await Order.replaceOne({ _id: id }, order);
+        res.status(200).json({msg: "Confirmation request sent"})
+    }
+    catch(error){
+        console.error(error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+})
+
+router.post('/revokeRequest', async (req, res) => {
+    const id = req.body.id
+    try{
+        const order = await Order.findOne({_id: id});
+        if(!order){
+            return res.status(400).json({error: "No order found"});
+        }
+
+        order.status = 'Revoked';
+        await order.deleteOne();
+        res.status(200).json({msg: "Order revoked successfully"})
+    }
+    catch(error){
+        console.error(error);
+        res.status(500).json({ error: "Internal server error" });
+    }
 })
 
 router.post('/companylogout', (req, res) => {

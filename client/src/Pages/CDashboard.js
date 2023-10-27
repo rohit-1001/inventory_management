@@ -4,7 +4,7 @@ import StockAlert from '../components/StockAlert';
 import Compchta from '../components/Compchta';
 import { useEffect } from 'react';
 import BarChart from '../components/BarChart';
-const CDashboard = () => {
+const CDashboard = (props) => {
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     document.title = 'Sangrah | Dashboard';
@@ -55,7 +55,7 @@ const CDashboard = () => {
       <br></br>
       <div style={parentContainerStyle}>
         <div>
-          <UpperBoxes />
+          <UpperBoxes details={{role:props.details.role}}/>
         </div>
         <div style={chartContainerStyle}>
           <BarChart data={chartData} name={name} />

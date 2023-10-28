@@ -1,11 +1,10 @@
 
-//This is for the pie chart on the Vendor Dashboard for the low quantity stock
-
+// This component is used to display the pie chart for the Top Selling Products.
 
 import React from 'react';
 import { Pie } from 'react-chartjs-2';
 
-const StockPieChart = ({ chartData }) => {
+const TopSellingChart = ({ chartData }) => {
   return (
     <div className="chart-container" style={{
       // border: "2px solid black",
@@ -21,7 +20,7 @@ const StockPieChart = ({ chartData }) => {
             plugins: {
               title: {
                 display: true,
-                text: "Low Quantity Stock"
+                text: "Top Selling Products"
               }
             },
             responsive: true, // Enable responsiveness
@@ -33,4 +32,4 @@ const StockPieChart = ({ chartData }) => {
   );
 };
 
-export default StockPieChart;
+export default TopSellingChart;

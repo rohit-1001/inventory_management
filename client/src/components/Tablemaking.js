@@ -313,7 +313,7 @@ export default function EnhancedTable({ data }) {
                       scope="row"
                       padding="none"
                     >
-                      {row.orderId}
+                      {row.pid}
                     </TableCell>
                     <TableCell align="right">{row.date}</TableCell>
                     <TableCell align="right">{row.quantity}</TableCell>

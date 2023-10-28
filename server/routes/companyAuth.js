@@ -467,4 +467,50 @@ router.post('/companylogout', (req, res) => {
     res.status(200).json({msg:"Logged out successfully"})
 })
 
+router.get('/topselling_c', async(req, res) => {
+    const email = req.cookies.inv_man.email
+
+    try {
+        const company = await Company.findOne({ email: email });
+    
+        if (!company) {
+          return res.status(404).json({error:'Company not found'});
+        }
+        let products = company.products
+        products = products.filter(product => product.sales !== 0);
+        products.sort((a, b) => b.sales - a.sales);
+        let top5Products = []
+        if (products.length < 5) {
+            top5Products = products;
+          } else {
+            top5Products = products.slice(0, 5);
+          }
+        return res.status(200).json(top5Products);
+      } catch (error) {
+        res.status(500).send(error);
+      }
+})
+
+router.get('/prothreshold_c', async(req, res) => {
+    const email = req.cookies.inv_man.email
+
+    try {
+        const company = await Company.findOne({email:email})
+        if(!company){
+            return res.status(400).json({error: "Company not found"})
+        }
+        const pro = company.products
+        const products=[]
+        for (const product of pro) {
+            if(product.quantity<=product.threshold){
+                products.push(product)
+            }
+        }
+        return res.status(200).json(products)
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ error: "Internal server error" });
+    }
+})
+
 module.exports = router;

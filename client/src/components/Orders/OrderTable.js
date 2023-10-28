@@ -3,7 +3,8 @@ import { DataGrid, GridToolbarContainer, GridToolbarExport, GridToolbarDensitySe
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ProductDetailsButton from './ProductDetailsButton';
-import { TextField, Button } from "@mui/material";
+import ShowInfo from './ShowInfo';
+import { Button } from "@mui/material";
 import axios from 'axios'
 
 function CustomToolbar() {
@@ -137,14 +138,14 @@ export default function OrderTable(props) {
         //     width: 230,
         // },
         { field: 'id', headerName: 'ID', width: 250 },
-        { field: props.data.role==="vendor" ? 'c_email' : 'v_email', headerName: props.data.role==="vendor" ? 'Company Email' : 'Vendor Email', width: 250 },
-        // { field: 'products', headerName: 'Products', width: 250 },
-        // {
-        //     field: 'count',
-        //     headerName: 'Count',
-        //     type: 'numeric',
-        //     width: 230,
-        // },
+        {
+            field: props.data.role==="vendor" ? 'c_email' : 'v_email',
+            headerName: props.data.role==="vendor" ? 'Company Email' : 'Vendor Email',
+            width: 250,
+            renderCell: (params) => (
+              <ShowInfo email={props.data.role==="vendor" ? params.row.c_email : params.row.v_email} />
+            ),
+        },
         {
             field: 'products',  // Placeholder for button/dropdown
             headerName: 'Products',

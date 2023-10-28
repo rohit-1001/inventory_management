@@ -258,7 +258,7 @@ router.post('/subtractstock', async (req, res) => {
     
             const dashboard = await Dashboard.findOne({ email });
             const date = new Date();
-            const month = date.getMonth().toString();;
+            const month = (date.getMonth()+1).toString();
             const year = date.getFullYear().toString();
             if(dashboard){
                 const monthData = dashboard.data.find((monthData) => monthData.month === month && monthData.year === year)
@@ -341,7 +341,7 @@ router.post('/subtractstock', async (req, res) => {
     
             const dashboard = await Dashboard.findOne({ email });
             const date = new Date();
-            const month = date.getMonth().toString();;
+            const month = (date.getMonth()+1).toString();
             const year = date.getFullYear().toString();
             if(dashboard){
                 const monthData = dashboard.data.find((monthData) => monthData.month === month && monthData.year === year)
@@ -746,6 +746,77 @@ router.post('/updateprofile', async (req, res) => {
         }
     } catch (error) {
         console.error(error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+})
+
+router.post('/getinfo', async(req, res) => {
+    const {email} = req.body
+    const role = req.cookies.inv_man.role
+
+    try {
+        if(role==="vendor"){
+            const comp= await Company.findOne({ email: email });
+            if (!comp) {
+                return res.status(400).json({ error: "Company not found" });
+            }
+            res.status(200).json({details:{name:comp.name, email:comp.email, phone:comp.phone}});
+        }
+        else if(role==="company"){
+            const vend = await Vendor.findOne({ email: email });
+            if (!vend) {
+                return res.status(400).json({ error: "Vendor not found" });
+            }
+            res.status(200).json({details:{name:vend.name, email:vend.email, phone:vend.phone}});
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+})
+
+router.get('/topselling_v', async(req, res) => {
+    const email = req.cookies.inv_man.email
+    try {
+        const vendor = await Vendor.findOne({ email: email });
+    
+        if (!vendor) {
+          return res.status(404).json({error:'Vendor not found'});
+        }
+        let products = vendor.products
+        products = products.filter(product => product.sales !== 0);
+        products.sort((a, b) => b.sales - a.sales);
+        let top5Products = []
+        if (products.length < 5) {
+            top5Products = products;
+          } else {
+            top5Products = products.slice(0, 5);
+          }
+        return res.status(200).json(top5Products);
+      } catch (error) {
+        console.log(error)
+        res.status(500).json({ error: "Internal server error" });
+      }
+})
+
+router.get('/prothreshold_v', async(req, res) => {
+    const email = req.cookies.inv_man.email
+
+    try {
+        const vendor = await Vendor.findOne({email:email})
+        if(!vendor){
+            return res.status(400).json({error: "Vendor not found"})
+        }
+        const pro = vendor.products
+        const products=[]
+        for (const product of pro) {
+            if(product.quantity<=product.threshold){
+                products.push(product)
+            }
+        }
+        return res.status(200).json(products)
+    } catch (error) {
+        console.log(error)
         res.status(500).json({ error: "Internal server error" });
     }
 })

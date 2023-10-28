@@ -230,23 +230,6 @@ router.post('/getallproducts_c', async (req, res) => {
     }
 });
 
-
-router.post('/profile',  async (req, res) => {
-    const email = req.body.email;
-    
-    try {
-        const company = await Company.findOne({ email: email });
-        if (!company) {
-            return res.status(400).json({ error: "Company not found" });
-        }
-        res.status(200).json(company);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: "Internal server error" });
-    }
-})
-
-
 //orders by vendors
 router.get('/orders_c',  async (req, res) => {
     const email = req.cookies.inv_man.email;

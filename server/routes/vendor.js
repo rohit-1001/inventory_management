@@ -483,15 +483,25 @@ router.post('/ordercancellation', async (req, res) => {
 })
 
 // vendor profile
-router.post('/profile', async (req, res) => {
-    const email = req.body.email;
+router.get('/profile', async (req, res) => {
+    const email = req.cookies.inv_man.email;
+    const role = req.cookies.inv_man.role;
 
     try {
-        const vendor = await Vendor.findOne({ email: email });
-        if (!vendor) {
-            return res.status(400).json({ error: "Vendor not found" });
+        if(role==="vendor"){
+            const vendor = await Vendor.findOne({ email: email });
+            if (!vendor) {
+                return res.status(400).json({ error: "Vendor not found" });
+            }
+            res.status(200).json(vendor);
         }
-        res.status(200).json(vendor);
+        else if(role==="company"){
+            const company = await Company.findOne({ email: email });
+            if (!company) {
+                return res.status(400).json({ error: "Company not found" });
+            }
+            res.status(200).json(company);
+        }
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: "Internal server error" });
@@ -660,6 +670,39 @@ router.post('/declineConfirmation', async (req, res) => {
         res.status(200).json({msg: "Order declined"})
     }
     catch(error){
+        console.error(error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+})
+
+router.post('/updateprofile', async (req, res) => {
+    const {name, email, phone} = req.body
+    const role = req.cookies.inv_man.role
+    if (!name || !phone) {
+        res.status(422).json({ msg: "All fields need to be filled" });
+    }
+    try {
+        if(role==="vendor"){
+            const user = await Vendor.findOne({email:email})
+            if(!user){
+                res.status(400).send({error: "Vendor not found"})
+            }
+            user.name=name
+            user.phone=phone
+            await Vendor.replaceOne({email:email}, user)
+            res.status(200).json({msg:"Profile updated successfully"})
+        }
+        else if(role==="company"){
+            const user = await Company.findOne({email:email})
+            if(!user){
+                res.status(400).send({error: "Company not found"})
+            }
+            user.name=name
+            user.phone=phone
+            await Company.replaceOne({email:email}, user)
+            res.status(200).json({msg:"Profile updated successfully"})
+        }
+    } catch (error) {
         console.error(error);
         res.status(500).json({ error: "Internal server error" });
     }

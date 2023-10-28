@@ -2,12 +2,38 @@ import React, { useState, useEffect } from 'react';
 import { Container, Grid, Paper, Typography, Button, Modal, Box, TextField } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import image1 from '../assets/testi1.jpg';
+import axios from 'axios'
 
 function CProfile() {
+  const [user, setUser] = useState({
+    name:"",
+    email:"",
+    phone:null
+  })
+  const [newuser, setNewUser] = useState({
+    name:"",
+    email:"",
+    phone:null
+  })
+  const getUserInfo = async () => {
+    try {
+      const c = await axios.get('/profile', {
+        withCredentials:true
+      })
+      const {name, email, phone} = c.data
+      setUser({name, email, phone})
+      setNewUser({name, email, phone})
+    } catch (error) {
+      if(error.response){
+        alert(error.response.data.error)
+      }
+    }
+  }
   // Sample data for company info
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     document.title = 'Sangrah | Profile';
+    getUserInfo()
   }, []);
   
   const [companyInfo, setCompanyInfo] = useState({
@@ -22,7 +48,7 @@ function CProfile() {
 
   const [openModal, setOpenModal] = useState(false);
 
-  const handleOpenModal = () => {
+  const handleOpenModal = async() => {
     setOpenModal(true);
   };
 
@@ -30,9 +56,21 @@ function CProfile() {
     setOpenModal(false);
   };
 
-  const handleSubmit = () => {
-    // Handle the form submission here
-    // You can update the companyInfo state and perform any other necessary actions
+  const handleSubmit = async () => {
+    try {
+      const c = await axios.post('/updateprofile',{name:newuser.name, email:newuser.email, phone:newuser.phone}, {
+        withCredentials:true
+      })
+
+      if(c.status===200){
+        alert(c.data.msg)
+      }
+    } catch (error) {
+      if(error.response){
+        alert(error.response.data.error)
+      }
+    }
+    getUserInfo()
     handleCloseModal();
   };
 
@@ -51,11 +89,9 @@ function CProfile() {
                   style={{ width: '100px', height: '100px', borderRadius: '50%', marginBottom: '10px' }}
                 />
               </div>
-              <Typography variant="h5">{companyInfo.name}</Typography>
-              <Typography variant="subtitle1">Email: {companyInfo.email}</Typography>
-              <Typography variant="subtitle1">Contact Number: {companyInfo.contactNumber}</Typography>
-              <Typography variant="subtitle1">Address: {companyInfo.address}</Typography> {/* Display Address */}
-              <Typography variant="subtitle1">Company Genre: {companyInfo.companyGenre}</Typography> {/* Display Company Genre */}
+              <Typography variant="h5">{user.name}</Typography>
+              <Typography variant="subtitle1">Email: {user.email}</Typography>
+              <Typography variant="subtitle1">Contact Number: {user.phone}</Typography>
               <Button variant="contained" color="primary" onClick={handleOpenModal} startIcon={<EditIcon />}>
                 Edit
               </Button>
@@ -84,16 +120,15 @@ function CProfile() {
             <TextField
               label="Name"
               fullWidth
-              value={companyInfo.name}
-              onChange={(e) => setCompanyInfo({ ...companyInfo, name: e.target.value })}
+              value={newuser.name}
+              onChange={(e) => setNewUser({ ...newuser, name: e.target.value })}
             />
             <br></br>
             <br></br>
             <TextField
               label="Email"
               fullWidth
-              value={companyInfo.email}
-              onChange={(e) => setCompanyInfo({ ...companyInfo, email: e.target.value })}
+              value={newuser.email}
               disabled
             />
             <br></br>
@@ -101,24 +136,8 @@ function CProfile() {
             <TextField
               label="Contact Number"
               fullWidth
-              value={companyInfo.contactNumber}
-              onChange={(e) => setCompanyInfo({ ...companyInfo, contactNumber: e.target.value })}
-            />
-            <br></br>
-            <br></br>
-            <TextField
-              label="Address"
-              fullWidth
-              value={companyInfo.address}
-              onChange={(e) => setCompanyInfo({ ...companyInfo, address: e.target.value })}
-            />
-            <br></br>
-            <br></br>
-            <TextField
-              label="Company Genre"
-              fullWidth
-              value={companyInfo.companyGenre}
-              onChange={(e) => setCompanyInfo({ ...companyInfo, companyGenre: e.target.value })}
+              value={newuser.phone}
+              onChange={(e) => setNewUser({ ...newuser, phone: e.target.value })}
             />
             <br></br>
             <br></br>

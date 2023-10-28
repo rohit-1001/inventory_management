@@ -113,6 +113,36 @@ router.post('/allproductsadmin', async (req, res) => {
     }
 });
 
+router.get('/totaluppervalues', async (req, res) => {
+    try {
+        const vendors = await Vendor.find();
+        const companies = await Company.find();
+
+        const uniqueProductIds = new Set();
+        let tsales=0
+
+        vendors.forEach((vendor) => {
+            const products = vendor.products;
+            products.forEach((product) => {
+                uniqueProductIds.add(product.pid);
+                tsales+=product.sales
+            });
+        });
+        companies.forEach((company) => {
+            const products = company.products;
+            products.forEach((product) => {
+                uniqueProductIds.add(product.pid);
+                tsales+=product.sales
+            });
+        });
+
+        return res.status(200).json({tpro:uniqueProductIds.size, tsales:tsales})
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+})
+
 // router.get('/totalsales', ())
 
 router.post('/adminlogout', (req, res) => {

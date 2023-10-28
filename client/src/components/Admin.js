@@ -25,6 +25,8 @@ const Admin = () => {
   const [activeTab, setActiveTab] = useState("vendors");
   const [companies, setCompanies] = useState([]);
   const [vendors, setVendors] = useState([]);
+  const [totalSales, setTotalSales] = useState();
+  const [totalProducts, setTotalProducts]= useState();
   const [isVisible, setIsVisible] = useState(false);
   const getData = async () => {
     try {
@@ -35,9 +37,17 @@ const Admin = () => {
       alert("Some error occurred");
     }
     try {
-      const v = await axios("/allvendors");
+      const v = await axios.get("/allvendors");
 
       setVendors(v.data);
+    } catch (error) {
+      alert("Some error occurred");
+    }
+    try {
+      const v = await axios.get("/totaluppervalues");
+      const {tpro, tsales} = v.data
+      setTotalProducts(tpro);
+      setTotalSales(tsales);
     } catch (error) {
       alert("Some error occurred");
     }
@@ -75,8 +85,8 @@ const Admin = () => {
   const data = {
     nvendors: vendors ? vendors.length : 0,
     ncompany: companies ? companies.length : 0,
-    tsales: 1000,
-    tprods: 5000,
+    tsales: totalSales,
+    tprods: totalProducts,
   };
 
   return (

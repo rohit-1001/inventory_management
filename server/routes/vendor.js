@@ -128,8 +128,17 @@ router.post('/addproducts_v', async (req, res) => {
 // addstock
 // router.post('/addstock', vendorAuthenticate, async (req, res) => {
 router.post('/addstock', async (req, res) => {
-    let { quantity, pid } = req.body;
+    let { quantity, pid,name,
+        desc,
+        category,
+        manufacturer,
+        threshold,
+        s_price,
+        c_price } = req.body;
     // console.log("Request Body: ", req.body);
+    if(!name || !desc || !category || !manufacturer || !threshold || !s_price || !c_price){
+        return res.status(400).json({error: "All fields required"})
+    }
     quantity = parseInt(quantity);
     const email = req.cookies.inv_man.email
     const role = req.cookies.inv_man.role
@@ -149,11 +158,18 @@ router.post('/addstock', async (req, res) => {
     
             // Ensure the quantity is valid and subtract it from the product
             product.quantity += quantity;
+            product.name=name
+            product.desc=desc
+            product.category=category
+            product.manufacturer=manufacturer
+            product.threshold=threshold
+            product.s_price=s_price
+            product.c_price=c_price
             // vendor.find(product).quantity += quantity;
             // await vendor.save(); // Save the updated vendor document
             await Vendor.replaceOne({ email: email }, vendor);
     
-            return res.status(200).json({ message: "Stock added successfully" });
+            return res.status(200).json({ message: "Stock updated successfully" });
         } catch (error) {
             console.error(error);
             return res.status(500).json({ error: "Internal server error" }); // Handle errors properly
@@ -172,11 +188,17 @@ router.post('/addstock', async (req, res) => {
     
             // Ensure the quantity is valid and subtract it from the product
             product.quantity += quantity;
+            product.name=name
+            product.desc=desc
+            product.category=category
+            product.threshold=threshold
+            product.s_price=s_price
+            product.c_price=c_price
             // vendor.find(product).quantity += quantity;
             // await vendor.save(); // Save the updated vendor document
             await Company.replaceOne({ email: email }, company);
     
-            return res.status(200).json({ message: "Stock added successfully" });
+            return res.status(200).json({ message: "Stock updated successfully" });
         } catch (error) {
             console.error(error);
             return res.status(500).json({ error: "Internal server error" }); // Handle errors properly
@@ -187,7 +209,16 @@ router.post('/addstock', async (req, res) => {
 // substock
 // router.post('/subtractstock', vendorAuthenticate, async (req, res) => {
 router.post('/subtractstock', async (req, res) => {
-    let { quantity, pid } = req.body;
+    let { quantity, pid,name,
+        desc,
+        category,
+        manufacturer,
+        threshold,
+        s_price,
+        c_price } = req.body;
+    if(!name || !desc || !category || !manufacturer || !threshold || !s_price || !c_price){
+        return res.status(400).json({error: "All fields required"})
+        }
     quantity = parseInt(quantity);
     // console.log("Request Body: ", req.body);
     const email = req.cookies.inv_man.email
@@ -207,7 +238,13 @@ router.post('/subtractstock', async (req, res) => {
             if (!product) {
                 return res.status(400).json({ error: "Product not found" });
             }
-    
+            product.name=name
+            product.desc=desc
+            product.category=category
+            product.manufacturer=manufacturer
+            product.threshold=threshold
+            product.s_price=s_price
+            product.c_price=c_price
             // Ensure the quantity is valid and subtract it from the product
             if (product.quantity >= quantity) {
                 product.quantity -= quantity;
@@ -267,7 +304,7 @@ router.post('/subtractstock', async (req, res) => {
             await Vendor.replaceOne({ email: email }, vendor);
             // await vendor.save()
     
-            return res.status(200).json({ message: "Stock subtracted successfully" });
+            return res.status(200).json({ message: "Stock updated successfully" });
         } catch (error) {
             console.error(error);
             return res.status(500).json({ error: "Internal server error" }); // Handle errors properly
@@ -285,7 +322,12 @@ router.post('/subtractstock', async (req, res) => {
             if (!product) {
                 return res.status(400).json({ error: "Product not found" });
             }
-    
+            product.name=name
+            product.desc=desc
+            product.category=category
+            product.threshold=threshold
+            product.s_price=s_price
+            product.c_price=c_price
             // Ensure the quantity is valid and subtract it from the product
             if (product.quantity >= quantity) {
                 product.quantity -= quantity;
@@ -345,7 +387,7 @@ router.post('/subtractstock', async (req, res) => {
             await Company.replaceOne({ email: email }, company);
             // await company.save()
     
-            return res.status(200).json({ message: "Stock subtracted successfully" });
+            return res.status(200).json({ message: "Stock updated successfully" });
         } catch (error) {
             console.error(error);
             return res.status(500).json({ error: "Internal server error" }); // Handle errors properly
@@ -625,7 +667,7 @@ router.post('/confirmDelivery', async (req, res) => {
                   name:product.name,
                   quantity: product.quantity,
                   desc:pro.desc,
-                  category:pro.desc,
+                  category:pro.category,
                   pid: product.pid,
                   name: product.name,
                   c_price:pro.s_price

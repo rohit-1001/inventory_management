@@ -141,14 +141,14 @@ const Products = (props) => {
     event.preventDefault();
     searchPro();
   };
-  const onClickUpdate = async (name, quantity, category, pid) => {
+  const onClickUpdate = async (name, quantity, category, pid,desc,  manufacturer, threshold, s_price, c_price) => {
     setIsVisible(true);
     try {
       const c = await axios.get("/getallproducts", {
         withCredentials: true,
       });
       const root = createRoot(document.getElementById('forShowingUpdateStockPopup'));
-      root.render(<UpdateStockPopUp details={{ pid, name, category, quantity, setIsVisible, setAllProducts, setFilteredProducts, currInput, allProducts, filteredProducts }} />);
+      root.render(<UpdateStockPopUp details={{ pid, name, category, quantity, setIsVisible, setAllProducts, setFilteredProducts, currInput, allProducts, filteredProducts, role:props.items.role, desc, manufacturer, threshold, s_price, c_price }} />);
     } catch (error) {
       console.log(error);
       alert("Some error occured")
@@ -469,7 +469,7 @@ const Products = (props) => {
                           <Button
                             className="link_in_table"
                             onClick={() => {
-                              onClickUpdate(item.name, item.quantity, item.category, item.pid)
+                              onClickUpdate(item.name, item.quantity, item.category, item.pid, item.desc, props.items.role==="vendor" ? item.manufacturer : "", item.threshold, item.s_price, item.c_price)
                             }
                             }
                           >

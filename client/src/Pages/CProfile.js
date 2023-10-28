@@ -92,7 +92,7 @@ function CProfile() {
                   style={{ width: '250px', height: '250px', borderRadius: '50%', marginBottom: '10px' }}
                 />
               </div>
-              <div style={{ width: "100%", margin: "0 auto", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column" }}>
+              <div style={{ width: "100%", margin: "0 auto", display: "flex", justifyContent: "flex-start", alignItems: "flex-start", flexDirection: "column" }}>
                 <Typography variant="h5">{user.name}</Typography>
                 <Typography variant="subtitle1">Email: {user.email}</Typography>
                 <Typography variant="subtitle1">Contact Number: {user.phone}</Typography>

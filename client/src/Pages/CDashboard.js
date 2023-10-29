@@ -55,14 +55,14 @@ const CDashboard = (props) => {
       <br></br>
       <div style={parentContainerStyle}>
         <div>
-          <UpperBoxes details={{role:props.details.role}}/>
+          <UpperBoxes details={{ role: props.details.role }} />
         </div>
         <div style={chartContainerStyle}>
           <BarChart data={chartData} name={name} />
         </div>
       </div>
-      <StockAlert />
-      <Compchta />
+      <StockAlert details={{ role: props.details.role }} />
+      <Compchta details={{ role: props.details.role }} />
     </div>
   )
 }

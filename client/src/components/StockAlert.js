@@ -1,9 +1,11 @@
-import { useState, React } from 'react'
+import { useState, React, useEffect } from 'react'
 import Chart from "chart.js/auto";
 import { CategoryScale } from "chart.js";
 import StockPieChart from './StockPieChart';
+import axios from 'axios'
 import EnhancedTable from './Tablemaking';
-const StockAlert = () => {
+import StockAlertTable from './StockAlertTable';
+const StockAlert = (props) => {
   const sampleData = [
     {
       orderId: '1',
@@ -54,7 +56,65 @@ const StockAlert = () => {
 
 
   const [chartData, setChartData] = useState(initialChartData);
+  const [tabledata, setTableData] = useState([])
 
+  useEffect(() => {
+    if (props.details.role === "vendor") {
+      const stockalert = axios.get('/prothreshold_v').then((res) => {
+        console.log("Threshold Stock Data: ", res.data)
+        const data = res.data
+        const labels = data.map(item => item.name)
+        const quantity = data.map(item => item.quantity)
+        // const backgroundColor = ['blue', 'lightblue', 'deepskyblue', 'dodgerblue', 'royalblue']
+        // const backgroundColor = ['rgb(124, 146, 230)', 'rgb(198, 221, 110)', 'rgb(25, 25, 112)', 'rgb(127, 255, 0)', 'rgb(0, 128, 128)'];
+        // const backgroundColor = ['rgb(124, 146, 230)', 'rgb(198, 221, 110)', 'rgb(172, 190, 223)', 'rgb(150, 207, 139)', 'rgb(126, 144, 120)'];
+        const backgroundColor = ['rgb(124, 146, 230)', 'rgb(198, 221, 110)', 'rgb(92, 124, 114)', 'rgb(135, 206, 235)', 'rgb(78, 118, 155)'];
+
+        const chartData = {
+          labels: labels,
+          datasets: [
+            {
+              data: quantity,
+              backgroundColor: backgroundColor,
+            },
+          ],
+        };
+        setChartData(chartData)
+        setTableData(data)
+      })
+    }
+    else if (props.details.role === "company") {
+      const stockalert = axios.get('/prothreshold_c').then((res) => {
+        console.log("Threshold Stock Data: ", res.data)
+        const data = res.data
+        const labels = data.map(item => item.name)
+        const quantity = data.map(item => item.quantity)
+        const backgroundColor = ['blue', 'lightblue', 'deepskyblue', 'dodgerblue', 'royalblue']
+        const chartData = {
+          labels: labels,
+          datasets: [
+            {
+              data: quantity,
+              backgroundColor: backgroundColor,
+            },
+          ],
+        };
+        setChartData(chartData)
+        setTableData(data)
+      })
+    }
+    // const stocktable = axios.get('/prothreshold_v').then((res) => {
+    //   console.log("Stock Data: ", res.data)
+    //   const data = res.data
+    //   setTableData(data)
+    // })
+  }, [])
+
+
+  const productsWithId = tabledata.map((product) => ({
+    ...product,
+    id: product._id, // Assigning _id as the id property
+  }));
 
   return (
     <div className="flex" style={{ display: 'flex', flexDirection: 'row', margin: "3rem auto", width: "75%", justifyContent: "space-between" }}>
@@ -70,7 +130,8 @@ const StockAlert = () => {
         // border: "2px solid blue",
         justifyContent: "top",
       }}>
-        <EnhancedTable data={sampleData} />
+        {/* <EnhancedTable data={tabledata} /> */}
+        <StockAlertTable data={productsWithId} />
       </div>
     </div>
 

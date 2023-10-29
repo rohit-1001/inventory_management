@@ -21,6 +21,8 @@ import Navbar from "./components/Navbar";
 import Navbar2 from "./components/Navbar2";
 import Navbar3 from "./components/Navbar3";
 import HomeAbout from "./components/AboutUs/HomeAbout";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 // import OrderHistory from "./components/OrderHistory";
 import Marketplace from "./Pages/Marketplace";
 import SearchResult from './Pages/SearchResult';
@@ -203,6 +205,9 @@ function App() {
   }, [])
   return (
     <>
+      <div>
+        <ToastContainer />
+      </div>
       {/* <context.Provider value={{state, dispatch}}> */}
       {role === "visitor" && (
         <>
@@ -226,12 +231,12 @@ function App() {
         <>
           <Navbar details={{ role, setRole }} />
           <Routes>
-            <Route path="/codb" element={<CDashboard details={{role}}/>} />
+            <Route path="/codb" element={<CDashboard details={{ role }} />} />
             <Route path="/copr" element={<CProfile />} />
-            <Route path="/orders" element={<Orders details={{role}} />} />
+            <Route path="/orders" element={<Orders details={{ role }} />} />
             <Route
               path="/products"
-              element={<Products items={{role}} />}
+              element={<Products items={{ role }} />}
             />
             {/* <Route path="/order-history" element={<OrderHistory details={role}/>} /> */}
             <Route path="/requests" element={<Requests />} />
@@ -243,12 +248,12 @@ function App() {
         <>
           <Navbar details={{ role, setRole }} />
           <Routes>
-            <Route path="/codb" element={<CDashboard details={{role}}/>} />
+            <Route path="/codb" element={<CDashboard details={{ role }} />} />
             <Route path="/copr" element={<CProfile />} />
-            <Route path="/orders" element={<Orders details={{role}} />} />
+            <Route path="/orders" element={<Orders details={{ role }} />} />
             <Route
               path="/products"
-              element={<Products items={{ role}} />}
+              element={<Products items={{ role }} />}
             />
             {/* <Route path="/order-history" element={<OrderHistory details={{ role }} />} /> */}
             <Route path="/requests" element={<Requests />} />

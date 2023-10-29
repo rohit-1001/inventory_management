@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import signin from "../assets/signin.png";
 import signup from "../assets/signup.png";
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 const Login = (props) => {
   useEffect(() => {
@@ -74,30 +76,30 @@ const Login = (props) => {
       try {
         const res = await axios.post("/companysignin", userData);
         if (res.status !== 200) {
-          window.alert(res.data.msg);
+          toast.error(res.data.msg);
         } else {
-          window.alert(res.data.msg);
+          toast.success(res.data.msg);
           const { setRole } = props.details;
           setRole("company")
           navigate("/codb");
         }
       } catch (error) {
-        window.alert("Invalid Credentials");
+        toast.error("Invalid Credentials");
       }
     }
     else if (role.value === "vendor") {
       try {
         const res = await axios.post("/vendorsignin", userData);
         if (res.status !== 200) {
-          window.alert(res.data.msg);
+          toast.error(res.data.msg);
         } else {
-          window.alert(res.data.msg);
+          toast.success(res.data.msg);
           const { setRole } = props.details;
           setRole("vendor")
           navigate("/codb");
         }
       } catch (error) {
-        window.alert("Invalid Credentials");
+        toast.error("Invalid Credentials");
       }
     }
   };
@@ -109,14 +111,14 @@ const Login = (props) => {
         const res = await axios.post("/companyregister", userDataSignUp);
 
         if (res.status === 200) {
-          window.alert("User registered successfully");
+          toast.success("User registered successfully");
         } else {
-          window.alert("User registration failed" + res.msg);
+          toast.error("User registration failed" + res.msg);
         }
         onclick_sign_in_btn();
         onclick_sign_in_btn2();
       } catch (error) {
-        window.alert("Vendor registration unsuccessful ");
+        toast.error("Vendor registration unsuccessful ");
       }
     }
     else if (role.value === "vendor") {
@@ -124,14 +126,14 @@ const Login = (props) => {
         const res = await axios.post("/vendorregister", userDataSignUp);
 
         if (res.status === 200) {
-          window.alert("User registered successfully");
+          toast.success("User registered successfully");
         } else {
-          window.alert("User registration failed" + res.msg);
+          toast.error("User registration failed" + res.msg);
         }
         onclick_sign_in_btn();
         onclick_sign_in_btn2();
       } catch (error) {
-        window.alert("Company registration unsuccessful ");
+        toast.error("Company registration unsuccessful ");
       }
     }
   };

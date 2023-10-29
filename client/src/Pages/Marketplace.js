@@ -108,8 +108,8 @@ const Marketplace = () => {
         setOpen(true);
     };
 
-    const handleClose = async() => {
-        if(selectedProducts.length!=0){
+    const handleOrderSubmit = async () => {
+        if(selectedProducts.length!==0){
             try {
                 const c = await axios.post('/request', {
                     c_email:currcompany.email,
@@ -126,10 +126,21 @@ const Marketplace = () => {
                     alert(error.response.data.error)
                 }
             }
+            setOpen(false);
+            setcurrcompany('undefined');
+            setSelectedProducts([]);
+            setSelectedProductPrice(0);
+            setSelectedProduct('NaN');
+            setSelectedProductPid('NaN');
+            setSelectedProductQuantity(0);
         }
+        else{
+            alert("No products selected")
+        }
+    }
+
+    const handleClose = async() => {
         setOpen(false);
-        console.log("Selected Products", selectedProducts)
-        console.log("Selected Company", currcompany)
         setcurrcompany('undefined');
         setSelectedProducts([]);
         setSelectedProductPrice(0);
@@ -239,7 +250,7 @@ const Marketplace = () => {
                             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
                                 Order Details
                             </Typography>
-                            <Button autoFocus color="inherit" onClick={handleClose}>
+                            <Button autoFocus color="inherit" onClick={handleOrderSubmit}>
                                 Order
                             </Button>
                         </Toolbar>
@@ -374,7 +385,7 @@ const Marketplace = () => {
                                         // Get the selected product and quantity
                                         const selectedProduct = document.querySelector('select').value;
                                         const quantity = parseInt(document.querySelector('#quan').value);
-                                        if(selectedProduct=='NaN'){
+                                        if(selectedProduct==='NaN'){
                                             alert("Product not selected")
                                         }
                                         else if(quantity===0){

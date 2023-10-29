@@ -89,7 +89,8 @@ const StockAlert = (props) => {
         const data = res.data
         const labels = data.map(item => item.name)
         const quantity = data.map(item => item.quantity)
-        const backgroundColor = ['blue', 'lightblue', 'deepskyblue', 'dodgerblue', 'royalblue']
+        // const backgroundColor = ['blue', 'lightblue', 'deepskyblue', 'dodgerblue', 'royalblue']
+        const backgroundColor = ['rgb(124, 146, 230)', 'rgb(198, 221, 110)', 'rgb(92, 124, 114)', 'rgb(135, 206, 235)', 'rgb(78, 118, 155)'];
         const chartData = {
           labels: labels,
           datasets: [

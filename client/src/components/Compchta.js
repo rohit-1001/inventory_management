@@ -54,8 +54,15 @@ const Compchta = (props) => {
             const stockalert = axios.get('/topselling_v').then((res) => {
                 console.log("Top Selling Stock Data: ", res.data)
                 const data = res.data
-                const labels = data.map(item => item.name)
-                const quantity = data.map(item => item.sales)
+                console.log("Data is: ", data)
+                const top5Products = data.top5Products;
+                const others = data.others;
+                const labels = top5Products.map(item => item.name);
+                labels.push('Others');
+
+                // Create data for the chart, including the sales of "Others"
+                const quantity = top5Products.map(item => item.sales);
+                quantity.push(others);
                 // const backgroundColor = ['blue', 'lightblue', 'deepskyblue', 'dodgerblue', 'royalblue']
                 // const backgroundColor = ['rgb(124, 146, 230)', 'rgb(198, 221, 110)', 'rgb(25, 25, 112)', 'rgb(127, 255, 0)', 'rgb(0, 128, 128)'];
                 // const backgroundColor = ['rgb(124, 146, 230)', 'rgb(198, 221, 110)', 'rgb(172, 190, 223)', 'rgb(150, 207, 139)', 'rgb(126, 144, 120)'];
@@ -71,16 +78,27 @@ const Compchta = (props) => {
                     ],
                 };
                 setChartData(chartData)
-                setTableData(data)
+                setTableData(top5Products)
             })
         }
         else if (props.details.role === "company") {
             const stockalert = axios.get('/topselling_c').then((res) => {
                 console.log("Top Selling Stock Data: ", res.data)
                 const data = res.data
-                const labels = data.map(item => item.name)
-                const quantity = data.map(item => item.sales)
-                const backgroundColor = ['blue', 'lightblue', 'deepskyblue', 'dodgerblue', 'royalblue']
+                console.log("Data is: ", data)
+                const top5Products = data.top5Products;
+                const others = data.others;
+                const labels = top5Products.map(item => item.name);
+                labels.push('Others');
+
+                // Create data for the chart, including the sales of "Others"
+                const quantity = top5Products.map(item => item.sales);
+                quantity.push(others);
+                // const backgroundColor = ['blue', 'lightblue', 'deepskyblue', 'dodgerblue', 'royalblue']
+                // const backgroundColor = ['rgb(124, 146, 230)', 'rgb(198, 221, 110)', 'rgb(25, 25, 112)', 'rgb(127, 255, 0)', 'rgb(0, 128, 128)'];
+                // const backgroundColor = ['rgb(124, 146, 230)', 'rgb(198, 221, 110)', 'rgb(172, 190, 223)', 'rgb(150, 207, 139)', 'rgb(126, 144, 120)'];
+                const backgroundColor = ['rgb(124, 146, 230)', 'rgb(198, 221, 110)', 'rgb(92, 124, 114)', 'rgb(135, 206, 235)', 'rgb(78, 118, 155)'];
+
                 const chartData = {
                     labels: labels,
                     datasets: [
@@ -91,7 +109,7 @@ const Compchta = (props) => {
                     ],
                 };
                 setChartData(chartData)
-                setTableData(data)
+                setTableData(top5Products)
             })
         }
 

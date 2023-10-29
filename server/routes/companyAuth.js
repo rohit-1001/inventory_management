@@ -480,12 +480,16 @@ router.get('/topselling_c', async(req, res) => {
         products = products.filter(product => product.sales !== 0);
         products.sort((a, b) => b.sales - a.sales);
         let top5Products = []
+        let others=0
         if (products.length < 5) {
             top5Products = products;
-          } else {
+        } else {
             top5Products = products.slice(0, 5);
-          }
-        return res.status(200).json(top5Products);
+            for(i=5; i<products.length; i++){
+                others+=products[i].sales
+            }
+        }
+        return res.status(200).json({top5Products, others});
       } catch (error) {
         res.status(500).send(error);
       }

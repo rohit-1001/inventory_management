@@ -43,9 +43,6 @@ const Orders = (props) => {
     getallOrders();
     setCall(false)
   }, [call]);
-  useEffect(() => {
-    console.log("All Orders: ", allorders)
-  }, [allorders]);
 
   const orderswithID = allorders.map((order) => ({
     ...order,

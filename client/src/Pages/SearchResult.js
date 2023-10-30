@@ -96,8 +96,6 @@ const SearchResult = () => {
 
     const handleClose = () => {
         setOpen(false);
-        console.log("Selected Products", selectedProducts)
-        console.log("Selected Company", currcompany)
         setcurrcompany('undefined');
         setSelectedProducts([]);
         setSelectedProductPrice('NaN');
@@ -107,28 +105,26 @@ const SearchResult = () => {
 
 
     const getFilteredCompanies = async (det) => {
-        console.log("Inside getFilteredCompanies")
         const search = det;
         const endpoint = `http://localhost:8000/getFilteredCompanies`;
         const payload = {
             search: search,
         }
-        console.log("Payload : ", payload)
         try {
             await axios
                 .post(endpoint, payload)
                 .then((response) => {
-                    console.log("Response Data: ", response.data)
+                    
                     setCompanies(response.data);
                 })
         } catch (err) {
+            // Purposely Kept
             console.log(err);
         }
     }
 
     useEffect(() => {
         const searchquery = window.location.href.split(":")[3];
-        console.log("Search Query : ", searchquery);
         getFilteredCompanies(searchquery);
     }, [])
     return (

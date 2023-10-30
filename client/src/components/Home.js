@@ -107,7 +107,7 @@ const Home = () => {
           <div className="testimonial-box999">
             <div className="testimonial123">
               <i className="fas123 fa-quote-right"></i>
-              <span className="testimonial-text123">"Efficient inventory management has been a game-changer for our business. A partnership with Sangrah has been one of our best decisions."</span>
+              <span className="testimonial-text123">"Revolutionizing our operations, Sangrah's inventory management has redefined success for our company. A trusted ally, they've unlocked new horizons for us. Our growth story is incomplete without their invaluable support."</span>
               <div className="testimonial-user123">
                 <img src={testi2} alt="user-img" className="user-img123" />
                 <div className="user-info123">
@@ -125,7 +125,7 @@ const Home = () => {
           <div className="testimonial-box999">
             <div className="testimonial123">
               <i className="fas123 fa-quote-right"></i>
-              <span className="testimonial-text123">"Efficient inventory management has been a game-changer for our business. A partnership with Sangrah has been one of our best decisions."</span>
+              <span className="testimonial-text123">"The transformation we've witnessed with Sangrah's inventory management is nothing short of remarkable. Their partnership is a strategic asset, propelling our business forward. In the journey of success, they've been our steadfast companion."</span>
               <div className="testimonial-user123">
                 <img src={testi3} alt="user-img" className="user-img123" />
                 <div className="user-info123">

@@ -154,12 +154,12 @@ const Compchta = (props) => {
 
     return (
         <div>
-            <div className="flex" style={{ display: 'flex', flexDirection: 'row', margin: "3rem auto", width: "75%", justifyContent: "space-between" }}>
+            <div className="flex" style={{ display: 'flex', flexDirection: 'row', margin: "3rem auto", width: "75%", justifyContent: "space-around" }}>
                 <div className='flex-item' style={{
                     // border: "2px solid black"
                 }}>
                     {/* <EnhancedTable data={sampleData} /> */}
-                    <TopSellingTable data={productsWithId} />
+                    <TopSellingTable data={{ productsWithId, role: props.details.role }} />
                 </div>
                 <div className='flex-item' style={{
                     display: "flex",

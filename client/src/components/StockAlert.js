@@ -134,7 +134,7 @@ const StockAlert = (props) => {
   }));
 
   return (
-    <div className="flex" style={{ display: 'flex', flexDirection: 'row', margin: "3rem auto", width: "75%", justifyContent: "space-between" }}>
+    <div className="flex" style={{ display: 'flex', flexDirection: 'row', margin: "3rem auto", width: "75%", justifyContent: "space-around" }}>
       <div className='flex-item' style={{
         // border: "2px solid black",
         margin: "0 2em 0 0",

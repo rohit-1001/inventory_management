@@ -7,10 +7,10 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 const columns = [
-    { field: 'pid', headerName: 'ID', width: 70 },
-    { field: 'name', headerName: 'Product Name', width: 200 },
-    { field: 'quantity', headerName: 'Quantity', width: 200 },
-    { field: 'threshold', headerName: 'Threshold Value', width: 200 },
+    { field: 'pid', headerName: 'ID', width: 70, align: 'center', headerAlign: 'center' },
+    { field: 'name', headerName: 'Product Name', width: 200, align: 'center', headerAlign: 'center' },
+    { field: 'quantity', headerName: 'Quantity', width: 200, align: 'center', headerAlign: 'center' },
+    { field: 'threshold', headerName: 'Threshold Value', width: 200, align: 'center', headerAlign: 'center' },
 ];
 
 function CustomToolbar() {

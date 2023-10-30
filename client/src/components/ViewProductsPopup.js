@@ -11,9 +11,6 @@ import {
 import "../css_files/Popup.css";
 
 const ViewProductsPopup = ({ details }) => {
-  if(details){
-    console.log(details)
-  }
   const handleClose = () => {
     details.setIsVisible(false);
   };

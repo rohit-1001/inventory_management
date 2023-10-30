@@ -1,8 +1,8 @@
 import "./App.css";
 import "./css_files/rohit.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useState, useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Routes, Route} from "react-router-dom";
 // import Navbar from './components/Navbar';
 import Home from "./components/Home";
 import Contact from "./components/Contact";
@@ -231,6 +231,7 @@ function App() {
         <>
           <Navbar details={{ role, setRole }} />
           <Routes>
+            <Route exact path="/" element={<CDashboard details={{ role }} />} />
             <Route path="/codb" element={<CDashboard details={{ role }} />} />
             <Route path="/copr" element={<CProfile />} />
             <Route path="/orders" element={<Orders details={{ role }} />} />
@@ -248,6 +249,7 @@ function App() {
         <>
           <Navbar details={{ role, setRole }} />
           <Routes>
+            <Route exact path="/" element={<CDashboard details={{ role }} />} />
             <Route path="/codb" element={<CDashboard details={{ role }} />} />
             <Route path="/copr" element={<CProfile />} />
             <Route path="/orders" element={<Orders details={{ role }} />} />
@@ -268,6 +270,7 @@ function App() {
         <>
           <Navbar3 details={{ setRole }} />
           <Routes>
+            <Route exact path="/" element={<Admin />} />
             <Route path="/adminDashboard" element={<Admin />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

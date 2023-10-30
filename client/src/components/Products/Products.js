@@ -10,10 +10,8 @@ import ProductTable from "./ProductTable";
 import UpdateStockPopUp from "../UpdateStockPopUp";
 import { TextField, Button } from "@mui/material";
 import axios from "axios";
-import { createRoot } from 'react-dom/client';
-import {
-  Typography,
-} from "@mui/material";
+import { createRoot } from "react-dom/client";
+import { Typography } from "@mui/material";
 import ListItemText from "@mui/material/ListItemText";
 import ListItem from "@mui/material/ListItem";
 import List from "@mui/material/List";
@@ -21,9 +19,9 @@ import Divider from "@mui/material/Divider";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Slide from "@mui/material/Slide";
-import 'react-toastify/dist/ReactToastify.css';
-import 'react-toastify/dist/ReactToastify.css';
-import { toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 // const rows = [
 //   { id: 1, date: "2019-09-09", vendor: "Jon", productName: "Shampoo" },
@@ -48,9 +46,9 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const Products = (props) => {
   useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-    document.title = 'Sangrah | Products';
-  }, [])
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+    document.title = "Sangrah | Products";
+  }, []);
   // ======================================================
   const [isVisible, setIsVisible] = useState(false);
   const [currInput, setCurrInput] = useState("");
@@ -66,9 +64,6 @@ const Products = (props) => {
   useEffect(() => {
     getAllProducts();
   }, []);
-  useEffect(() => {
-    console.log("All Products: ", allProducts);
-  }, [allProducts]);
   const productsWithId = allProducts.map((product) => ({
     ...product,
     id: product._id, // Assigning _id as the id property
@@ -143,17 +138,54 @@ const Products = (props) => {
     event.preventDefault();
     searchPro();
   };
-  const onClickUpdate = async (name, quantity, category, pid,desc,  manufacturer, threshold, s_price, c_price) => {
+  const onClickUpdate = async (
+    name,
+    quantity,
+    category,
+    pid,
+    desc,
+    manufacturer,
+    threshold,
+    s_price,
+    c_price
+  ) => {
     setIsVisible(true);
     try {
       const c = await axios.get("/getallproducts", {
         withCredentials: true,
       });
-      const root = createRoot(document.getElementById('forShowingUpdateStockPopup'));
-      root.render(<UpdateStockPopUp details={{ pid, name, category, quantity, setIsVisible, setAllProducts, setFilteredProducts, currInput, allProducts, filteredProducts, role:props.items.role, desc, manufacturer, threshold, s_price, c_price }} />);
+      const root = createRoot(
+        document.getElementById("forShowingUpdateStockPopup")
+      );
+      root.render(
+        <UpdateStockPopUp
+          details={{
+            pid,
+            name,
+            category,
+            quantity,
+            setIsVisible,
+            setAllProducts,
+            setFilteredProducts,
+            currInput,
+            allProducts,
+            filteredProducts,
+            role: props.items.role,
+            desc,
+            manufacturer,
+            threshold,
+            s_price,
+            c_price,
+          }}
+        />
+      );
     } catch (error) {
       console.log(error);
-      toast.error("Some error occured")
+      if (error.response) {
+        toast.error(error.response.data.error);
+      } else {
+        toast.error("Some error occured");
+      }
     }
   };
   const handleInputChange2 = (e) => {
@@ -163,7 +195,7 @@ const Products = (props) => {
     searchPro();
   }, [currInput]);
   useEffect(() => {
-    getAllProducts()
+    getAllProducts();
     searchPro();
   }, [isVisible]);
 
@@ -191,8 +223,12 @@ const Products = (props) => {
         });
         handleClose();
       } catch (error) {
-        console.log(error); 
-        toast.error("Internal server error");
+        console.log(error);
+        if (error.response) {
+          toast.error(error.response.data.error);
+        } else {
+          toast.error("Some error occured");
+        }
       }
     } else if (props.items.role === "company") {
       try {
@@ -217,7 +253,11 @@ const Products = (props) => {
         handleClose();
       } catch (error) {
         console.log(error);
-        toast.error("Internal server error");
+        if (error.response) {
+          toast.error(error.response.data.error);
+        } else {
+          toast.error("Some error occured");
+        }
       }
     }
     getAllProducts();
@@ -384,10 +424,18 @@ const Products = (props) => {
           >
             <AppBar sx={{ position: "relative" }}>
               <Toolbar>
-                <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+                <Typography
+                  sx={{ ml: 2, flex: 1 }}
+                  variant="h6"
+                  component="div"
+                >
                   Update Stock
                 </Typography>
-                <Button autoFocus color="inherit" onClick={handleCloseUpdateBox}>
+                <Button
+                  autoFocus
+                  color="inherit"
+                  onClick={handleCloseUpdateBox}
+                >
                   Close
                 </Button>
               </Toolbar>
@@ -471,9 +519,20 @@ const Products = (props) => {
                           <Button
                             className="link_in_table"
                             onClick={() => {
-                              onClickUpdate(item.name, item.quantity, item.category, item.pid, item.desc, props.items.role==="vendor" ? item.manufacturer : "", item.threshold, item.s_price, item.c_price)
-                            }
-                            }
+                              onClickUpdate(
+                                item.name,
+                                item.quantity,
+                                item.category,
+                                item.pid,
+                                item.desc,
+                                props.items.role === "vendor"
+                                  ? item.manufacturer
+                                  : "",
+                                item.threshold,
+                                item.s_price,
+                                item.c_price
+                              );
+                            }}
                           >
                             Update
                           </Button>

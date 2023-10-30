@@ -54,7 +54,11 @@ export default function Adminlogin (props123) {
           navigate("/adminDashboard");
         }
       } catch (error) {
-        toast.error("Invalid Credentials");
+        if (error.response) {
+          toast.error(error.response.data.error);
+        } else {
+          toast.error("Some error occured");
+        }
       }
   };
 

@@ -26,7 +26,9 @@ function CProfile() {
       setNewUser({ name, email, phone })
     } catch (error) {
       if (error.response) {
-        toast.error(error.response.data.error)
+        toast.error(error.response.data.error);
+      } else {
+        toast.error("Some error occured");
       }
     }
   }
@@ -71,7 +73,9 @@ function CProfile() {
       }
     } catch (error) {
       if (error.response) {
-       toast.error(error.response.data.error)
+        toast.error(error.response.data.error);
+      } else {
+        toast.error("Some error occured");
       }
     }
     getUserInfo()

@@ -443,14 +443,6 @@ const Products = (props) => {
               ) : (
                 <>
                   <List>
-                    {/* <ListItemText
-                    primary="Matching Results"
-                    style={{
-                      textAlign: "left",
-                      marginLeft: "1rem",
-                      fontSize: "1.5rem",
-                    }}
-                  /> */}
                     <Typography variant="h5" style={{ margin: "10px" }}>
                       Matching Results
                     </Typography>

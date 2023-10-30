@@ -55,12 +55,30 @@ const Compchta = (props) => {
                 const data = res.data
                 const top5Products = data.top5Products;
                 const others = data.others;
-                const labels = top5Products.map(item => item.name);
-                labels.push('Others');
+                // const labels = top5Products.map(item => item.name);
+                // labels.push('Others');
 
-                // Create data for the chart, including the sales of "Others"
-                const quantity = top5Products.map(item => item.sales);
-                quantity.push(others);
+                // // Create data for the chart, including the sales of "Others"
+                // const quantity = top5Products.map(item => item.sales);
+                // quantity.push(others);
+                let labels = [];
+                let quantity = [];
+                if (data.top5Products.length === 0) {
+                    labels.push('No Data');
+                    quantity.push(100);
+
+                }
+                else {
+                    // const labels = top5Products.map(item => item.name);
+                    // labels.push('Others');
+                    // const quantity = top5Products.map(item => item.sales);
+                    // quantity.push(others);
+
+                    labels = top5Products.map(item => item.name);
+                    labels.push('Others');
+                    quantity = top5Products.map(item => item.sales);
+                    quantity.push(others);
+                }
                 // const backgroundColor = ['blue', 'lightblue', 'deepskyblue', 'dodgerblue', 'royalblue']
                 // const backgroundColor = ['rgb(124, 146, 230)', 'rgb(198, 221, 110)', 'rgb(25, 25, 112)', 'rgb(127, 255, 0)', 'rgb(0, 128, 128)'];
                 // const backgroundColor = ['rgb(124, 146, 230)', 'rgb(198, 221, 110)', 'rgb(172, 190, 223)', 'rgb(150, 207, 139)', 'rgb(126, 144, 120)'];
@@ -84,12 +102,26 @@ const Compchta = (props) => {
                 const data = res.data
                 const top5Products = data.top5Products;
                 const others = data.others;
-                const labels = top5Products.map(item => item.name);
-                labels.push('Others');
+                let labels = [];
+                let quantity = [];
+                if (data.top5Products.length === 0) {
+                    labels.push('No Data');
+                    quantity.push(100);
 
+                }
+                else {
+                    // const labels = top5Products.map(item => item.name);
+                    // labels.push('Others');
+                    // const quantity = top5Products.map(item => item.sales);
+                    // quantity.push(others);
+
+                    labels = top5Products.map(item => item.name);
+                    labels.push('Others');
+                    quantity = top5Products.map(item => item.sales);
+                    quantity.push(others);
+                }
                 // Create data for the chart, including the sales of "Others"
-                const quantity = top5Products.map(item => item.sales);
-                quantity.push(others);
+
                 // const backgroundColor = ['blue', 'lightblue', 'deepskyblue', 'dodgerblue', 'royalblue']
                 // const backgroundColor = ['rgb(124, 146, 230)', 'rgb(198, 221, 110)', 'rgb(25, 25, 112)', 'rgb(127, 255, 0)', 'rgb(0, 128, 128)'];
                 // const backgroundColor = ['rgb(124, 146, 230)', 'rgb(198, 221, 110)', 'rgb(172, 190, 223)', 'rgb(150, 207, 139)', 'rgb(126, 144, 120)'];
@@ -122,12 +154,12 @@ const Compchta = (props) => {
 
     return (
         <div>
-            <div className="flex" style={{ display: 'flex', flexDirection: 'row', margin: "3rem auto", width: "75%", justifyContent: "space-between" }}>
+            <div className="flex" style={{ display: 'flex', flexDirection: 'row', margin: "3rem auto", width: "75%", justifyContent: "space-around" }}>
                 <div className='flex-item' style={{
                     // border: "2px solid black"
                 }}>
                     {/* <EnhancedTable data={sampleData} /> */}
-                    <TopSellingTable data={productsWithId} />
+                    <TopSellingTable data={{ productsWithId, role: props.details.role }} />
                 </div>
                 <div className='flex-item' style={{
                     display: "flex",

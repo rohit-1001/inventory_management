@@ -145,7 +145,7 @@ const UpperBoxes = (props) => {
             <div className="text-dark  rounded d-flex align-items-center p-4" style={{ background: "rgb(72, 104, 223, 0.7)", boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px" }}>
               <i className="fa fa-chart-line fa-4x text-tertiary" />
               <div className="ms-4 justify-content-center">
-                <p className="mb-2">Today Sales</p>
+                <p className="mb-2">Total Sales</p>
                 <h6 className="mb-0">₹{data.tsales}</h6>
               </div>
             </div>
@@ -163,7 +163,7 @@ const UpperBoxes = (props) => {
             <div className="text-dark  rounded d-flex align-items-center p-4" style={{ background: "rgb(72, 104, 223, 0.7)", boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px" }}>
               <i className="fa fa-chart-area fa-4x text-tertiary" />
               <div className="ms-4 justify-content-center">
-                <p className="mb-2 ">Sales</p>
+                <p className="mb-2 ">Current Month Sales</p>
                 <h6 className="mb-0">₹{data.sales}</h6>
               </div>
             </div>

@@ -12,7 +12,7 @@ const Admin = require('../models/Admin')
 router.post('/adminlogin', async (req, res) => {
     const {email, password} = req.body;
     if(!email || !password){
-        res.status(400).json({msg: "Please fill all required fields"})
+        return res.status(400).json({error: "Please fill all required fields"})
     }
     try {
         const emailExist = await Admin.findOne({email: email});
@@ -24,17 +24,17 @@ router.post('/adminlogin', async (req, res) => {
                     expires: new Date(Date.now() + 604800),
                     httpOnly: true
                 })
-                res.status(200).json({msg: "Admin login successful"})
+                return res.status(200).json({msg: "Admin login successful"})
             }
             else{
-                res.status(400).json({msg: "Admin login failed"})
+                return res.status(400).json({error: "Admin login failed"})
             }
         }
         else{
-            res.status(400).json({msg: "Invalid credentials"})
+            return res.status(400).json({error: "Invalid credentials"})
         }
     } catch (error) {
-        res.status(500).json({msg: "Some unexpected error occured"});
+        return res.status(500).json({error: "Some unexpected error occured"});
     }
 })
 
@@ -45,14 +45,14 @@ router.get('/allcompanies', async (req, res) => {
         const companies = await Company.find();
 
         if (!companies || companies.length === 0) {
-            return res.status(404).json({ message: 'No companies found' });
+            return res.status(404).json({ error: 'No companies found' });
         }
 
         // Send the list of companies as a JSON response
-        res.status(200).json(companies);
+        return res.status(200).json(companies);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'Internal server error' });
+        return res.status(500).json({ error: 'Internal server error' });
     }
 });
 
@@ -64,14 +64,14 @@ router.get('/allvendors', async (req, res) => {
         const vendors = await Vendor.find();
 
         if (!vendors || vendors.length === 0) {
-            return res.status(404).json({ message: 'No vendors found' });
+            return res.status(404).json({ error: 'No vendors found' });
         }
 
         // Send the list of vendors as a JSON response
-        res.status(200).json(vendors);
+        return res.status(200).json(vendors);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'Internal server error' });
+        return res.status(500).json({ error: 'Internal server error' });
     }
 });
 
@@ -88,10 +88,10 @@ router.post('/allproductsadmin', async (req, res) => {
             if (!products) {
                 return res.status(400).json({ error: "No products found" });
             }
-            res.status(200).json(products);
+            return res.status(200).json(products);
         }
         catch (error) {
-            res.status(500).json({ error: "Internal server error" });
+            return res.status(500).json({ error: "Internal server error" });
         }
     }
     else if(role==="company"){
@@ -104,11 +104,11 @@ router.post('/allproductsadmin', async (req, res) => {
             if (!products) {
                 return res.status(400).json({ error: "No products found" });
             }
-            res.status(200).json(products);
+            return res.status(200).json(products);
         }
         catch (error) {
             console.error(error);
-            res.status(500).json({ error: "Internal server error" });
+            return res.status(500).json({ error: "Internal server error" });
         }
     }
 });
@@ -139,7 +139,7 @@ router.get('/totaluppervalues', async (req, res) => {
         return res.status(200).json({tpro:uniqueProductIds.size, tsales:tsales})
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: "Internal server error" });
+        return res.status(500).json({ error: "Internal server error" });
     }
 })
 
@@ -147,7 +147,7 @@ router.get('/totaluppervalues', async (req, res) => {
 
 router.post('/adminlogout', (req, res) => {
     res.clearCookie('inv_man', {path:'/'})
-    res.status(200).json({msg:"Logged out successfully"})
+    return res.status(200).json({msg:"Logged out successfully"})
 })
 
 

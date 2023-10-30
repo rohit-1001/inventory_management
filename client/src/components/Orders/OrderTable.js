@@ -19,11 +19,7 @@ function CustomToolbar() {
     <GridToolbarContainer>
       <GridToolbarExport />
       <GridToolbarDensitySelector />
-      <IconButton
-        color="primary"
-        aria-label="delete selected rows"
-        component="span"
-      >
+      <IconButton color="primary" aria-label="delete selected rows" component="span">
         <DeleteIcon />
       </IconButton>
     </GridToolbarContainer>
@@ -190,12 +186,13 @@ export default function OrderTable(props) {
     //     type: 'numeric',
     //     width: 230,
     // },
-    { field: "id", headerName: "ID", width: 250 },
+    { field: "id", headerName: "ID", width: 250, align: 'center', headerAlign: 'center' },
     {
       field: props.data.role === "vendor" ? "c_email" : "v_email",
       headerName:
         props.data.role === "vendor" ? "Company Email" : "Vendor Email",
       width: 250,
+      align: 'center',
       renderCell: (params) => (
         <ShowInfo
           email={
@@ -205,11 +202,14 @@ export default function OrderTable(props) {
           }
         />
       ),
+      headerAlign: 'center',
     },
     {
       field: "products", // Placeholder for button/dropdown
       headerName: "Products",
       width: 170,
+      align: 'center',
+      headerAlign: 'center',
       renderCell: (params) => (
         <ProductDetailsButton products={params.row.products} />
       ),
@@ -219,24 +219,29 @@ export default function OrderTable(props) {
     //     headerName: 'Products',
     //     hide: true,
     // },
-    { field: "status", headerName: "Status", width: 150 },
+    { field: "status", headerName: "Status", width: 150, align: 'center', headerAlign: 'center' },
     props.data.role === "vendor"
       ? {
           field: "action",
           headerName: "Action",
           headerAlign: "center",
           headerWidth: 200,
+          align: 'center',
+      headerAlign: 'center',
           renderCell: (params) => {
             const status = params.row.status;
 
             switch (status) {
               case "Requested":
                 return (
-                  <div style={{ display: "flex", justifyContent: "center" }}>
+                  <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
                     <Button
                       className="link_in_table"
                       onClick={() => {
                         revokeRequest(params.row.id);
+                      }}
+                      style={{
+                        color: "red",
                       }}
                     >
                       Revoke
@@ -245,11 +250,14 @@ export default function OrderTable(props) {
                 );
               case "Confirmation pending":
                 return (
-                  <div style={{ display: "flex", justifyContent: "center" }}>
+                  <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
                     <Button
                       className="link_in_table"
                       onClick={() => {
                         confirmDelivery(params.row.id);
+                      }}
+                      style={{
+                        color: "green",
                       }}
                     >
                       Confirm
@@ -258,6 +266,9 @@ export default function OrderTable(props) {
                       className="link_in_table"
                       onClick={() => {
                         declineConfirmation(params.row.id);
+                      }}
+                      style={{
+                        color: "red",
                       }}
                     >
                       Decline
@@ -275,17 +286,22 @@ export default function OrderTable(props) {
           headerName: "Action",
           headerAlign: "center",
           headerWidth: 200,
+          align: 'center',
           renderCell: (params) => {
             const status = params.row.status;
 
             switch (status) {
               case "Requested":
                 return (
-                  <div style={{ display: "flex", justifyContent: "center" }}>
+                  <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
                     <Button
                       className="link_in_table"
                       onClick={() => {
                         acceptRequest(params.row.id);
+                      }}
+                      style={{
+                        color: "green",
+  
                       }}
                     >
                       Accept
@@ -295,6 +311,10 @@ export default function OrderTable(props) {
                       onClick={() => {
                         rejectRequest(params.row.id);
                       }}
+                      style={{
+                        color: "red",
+  
+                      }}
                     >
                       Reject
                     </Button>
@@ -302,11 +322,15 @@ export default function OrderTable(props) {
                 );
               case "Accepted":
                 return (
-                  <div style={{ display: "flex", justifyContent: "center" }}>
+                  <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
                     <Button
                       className="link_in_table"
                       onClick={() => {
                         dispatchRequest(params.row.id);
+                      }}
+                      style={{
+                        color: "green",
+  
                       }}
                     >
                       Dispatch
@@ -315,11 +339,15 @@ export default function OrderTable(props) {
                 );
               case "Dispatched":
                 return (
-                  <div style={{ display: "flex", justifyContent: "center" }}>
+                  <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
                     <Button
                       className="link_in_table"
                       onClick={() => {
                         confirmationPending(params.row.id);
+                      }}
+                      style={{
+                        color: "green",
+  
                       }}
                     >
                       Request Confirmation

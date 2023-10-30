@@ -138,7 +138,7 @@ const Admin = () => {
             <div className="bg-light rounded d-flex align-items-center justify-content-between p-4">
               <i className="fa fa-chart-area fa-3x text-primary" />
               <div className="ms-3">
-                <p className="mb-2">Today Sales</p>
+                <p className="mb-2">Total Sales</p>
                 <h6 className="mb-0">{data.tsales}</h6>
               </div>
             </div>

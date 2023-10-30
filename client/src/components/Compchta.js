@@ -57,12 +57,30 @@ const Compchta = (props) => {
                 console.log("Data is: ", data)
                 const top5Products = data.top5Products;
                 const others = data.others;
-                const labels = top5Products.map(item => item.name);
-                labels.push('Others');
+                // const labels = top5Products.map(item => item.name);
+                // labels.push('Others');
 
-                // Create data for the chart, including the sales of "Others"
-                const quantity = top5Products.map(item => item.sales);
-                quantity.push(others);
+                // // Create data for the chart, including the sales of "Others"
+                // const quantity = top5Products.map(item => item.sales);
+                // quantity.push(others);
+                let labels = [];
+                let quantity = [];
+                if (data.top5Products.length === 0) {
+                    labels.push('No Data');
+                    quantity.push(100);
+
+                }
+                else {
+                    // const labels = top5Products.map(item => item.name);
+                    // labels.push('Others');
+                    // const quantity = top5Products.map(item => item.sales);
+                    // quantity.push(others);
+
+                    labels = top5Products.map(item => item.name);
+                    labels.push('Others');
+                    quantity = top5Products.map(item => item.sales);
+                    quantity.push(others);
+                }
                 // const backgroundColor = ['blue', 'lightblue', 'deepskyblue', 'dodgerblue', 'royalblue']
                 // const backgroundColor = ['rgb(124, 146, 230)', 'rgb(198, 221, 110)', 'rgb(25, 25, 112)', 'rgb(127, 255, 0)', 'rgb(0, 128, 128)'];
                 // const backgroundColor = ['rgb(124, 146, 230)', 'rgb(198, 221, 110)', 'rgb(172, 190, 223)', 'rgb(150, 207, 139)', 'rgb(126, 144, 120)'];
@@ -88,12 +106,26 @@ const Compchta = (props) => {
                 console.log("Data is: ", data)
                 const top5Products = data.top5Products;
                 const others = data.others;
-                const labels = top5Products.map(item => item.name);
-                labels.push('Others');
+                let labels = [];
+                let quantity = [];
+                if (data.top5Products.length === 0) {
+                    labels.push('No Data');
+                    quantity.push(100);
 
+                }
+                else {
+                    // const labels = top5Products.map(item => item.name);
+                    // labels.push('Others');
+                    // const quantity = top5Products.map(item => item.sales);
+                    // quantity.push(others);
+
+                    labels = top5Products.map(item => item.name);
+                    labels.push('Others');
+                    quantity = top5Products.map(item => item.sales);
+                    quantity.push(others);
+                }
                 // Create data for the chart, including the sales of "Others"
-                const quantity = top5Products.map(item => item.sales);
-                quantity.push(others);
+
                 // const backgroundColor = ['blue', 'lightblue', 'deepskyblue', 'dodgerblue', 'royalblue']
                 // const backgroundColor = ['rgb(124, 146, 230)', 'rgb(198, 221, 110)', 'rgb(25, 25, 112)', 'rgb(127, 255, 0)', 'rgb(0, 128, 128)'];
                 // const backgroundColor = ['rgb(124, 146, 230)', 'rgb(198, 221, 110)', 'rgb(172, 190, 223)', 'rgb(150, 207, 139)', 'rgb(126, 144, 120)'];

@@ -20,6 +20,9 @@ import { faUser } from '@fortawesome/free-solid-svg-icons';// Logout
 import { FaShoppingCart } from 'react-icons/fa';
 import axios from 'axios'
 import "./NavbarStyle.css";
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
+
 const Navbar = (props) => {
   const navigate = useNavigate()
   const [showMediaIcons, setShowMediaIcons] = useState(false);
@@ -50,12 +53,12 @@ const Navbar = (props) => {
           });
 
           if (res.status === 200) {
-            window.alert(res.data.msg);
+            toast.info(res.data.msg);
             setRole("visitor")
             navigate('/login');
           }
         } catch (error) {
-          window.alert('Some error occurred');
+          toast.error('Some error occurred');
         }
       }
       else if (role === "company") {
@@ -65,12 +68,12 @@ const Navbar = (props) => {
           });
 
           if (res.status === 200) {
-            window.alert(res.data.msg);
+            toast.info(res.data.msg);
             setRole("visitor")
             navigate('/login');
           }
         } catch (error) {
-          window.alert('Some error occurred');
+          toast.error('Some error occurred');
         }
       }
     }

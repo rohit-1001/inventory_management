@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 const Signup = () => {
     const [user, setUser] = useState({
@@ -17,14 +19,14 @@ const Signup = () => {
             const res = await axios.post('/register', user)
 
             if (res.status === 200) {
-                window.alert("User registered successfully")
+                toast.success("User registered successfully")
             }
             else {
-                window.alert("User registration failed" + res.msg)
+                toast.error("User registration failed" + res.msg)
             }
             navigate('/login')
         } catch (error) {
-            window.alert("User registration unsuccessful ")
+            toast.warning("User registration unsuccessful ")
         }
     }
     let name, value;

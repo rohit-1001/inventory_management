@@ -14,6 +14,8 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 function Copyright(props) {
   return (
@@ -44,15 +46,15 @@ export default function Adminlogin (props123) {
     try {
         const res = await axios.post("/adminlogin", adminData);
         if (res.status !== 200) {
-          window.alert(res.data.msg);
+          toast.warning(res.data.msg);
         } else {
-          window.alert(res.data.msg);
+          toast.success(res.data.msg);
           const {setRole} = props123.details
           setRole("admin")
           navigate("/adminDashboard");
         }
       } catch (error) {
-        window.alert("Invalid Credentials");
+        toast.error("Invalid Credentials");
       }
   };
 

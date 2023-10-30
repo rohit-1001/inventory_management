@@ -194,16 +194,16 @@ const Login = (props) => {
               </button>
               <p className="social-text123">Or Sign in to our Community</p>
               <div className="social-media123">
-                <a href="/" className="social-icon123">
+                <a target= "_blank" href="https://www.facebook.com/" className="social-icon123">
                   <i className="fab fa-facebook"></i>
                 </a>
-                <a href="/" className="social-icon123">
+                <a target= "_blank" href="https://twitter.com/" className="social-icon123">
                   <i className="fab fa-twitter"></i>
                 </a>
-                <a href="/" className="social-icon123">
+                <a target= "_blank" href="https://www.google.com/" className="social-icon123">
                   <i className="fab fa-google"></i>
                 </a>
-                <a href="/" className="social-icon123">
+                <a target= "_blank" href="https://in.linkedin.com/" className="social-icon123">
                   <i className="fab fa-linkedin-in"></i>
                 </a>
               </div>
@@ -296,16 +296,16 @@ const Login = (props) => {
               </button>
               <p className="social-text123">Or Sign in with social platform</p>
               <div className="social-media123">
-                <a href="/" className="social-icon123">
+                <a target= "_blank" href="https://www.facebook.com/" className="social-icon123">
                   <i className="fab fa-facebook"></i>
                 </a>
-                <a href="/" className="social-icon123">
+                <a target= "_blank" href="https://twitter.com/" className="social-icon123">
                   <i className="fab fa-twitter"></i>
                 </a>
-                <a href="/" className="social-icon123">
+                <a target= "_blank" href="https://www.google.com/" className="social-icon123">
                   <i className="fab fa-google"></i>
                 </a>
-                <a href="/" className="social-icon123">
+                <a target= "_blank" href="https://in.linkedin.com/" className="social-icon123">
                   <i className="fab fa-linkedin-in"></i>
                 </a>
               </div>

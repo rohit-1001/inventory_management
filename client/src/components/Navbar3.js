@@ -19,6 +19,8 @@ import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { faUser } from '@fortawesome/free-solid-svg-icons';// Logout
 import axios from 'axios'
 import "./NavbarStyle.css";
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 const Navbar3 = (props) => {
   const navigate = useNavigate()
   const [showMediaIcons, setShowMediaIcons] = useState(false);
@@ -46,12 +48,12 @@ const Navbar3 = (props) => {
           });
     
           if (res.status === 200) {
-            window.alert(res.data.msg);
+            toast.info(res.data.msg);
             setRole("visitor")
             navigate('/login');
           }
         } catch (error) {
-          window.alert('Some error occurred');
+          toast.error('Some error occurred');
         }
     }
   }

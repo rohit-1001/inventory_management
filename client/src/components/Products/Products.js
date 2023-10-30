@@ -21,6 +21,8 @@ import Divider from "@mui/material/Divider";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Slide from "@mui/material/Slide";
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 
 // const rows = [
@@ -172,9 +174,9 @@ const Products = (props) => {
         const res = await axios.post("/addproducts_v", product);
 
         if (res.status === 201) {
-          window.alert(res.data.message);
+          toast.success(res.data.message);
         } else {
-          window.alert("Adding product failed");
+          toast.error("Adding product failed");
         }
         setProduct({
           name: "",
@@ -189,7 +191,7 @@ const Products = (props) => {
         });
         handleClose();
       } catch (error) {
-        console.log(error);
+        console.log(error); 
         alert("Internal server error");
       }
     } else if (props.items.role === "company") {
@@ -197,9 +199,9 @@ const Products = (props) => {
         const res = await axios.post("/addproducts_c", product);
 
         if (res.status === 201) {
-          window.alert(res.data.message);
+          toast.success(res.data.message);
         } else {
-          window.alert("Adding product failed");
+          toast.error("Adding product failed");
         }
         setProduct({
           name: "",

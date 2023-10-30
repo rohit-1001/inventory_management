@@ -52,9 +52,7 @@ const Compchta = (props) => {
     useEffect(() => {
         if (props.details.role === "vendor") {
             const stockalert = axios.get('/topselling_v').then((res) => {
-                console.log("Top Selling Stock Data: ", res.data)
                 const data = res.data
-                console.log("Data is: ", data)
                 const top5Products = data.top5Products;
                 const others = data.others;
                 // const labels = top5Products.map(item => item.name);
@@ -101,9 +99,7 @@ const Compchta = (props) => {
         }
         else if (props.details.role === "company") {
             const stockalert = axios.get('/topselling_c').then((res) => {
-                console.log("Top Selling Stock Data: ", res.data)
                 const data = res.data
-                console.log("Data is: ", data)
                 const top5Products = data.top5Products;
                 const others = data.others;
                 let labels = [];

@@ -61,7 +61,6 @@ const StockAlert = (props) => {
   useEffect(() => {
     if (props.details.role === "vendor") {
       const stockalert = axios.get('/prothreshold_v').then((res) => {
-        console.log("Threshold Stock Data: ", res.data)
         const data = res.data
         let labels = [];
         let quantity = [];
@@ -94,7 +93,6 @@ const StockAlert = (props) => {
     }
     else if (props.details.role === "company") {
       const stockalert = axios.get('/prothreshold_c').then((res) => {
-        console.log("Threshold Stock Data: ", res.data)
         const data = res.data
         let labels = [];
         let quantity = [];

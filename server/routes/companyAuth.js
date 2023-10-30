@@ -317,7 +317,7 @@ router.post('/getupfields', async (req, res) => {
         // Find the company's data by email
         const dashboard = await Dashboard.findOne({ email });
         if (!dashboard) {
-            return res.status(404).json({ error: 'Company data not found' });
+            res.status(200).json({ sales:0, profit:0, tsales:0 });
         }
         
         // Calculate the total sales and profits for the company based on the monthly data

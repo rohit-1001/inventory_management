@@ -18,7 +18,7 @@ const Footer = () => {
                         <div className="tab1123">
                             <div className="address123">
                                 {/* <p className="Addresshead"><b>OFFICE ADDRESS</b></p> */}
-                                <p className="fullAddress123">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Hic, veritatis saepe. Pariatur accusamus aliquid nesciunt at, deserunt sed perferendis explicabo error veritatis? Expedita voluptas excepturi debitis facere vel! Voluptatibus, modi.</p>
+                                <p className="fullAddress123">Efficiency at its finest, optimizing operations and enhancing productivity. Striving for excellence, we ensure your business succeeds, delivering results that matter. Seamlessly managing inventory, we pave the way for your success. Discover a new level of control, precision, and growth.</p>
                             </div>
                             <div className="implinks123">
                                 <p className="linkshead123"><b>IMPORTANT LINKS</b></p>

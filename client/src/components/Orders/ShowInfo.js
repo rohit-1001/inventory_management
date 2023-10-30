@@ -20,7 +20,6 @@ const ShowInfo = (props) => {
         }
       );
       const { name, email, phone } = c.data.details;
-      console.log(name, " ", email, " ", phone)
       setInfo({ name, email, phone });
     } catch (error) {
 

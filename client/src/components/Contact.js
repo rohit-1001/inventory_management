@@ -25,6 +25,7 @@ const Contact = () => {
           throw new Error('No login found')
         }
       } catch (error) {
+        // Kept purposely to avoid empty catch error if it exists
         console.log(error)
       }
   }

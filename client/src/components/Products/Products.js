@@ -66,9 +66,6 @@ const Products = (props) => {
   useEffect(() => {
     getAllProducts();
   }, []);
-  useEffect(() => {
-    console.log("All Products: ", allProducts);
-  }, [allProducts]);
   const productsWithId = allProducts.map((product) => ({
     ...product,
     id: product._id, // Assigning _id as the id property
@@ -152,7 +149,6 @@ const Products = (props) => {
       const root = createRoot(document.getElementById('forShowingUpdateStockPopup'));
       root.render(<UpdateStockPopUp details={{ pid, name, category, quantity, setIsVisible, setAllProducts, setFilteredProducts, currInput, allProducts, filteredProducts, role:props.items.role, desc, manufacturer, threshold, s_price, c_price }} />);
     } catch (error) {
-      console.log(error);
       toast.error("Some error occured")
     }
   };
@@ -191,7 +187,6 @@ const Products = (props) => {
         });
         handleClose();
       } catch (error) {
-        console.log(error); 
         toast.error("Internal server error");
       }
     } else if (props.items.role === "company") {
@@ -216,7 +211,7 @@ const Products = (props) => {
         });
         handleClose();
       } catch (error) {
-        console.log(error);
+        
         toast.error("Internal server error");
       }
     }

@@ -67,9 +67,9 @@ const Marketplace = () => {
 
     useEffect(() => {
         axios.get('/allcompanies').then((res) => {
-            console.log(res.data);
             setCompanies(res.data);
         }).catch((err) => {
+            // Kept Purposely to avoid empty catch error if it exists
             console.log(err);
         })
     }, []);

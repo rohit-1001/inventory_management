@@ -371,110 +371,113 @@ const Products = (props) => {
         </div>
         {/* =========================================================================== */}
         <div>
-          <Dialog
-            fullScreen
-            open={openUpdateBox}
-            onClose={handleCloseUpdateBox}
-            TransitionComponent={Transition}
-          >
-            <AppBar sx={{ position: "relative" }}>
-              <Toolbar>
-                <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-                  Update Stock
-                </Typography>
-                <Button autoFocus color="inherit" onClick={handleCloseUpdateBox}>
-                  Close
-                </Button>
-              </Toolbar>
-            </AppBar>
-            <div className="d-flex justify-content-center">
-              <form className="row g-10 m-5" onSubmit={onSubmitSearch}>
-                <div className="col-auto">
-                  <input
-                    type="text"
-                    readOnly
-                    className="form-control-plaintext"
-                    value="Enter Product ID / Name "
-                  />
-                </div>
-                <div className="col-auto">
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="inputPassword2"
-                    placeholder="Product ID / Name"
-                    value={currInput}
-                    onChange={handleInputChange2}
-                    required
-                  />
-                </div>
-                <div className="col-auto">
-                  <button type="submit" className="btn btn-primary mb-3">
-                    Search
-                  </button>
-                </div>
-              </form>
-            </div>
-            <List>
-              <Divider />
-              {filteredProducts.length === 0 && currInput.length !== 0 ? (
-                <ListItemText
-                  primary="No products found"
-                  style={{
-                    textAlign: "left",
-                    marginLeft: "1rem",
-                    fontSize: "1.5rem",
-                  }}
+      <Dialog
+        fullScreen
+        open={openUpdateBox}
+        onClose={handleCloseUpdateBox}
+        TransitionComponent={Transition}
+        style={{ minWidth: '300px' }}
+      >
+        <AppBar position="relative" style={{ backgroundColor: '#2196F3' }}>
+          <Toolbar>
+            <Typography variant="h6" style={{ flex: 1, textAlign: 'center' }}>
+              Update Stock
+            </Typography>
+            <Button autoFocus color="inherit" onClick={handleCloseUpdateBox}>
+              Close
+            </Button>
+          </Toolbar>
+        </AppBar>
+        <div style={{ padding: '20px' }}>
+          <div className="d-flex justify-content-center">
+            <form className="row g-3">
+              <div className="col-auto">
+                <input
+                  type="text"
+                  readOnly
+                  className="form-control-plaintext"
+                  value="Enter Product ID / Name "
                 />
-              ) : filteredProducts.length === 0 ? (
-                <ListItemText
-                  primary=""
-                  style={{
-                    textAlign: "left",
-                    marginLeft: "1rem",
-                    fontSize: "1.5rem",
-                  }}
+              </div>
+              <div className="col-auto">
+                <input
+                  type="text"
+                  className="form-control"
+                  id="inputPassword2"
+                  placeholder="Product ID / Name"
+                  value={currInput}
+                  onChange={handleInputChange2}
+                  required
                 />
-              ) : (
-                <>
-                  <List>
-                    <Typography variant="h5" style={{ margin: "10px" }}>
-                      Matching Results
-                    </Typography>
-                    <Divider />
-                    {filteredProducts.map((item, index) => (
-                      <div key={index}>
-                        <ListItem>
-                          <ListItemText primary={`Product ID: ${item.pid}`} />
-                          <ListItemText
-                            secondary={`Product Name: ${item.name}`}
-                          />
-                          <ListItemText
-                            secondary={`Category: ${item.category}`}
-                          />
-                          <ListItemText
-                            secondary={`Quantity: ${item.quantity}`}
-                          />
-                          <Button
-                            className="link_in_table"
-                            onClick={() => {
-                              onClickUpdate(item.name, item.quantity, item.category, item.pid, item.desc, props.items.role==="vendor" ? item.manufacturer : "", item.threshold, item.s_price, item.c_price)
-                            }
-                            }
-                          >
-                            Update
-                          </Button>
-                        </ListItem>
-                        <Divider />
-                      </div>
-                    ))}
-                  </List>
-                </>
-              )}
-            </List>
-            {isVisible && <div id="forShowingUpdateStockPopup"></div>}
-          </Dialog>
+              </div>
+              <div className="col-auto">
+                <button type="submit" className="btn btn-primary mb-3">
+                  Search
+                </button>
+              </div>
+            </form>
+          </div>
+          <List style={{ marginTop: '20px' }}>
+            <Divider />
+            {filteredProducts.length === 0 && currInput.length !== 0 ? (
+              <Typography
+                variant="h6"
+                style={{
+                  textAlign: 'left',
+                  marginLeft: '1rem',
+                  fontSize: '1.5rem',
+                }}
+              >
+                No products found
+              </Typography>
+            ) : (
+              filteredProducts.map((item, index) => (
+                <div key={index}>
+                  <ListItem style={{ justifyContent: 'space-between' }}>
+                    <div>
+                      <Typography variant="subtitle1">
+                        Product ID: {item.pid}
+                      </Typography>
+                      <Typography variant="subtitle2">
+                        Product Name: {item.name}
+                      </Typography>
+                      <Typography variant="subtitle2">
+                        Category: {item.category}
+                      </Typography>
+                      <Typography variant="subtitle2">
+                        Quantity: {item.quantity}
+                      </Typography>
+                    </div>
+                    <Button
+                      className="link_in_table"
+                      onClick={() => {
+                        onClickUpdate(
+                          item.name,
+                          item.quantity,
+                          item.category,
+                          item.pid,
+                          item.desc,
+                          props.items.role === 'vendor'
+                            ? item.manufacturer
+                            : '',
+                          item.threshold,
+                          item.s_price,
+                          item.c_price
+                        );
+                      }}
+                    >
+                      Update
+                    </Button>
+                  </ListItem>
+                  <Divider />
+                </div>
+              ))
+            )}
+          </List>
+          {isVisible && <div id="forShowingUpdateStockPopup"></div>}
         </div>
+      </Dialog>
+    </div>
         {/* =========================================================================== */}
         {/* <Dialog
           open={isVisible}

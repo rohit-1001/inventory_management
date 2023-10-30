@@ -22,8 +22,8 @@ import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Slide from "@mui/material/Slide";
 import 'react-toastify/dist/ReactToastify.css';
+import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
-
 
 // const rows = [
 //   { id: 1, date: "2019-09-09", vendor: "Jon", productName: "Shampoo" },
@@ -153,7 +153,7 @@ const Products = (props) => {
       root.render(<UpdateStockPopUp details={{ pid, name, category, quantity, setIsVisible, setAllProducts, setFilteredProducts, currInput, allProducts, filteredProducts, role:props.items.role, desc, manufacturer, threshold, s_price, c_price }} />);
     } catch (error) {
       console.log(error);
-      alert("Some error occured")
+      toast.error("Some error occured")
     }
   };
   const handleInputChange2 = (e) => {
@@ -192,7 +192,7 @@ const Products = (props) => {
         handleClose();
       } catch (error) {
         console.log(error); 
-        alert("Internal server error");
+        toast.error("Internal server error");
       }
     } else if (props.items.role === "company") {
       try {
@@ -217,7 +217,7 @@ const Products = (props) => {
         handleClose();
       } catch (error) {
         console.log(error);
-        alert("Internal server error");
+        toast.error("Internal server error");
       }
     }
     getAllProducts();

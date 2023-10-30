@@ -2,6 +2,8 @@ import React from "react";
 import axios from "axios";
 import { Button } from "@mui/material";
 import "../css_files/Popup.css";
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 const UpdateStockPopUp = ({ details }) => {
   const handleClose = async () => {
@@ -59,15 +61,15 @@ const UpdateStockPopUp = ({ details }) => {
 
         if (c.status === 200) {
           await handleClose();
-          alert(c.data.message);
+          toast.success(c.data.message);
         } else {
-          alert(c.data.error);
+          toast.error(c.data.error);
         }
       } catch (error) {
         if (error.response) {
-          alert(error.response.data.error);
+          toast.error(error.response.data.error);
         } else {
-          alert("Some error occured");
+          toast.error("Some error occured");
         }
       }
     } else if (stock === "subtract") {
@@ -86,13 +88,13 @@ const UpdateStockPopUp = ({ details }) => {
 
         if (c.status === 200) {
           await handleClose();
-          alert(c.data.message);
+          toast.success(c.data.message);
         }
       } catch (error) {
         if (error.response) {
-          alert(error.response.data.error);
+          toast.error(error.response.data.error);
         } else {
-          alert("Some error occured");
+          toast.error("Some error occured");
         }
       }
     }

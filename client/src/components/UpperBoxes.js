@@ -7,7 +7,9 @@ import PropTypes from 'prop-types';
 import { Avatar, Card, CardContent, Stack, SvgIcon, Typography, Paper } from '@mui/material';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import PointOfSaleSharpIcon from '@mui/icons-material/PointOfSaleSharp';
-
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
+ 
 const UpperBoxes = (props) => {
   const boxStyle = {
     width: '30%',
@@ -47,7 +49,7 @@ const UpperBoxes = (props) => {
         const { profit, sales, tsales } = response.data;
         setData({ profit, sales, tsales });
       } catch (error) {
-        alert("Some error occurred");
+        toast.success("Some error occurred");
       }
     }
   };

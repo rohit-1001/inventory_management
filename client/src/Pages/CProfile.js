@@ -3,7 +3,8 @@ import { Container, Grid, Paper, Typography, Button, Modal, Box, TextField } fro
 import EditIcon from '@mui/icons-material/Edit';
 import image1 from '../assets/testi1.jpg';
 import axios from 'axios'
-
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 function CProfile() {
   const [user, setUser] = useState({
     name: "",
@@ -25,7 +26,7 @@ function CProfile() {
       setNewUser({ name, email, phone })
     } catch (error) {
       if (error.response) {
-        alert(error.response.data.error)
+        toast.error(error.response.data.error)
       }
     }
   }
@@ -66,11 +67,11 @@ function CProfile() {
       })
 
       if (c.status === 200) {
-        alert(c.data.msg)
+        toast.success(c.data.msg)
       }
     } catch (error) {
       if (error.response) {
-        alert(error.response.data.error)
+       toast.error(error.response.data.error)
       }
     }
     getUserInfo()

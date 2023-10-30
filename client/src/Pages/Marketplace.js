@@ -15,6 +15,8 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
 import axios from 'axios';
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 const useStyles = makeStyles((theme) => ({
     card: {
         maxWidth: 345,
@@ -116,14 +118,14 @@ const Marketplace = () => {
                     product:selectedProducts
                 })
                 if(c.status===200){
-                    alert(c.data.msg)
+                    toast.success(c.data.msg)
                 }
                 else if(c.status===422){
-                    alert(c.data.error)
+                    toast.warning(c.data.error)
                 }
             } catch (error) {
                 if(error.response){
-                    alert(error.response.data.error)
+                    toast.error(error.response.data.error)
                 }
             }
             setOpen(false);
@@ -135,7 +137,7 @@ const Marketplace = () => {
             setSelectedProductQuantity(0);
         }
         else{
-            alert("No products selected")
+            toast.info("No products selected")
         }
     }
 
@@ -386,10 +388,10 @@ const Marketplace = () => {
                                         const selectedProduct = document.querySelector('select').value;
                                         const quantity = parseInt(document.querySelector('#quan').value);
                                         if(selectedProduct==='NaN'){
-                                            alert("Product not selected")
+                                            toast.warning("Product not selected")
                                         }
                                         else if(quantity===0){
-                                            alert("Product quantity not mentioned")
+                                            toast.warning("Product quantity not mentioned")
                                         }
                                         else{
                                             // Add the product to the order

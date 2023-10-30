@@ -4,6 +4,9 @@ import LineChart from "./LineChart";
 import image1 from '../assets/image_2.png'
 import axios from "axios";
 import { createRoot } from 'react-dom/client';
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
+
 import {
   Container,
   Grid,
@@ -34,14 +37,14 @@ const Admin = () => {
 
       setCompanies(c.data);
     } catch (error) {
-      alert("Some error occurred");
+      toast.error("Some error occurred");
     }
     try {
       const v = await axios.get("/allvendors");
 
       setVendors(v.data);
     } catch (error) {
-      alert("Some error occurred");
+      toast.error("Some error occurred");
     }
     try {
       const v = await axios.get("/totaluppervalues");
@@ -49,7 +52,7 @@ const Admin = () => {
       setTotalProducts(tpro);
       setTotalSales(tsales);
     } catch (error) {
-      alert("Some error occurred");
+      toast.error("Some error occurred");
     }
   };
 
@@ -75,10 +78,10 @@ const Admin = () => {
       }
       else {
         const root = createRoot(document.getElementById('forShowingProducts'));
-        root.render(alert("No product exists"));
+        root.render(toast.warning("No product exists"));
       }
     } catch (error) {
-      alert("Some error occured")
+      toast.error("Some error occured")
     }
   };
 

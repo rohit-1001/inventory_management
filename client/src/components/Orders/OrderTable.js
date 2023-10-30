@@ -6,6 +6,8 @@ import ProductDetailsButton from './ProductDetailsButton';
 import ShowInfo from './ShowInfo';
 import { Button } from "@mui/material";
 import axios from 'axios'
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 function CustomToolbar() {
     return (
@@ -27,11 +29,11 @@ export default function OrderTable(props) {
                 withCredentials: true,
             });
             if(c.status===200){
-                alert(c.data.msg)
+                toast.success(c.data.msg)
             }
         } catch (error) {
             if(error.response){
-                alert(error.response.data.error)
+                toast.error(error.response.data.error)
             }
         }
         props.data.setCall(true)
@@ -42,11 +44,11 @@ export default function OrderTable(props) {
                 withCredentials: true,
             });
             if(c.status===200){
-                alert(c.data.msg)
+              toast.success(c.data.msg)
             }
         } catch (error) {
             if(error.response){
-                alert(error.response.data.error)
+              toast.error(error.response.data.error)
             }
         }
         props.data.setCall(true)
@@ -57,11 +59,11 @@ export default function OrderTable(props) {
                 withCredentials: true,
             });
             if(c.status===200){
-                alert(c.data.msg)
+              toast.success(c.data.msg)
             }
         } catch (error) {
             if(error.response){
-                alert(error.response.data.error)
+              toast.error(error.response.data.error)
             }
         }
         props.data.setCall(true)
@@ -73,11 +75,11 @@ export default function OrderTable(props) {
                 withCredentials: true,
             });
             if(c.status===200){
-                alert(c.data.msg)
+              toast.success(c.data.msg)
             }
         } catch (error) {
             if(error.response){
-                alert(error.response.data.error)
+              toast.error(error.response.data.error)
             }
         }
         props.data.setCall(true)
@@ -90,11 +92,11 @@ export default function OrderTable(props) {
                 withCredentials: true,
             });
             if(c.status===200){
-                alert(c.data.msg)
+              toast.success(c.data.msg)
             }
         } catch (error) {
             if(error.response){
-                alert(error.response.data.error)
+              toast.error(error.response.data.error)
             }
         }
         props.data.setCall(true)
@@ -105,11 +107,11 @@ export default function OrderTable(props) {
                 withCredentials: true,
             });
             if(c.status===200){
-                alert(c.data.msg)
+              toast.success(c.data.msg)
             }
         } catch (error) {
             if(error.response){
-                alert(error.response.data.error)
+              toast.error(error.response.data.error)
             }
         }
         props.data.setCall(true)
@@ -120,11 +122,11 @@ export default function OrderTable(props) {
                 withCredentials: true,
             });
             if(c.status===200){
-                alert(c.data.msg)
+              toast.success(c.data.msg)
             }
         } catch (error) {
             if(error.response){
-                alert(error.response.data.error)
+              toast.error(error.response.data.error)
             }
         }
         props.data.setCall(true)

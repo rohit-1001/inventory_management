@@ -492,7 +492,7 @@ const Products = (props) => {
                         </div>
                         <Button
                           variant="contained"
-                          color="primary"
+                          color="success"
                           className="link_in_table"
                           onClick={() => {
                             onClickUpdate(

@@ -380,7 +380,6 @@ router.post("/getupfields", async (req, res) => {
       profit += monthlyItem.monthly_data.profit;
     });
     
-    console.log("hello 13")
     return res.status(200).json({ sales, profit, tsales });
   } catch (error) {
     if (error.response) {

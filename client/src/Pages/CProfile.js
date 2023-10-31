@@ -52,6 +52,18 @@ function CProfile() {
     dob: "01/01/2000",
   });
 
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const base64Image = event.target.result;
+        setCompanyInfo({ ...companyInfo, logo: base64Image });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const [openModal, setOpenModal] = useState(false);
 
   const handleOpenModal = async () => {
@@ -154,6 +166,16 @@ function CProfile() {
             Edit Company Info
           </Typography>
           <br></br>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <img
+              src={companyInfo.logo}
+              alt="Company Logo"
+              style={{ width: '250px', height: '250px', borderRadius: '50%', marginBottom: '10px' }}
+            />
+            <input type="file" accept="image/*" onChange={handleImageUpload} />
+            <br></br>
+            <br></br>
+          </div>
           <form>
             <TextField
               label="Name"

@@ -47,7 +47,7 @@
   
   /* Style for the close button */
   .popup-header button {
-    background-color: transparent;
+    /* background-color: transparent; */
     border: none;
     cursor: pointer;
     font-size: 16px;
@@ -57,7 +57,7 @@
   
   /* Hover effect for the close button */
   .popup-header button:hover {
-    color: #ff0000; /* Change to your desired hover color */
+    color: #ff0000; 
   }
   
   /* Style for the table inside the modal */
@@ -81,18 +81,18 @@
   
   /* Style for the close button at the bottom of the modal */
   .popup-content button {
-    background-color: #ff0000; /* Change to your desired button color */
-    color: #fff;
+    /* background-color: #ff0000;  */
+    /* color: #fff; */
     border: none;
     padding: 10px 20px;
     border-radius: 4px;
     cursor: pointer;
     margin-top: 20px;
-    transition: background-color 0.2s ease-in-out;
+    /* transition: background-color 0.2s ease-in-out; */
   }
   
   /* Hover effect for the close button */
   .popup-content button:hover {
-    background-color: #cc0000; /* Change to your desired hover color */
+    /* background-color: #cc0000; */
   }
   

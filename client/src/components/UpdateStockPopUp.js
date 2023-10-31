@@ -34,10 +34,10 @@ const UpdateStockPopUp = ({ details }) => {
     const desc = event.target.desc.value
     const category = event.target.category.value
     let manufacturer
-    if(details.role==="vendor"){
+    if (details.role === "vendor") {
       manufacturer = event.target.manufacturer.value
     }
-    else{
+    else {
       manufacturer = " "
     }
     const threshold = event.target.threshold.value
@@ -106,7 +106,7 @@ const UpdateStockPopUp = ({ details }) => {
         <div className="popup-content">
           <div className="popup-header">
             <h2>Update Stock</h2>
-            <Button onClick={handleClose}>Close</Button>
+            <Button color="error" variant="outlined" onClick={handleClose}>Close</Button>
           </div>
           <form onSubmit={updateStock}>
             <div className="mb-2 row">
@@ -352,13 +352,14 @@ const UpdateStockPopUp = ({ details }) => {
               </div>
               <div className="align-self-center">
                 <button
+                  className="btn btn-success"
                   type="submit"
                   style={{
                     display: "flex",
                     margin: "auto",
                     marginTop: "10px",
                   }}
-                  className="btn btn-primary"
+
                 >
                   Update Stock
                 </button>

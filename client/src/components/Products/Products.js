@@ -422,123 +422,107 @@ const Products = (props) => {
             onClose={handleCloseUpdateBox}
             TransitionComponent={Transition}
           >
-            <AppBar sx={{ position: "relative" }}>
+            <AppBar position="relative" style={{ backgroundColor: '#2196F3' }}>
               <Toolbar>
-                <Typography
-                  sx={{ ml: 2, flex: 1 }}
-                  variant="h6"
-                  component="div"
-                >
+                <Typography variant="h6" style={{ flex: 1, textAlign: 'center' }}>
                   Update Stock
                 </Typography>
-                <Button
-                  autoFocus
-                  color="inherit"
-                  onClick={handleCloseUpdateBox}
-                >
+                <Button autoFocus color="inherit" onClick={handleCloseUpdateBox}>
                   Close
                 </Button>
               </Toolbar>
             </AppBar>
-            <div className="d-flex justify-content-center">
-              <form className="row g-10 m-5" onSubmit={onSubmitSearch}>
-                <div className="col-auto">
-                  <input
-                    type="text"
-                    readOnly
-                    className="form-control-plaintext"
-                    value="Enter Product ID / Name "
+            <div className="p-4">
+              <div className="text-center mb-4">
+                <form className="row g-3" onSubmit={onSubmitSearch}>
+                  <div className="col-auto">
+                    <input
+                      type="text"
+                      readOnly
+                      className="form-control-plaintext"
+                      value="Enter Product ID / Name "
+                    />
+                  </div>
+                  <div className="col-auto">
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="inputPassword2"
+                      placeholder="Product ID / Name"
+                      value={currInput}
+                      onChange={handleInputChange2}
+                      required
+                    />
+                  </div>
+                  <div className="col-auto">
+                    <button type="submit" className="btn btn-primary">
+                      Search
+                    </button>
+                  </div>
+                </form>
+              </div>
+              <List>
+                <Divider />
+                {filteredProducts.length === 0 && currInput.length !== 0 ? (
+                  <ListItemText
+                    primary="No products found"
+                    style={{
+                      textAlign: 'left',
+                      marginLeft: '1rem',
+                      fontSize: '1.5rem',
+                    }}
                   />
-                </div>
-                <div className="col-auto">
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="inputPassword2"
-                    placeholder="Product ID / Name"
-                    value={currInput}
-                    onChange={handleInputChange2}
-                    required
-                  />
-                </div>
-                <div className="col-auto">
-                  <button type="submit" className="btn btn-primary mb-3">
-                    Search
-                  </button>
-                </div>
-              </form>
+                ) : (
+                  filteredProducts.map((item, index) => (
+                    <div key={index} className="mb-3">
+                      <ListItem className="d-flex justify-content-between align-items-center">
+                        <div>
+                          <Typography variant="h6">
+                            Product ID: {item.pid}
+                          </Typography>
+                          <Typography variant="body1">
+                            Product Name: {item.name}
+                          </Typography>
+                          <Typography variant="body2">
+                            Category: {item.category}
+                          </Typography>
+                          <Typography variant="body2">
+                            Quantity: {item.quantity}
+                          </Typography>
+                        </div>
+                        <Button
+                          variant="contained"
+                          color="success"
+                          className="link_in_table"
+                          onClick={() => {
+                            onClickUpdate(
+                              item.name,
+                              item.quantity,
+                              item.category,
+                              item.pid,
+                              item.desc,
+                              props.items.role === 'vendor'
+                                ? item.manufacturer
+                                : '',
+                              item.threshold,
+                              item.s_price,
+                              item.c_price
+                            );
+                          }}
+                        >
+                          Update
+                        </Button>
+                      </ListItem>
+                      <Divider />
+                    </div>
+                  ))
+                )}
+              </List>
+              {isVisible && <div id="forShowingUpdateStockPopup"></div>}
             </div>
-            <List>
-              <Divider />
-              {filteredProducts.length === 0 && currInput.length !== 0 ? (
-                <ListItemText
-                  primary="No products found"
-                  style={{
-                    textAlign: "left",
-                    marginLeft: "1rem",
-                    fontSize: "1.5rem",
-                  }}
-                />
-              ) : filteredProducts.length === 0 ? (
-                <ListItemText
-                  primary=""
-                  style={{
-                    textAlign: "left",
-                    marginLeft: "1rem",
-                    fontSize: "1.5rem",
-                  }}
-                />
-              ) : (
-                <>
-                  <List>
-                    <Typography variant="h5" style={{ margin: "10px" }}>
-                      Matching Results
-                    </Typography>
-                    <Divider />
-                    {filteredProducts.map((item, index) => (
-                      <div key={index}>
-                        <ListItem>
-                          <ListItemText primary={`Product ID: ${item.pid}`} />
-                          <ListItemText
-                            secondary={`Product Name: ${item.name}`}
-                          />
-                          <ListItemText
-                            secondary={`Category: ${item.category}`}
-                          />
-                          <ListItemText
-                            secondary={`Quantity: ${item.quantity}`}
-                          />
-                          <Button
-                            className="link_in_table"
-                            onClick={() => {
-                              onClickUpdate(
-                                item.name,
-                                item.quantity,
-                                item.category,
-                                item.pid,
-                                item.desc,
-                                props.items.role === "vendor"
-                                  ? item.manufacturer
-                                  : "",
-                                item.threshold,
-                                item.s_price,
-                                item.c_price
-                              );
-                            }}
-                          >
-                            Update
-                          </Button>
-                        </ListItem>
-                        <Divider />
-                      </div>
-                    ))}
-                  </List>
-                </>
-              )}
-            </List>
-            {isVisible && <div id="forShowingUpdateStockPopup"></div>}
           </Dialog>
         </div>
+
         {/* =========================================================================== */}
         {/* <Dialog
           open={isVisible}

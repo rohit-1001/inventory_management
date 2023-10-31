@@ -98,14 +98,30 @@ function CProfile() {
                 />
               </div>
               <div style={{ width: "100%", margin: "0 auto", display: "flex", justifyContent: "flex-start", alignItems: "flex-start", flexDirection: "column" }}>
-                <Typography variant="h5">{user.name}</Typography>
-                <Typography variant="subtitle1">Email: {user.email}</Typography>
-                <Typography variant="subtitle1">Contact Number: {user.phone}</Typography>
-                <Typography variant="subtitle1">Address: {companyInfo.address}</Typography>
-                <Typography variant="subtitle1">Company Type: {companyInfo.companyGenre}</Typography>
-                <Typography variant="subtitle1">GST No: {companyInfo.GSTNO}</Typography>
-                <Typography variant="subtitle1">Role: {companyInfo.Grole}</Typography>
-                <Typography variant="subtitle1">Date of Birth: {companyInfo.dob}</Typography>
+                <div style={{ marginBottom: '17px' }}>
+                  <Typography variant="h5">{user.name}</Typography>
+                </div>
+                <div style={{ marginBottom: '5px' }}>
+                  <Typography variant="subtitle1">Email: {user.email}</Typography>
+                </div>
+                <div style={{ marginBottom: '5px' }}>
+                  <Typography variant="subtitle1">Contact Number: {user.phone}</Typography>
+                </div>
+                <div style={{ marginBottom: '5px' }}>
+                  <Typography variant="subtitle1">Address: {companyInfo.address}</Typography>
+                </div>
+                <div style={{ marginBottom: '5px' }}>
+                  <Typography variant="subtitle1">Company Type: {companyInfo.companyGenre}</Typography>
+                </div>
+                <div style={{ marginBottom: '5px' }}>
+                  <Typography variant="subtitle1">GST No: {companyInfo.GSTNO}</Typography>
+                </div>
+                <div style={{ marginBottom: '5px' }}>
+                  <Typography variant="subtitle1">Role: {companyInfo.Grole}</Typography>
+                </div>
+                <div style={{ marginBottom: '5px' }}>
+                  <Typography variant="subtitle1">Date of Birth: {companyInfo.dob}</Typography>
+                </div>
               </div>
             </Paper>
             <br></br>
@@ -124,8 +140,9 @@ function CProfile() {
             position: 'absolute',
             top: '50%',
             left: '50%',
+            width: "600px",
             transform: 'translate(-50%, -50%)',
-            maxWidth: '90%', // Adjust the maximum width as needed
+            maxWidth: '100%', // Adjust the maximum width as needed
             bgcolor: 'background.paper',
             boxShadow: 24,
             p: 4,
@@ -197,7 +214,9 @@ function CProfile() {
             <TextField
               label="Date of Birth"
               fullWidth
-              value={companyInfo.dob}
+              type="date" // Use the date type input
+              value={companyInfo.dob} // Display the date as is
+              onChange={(e) => setCompanyInfo({ ...companyInfo, dob: e.target.value })}
             />
             <br></br>
             <br></br>

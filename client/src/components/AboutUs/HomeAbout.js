@@ -33,8 +33,8 @@ import homeimg1 from "./images/homeimg1.png"
 import Footer from "../../components/Footer"
 import { useEffect } from 'react'
 import Fade from 'react-reveal/Fade';
-// import Zoom from 'react-reveal/Zoom';
-// import Flip from 'react-reveal/Flip';
+import Zoom from 'react-reveal/Zoom';
+import Flip from 'react-reveal/Flip';
 import Slide from 'react-reveal/Slide';
 // import Pulse from 'react-reveal/Pulse';
 // import Bounce from 'react-reveal/Bounce';

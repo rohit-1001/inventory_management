@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import DonutChart from "./DonutChart";
 import LineChart from "./LineChart";
-import image1 from '../assets/image_2.png'
+import image1 from "../assets/image_2.png";
 import axios from "axios";
-import { createRoot } from 'react-dom/client';
-import 'react-toastify/dist/ReactToastify.css';
-import { toast } from 'react-toastify';
+import { createRoot } from "react-dom/client";
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 import {
   Container,
@@ -29,7 +29,7 @@ const Admin = () => {
   const [companies, setCompanies] = useState([]);
   const [vendors, setVendors] = useState([]);
   const [totalSales, setTotalSales] = useState();
-  const [totalProducts, setTotalProducts]= useState();
+  const [totalProducts, setTotalProducts] = useState();
   const [isVisible, setIsVisible] = useState(false);
   const getData = async () => {
     try {
@@ -37,22 +37,34 @@ const Admin = () => {
 
       setCompanies(c.data);
     } catch (error) {
-      toast.error("Some error occurred");
+      if (error.response) {
+        toast.error(error.response.data.error);
+      } else {
+        toast.error("Some error occured");
+      }
     }
     try {
       const v = await axios.get("/allvendors");
 
       setVendors(v.data);
     } catch (error) {
-      toast.error("Some error occurred");
+      if (error.response) {
+        toast.error(error.response.data.error);
+      } else {
+        toast.error("Some error occured");
+      }
     }
     try {
       const v = await axios.get("/totaluppervalues");
-      const {tpro, tsales} = v.data
+      const { tpro, tsales } = v.data;
       setTotalProducts(tpro);
       setTotalSales(tsales);
     } catch (error) {
-      toast.error("Some error occurred");
+      if (error.response) {
+        toast.error(error.response.data.error);
+      } else {
+        toast.error("Some error occured");
+      }
     }
   };
 
@@ -73,15 +85,22 @@ const Admin = () => {
     try {
       const p = await axios.post("/allproductsadmin", param);
       if (p.data.length > 0) {
-        const root = createRoot(document.getElementById('forShowingProducts'));
-        root.render(<ViewProductsPopup details={{ products: p.data, setIsVisible: setIsVisible }} />);
-      }
-      else {
-        const root = createRoot(document.getElementById('forShowingProducts'));
+        const root = createRoot(document.getElementById("forShowingProducts"));
+        root.render(
+          <ViewProductsPopup
+            details={{ products: p.data, setIsVisible: setIsVisible }}
+          />
+        );
+      } else {
+        const root = createRoot(document.getElementById("forShowingProducts"));
         root.render(toast.warning("No product exists"));
       }
     } catch (error) {
-      toast.error("Some error occured")
+      if (error.response) {
+        toast.error(error.response.data.error);
+      } else {
+        toast.error("Some error occured");
+      }
     }
   };
 
@@ -110,7 +129,7 @@ const Admin = () => {
             <div className="bg-light rounded d-flex align-items-center justify-content-between p-4">
               <i className="fa fa-chart-bar fa-3x text-primary" />
               <div className="ms-3">
-                <p className="mb-2">Companies  Count</p>
+                <p className="mb-2">Companies Count</p>
                 <h6 className="mb-0">{data.ncompany}</h6>
               </div>
             </div>
@@ -119,7 +138,7 @@ const Admin = () => {
             <div className="bg-light rounded d-flex align-items-center justify-content-between p-4">
               <i className="fa fa-chart-area fa-3x text-primary" />
               <div className="ms-3">
-                <p className="mb-2">Today Sales</p>
+                <p className="mb-2">Total Sales</p>
                 <h6 className="mb-0">{data.tsales}</h6>
               </div>
             </div>
@@ -139,28 +158,34 @@ const Admin = () => {
       <br></br>
       <br></br>
 
-      <div style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}>
-        <div className="donutchart" style={{
-          // border: "2px solid red",
-          flex: "1",
-          maxWidth: "50%",
-          marginRight: "30px", // Add margin to create space
-        }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <div
+          className="donutchart"
+          style={{
+            // border: "2px solid red",
+            flex: "1",
+            maxWidth: "50%",
+            marginRight: "30px", // Add margin to create space
+          }}
+        >
           <DonutChart data={data} />
         </div>
-        <div style={{
-          // border: "2px solid red",
-          flex: "1",
-          maxWidth: "50%",
-        }}>
+        <div
+          style={{
+            // border: "2px solid red",
+            flex: "1",
+            maxWidth: "50%",
+          }}
+        >
           <LineChart />
         </div>
       </div>
-
 
       <br></br>
       <br></br>
@@ -173,8 +198,9 @@ const Admin = () => {
             <ul className="nav nav-tabs">
               <li className="nav-item">
                 <a
-                  className={`nav-link ${activeTab === "vendors" ? "active" : ""
-                    }`}
+                  className={`nav-link ${
+                    activeTab === "vendors" ? "active" : ""
+                  }`}
                   href="#vendors"
                   onClick={() => handleTabClick("vendors")}
                 >
@@ -183,8 +209,9 @@ const Admin = () => {
               </li>
               <li className="nav-item">
                 <a
-                  className={`nav-link ${activeTab === "companies" ? "active" : ""
-                    }`}
+                  className={`nav-link ${
+                    activeTab === "companies" ? "active" : ""
+                  }`}
                   href="#companies"
                   onClick={() => handleTabClick("companies")}
                 >
@@ -196,8 +223,9 @@ const Admin = () => {
             <div className="tab-content">
               <div
                 id="vendors"
-                className={`tab-pane ${activeTab === "vendors" ? "active" : ""
-                  }`}
+                className={`tab-pane ${
+                  activeTab === "vendors" ? "active" : ""
+                }`}
               >
                 {!vendors ? (
                   <h1>No Vendors Found</h1>
@@ -240,7 +268,9 @@ const Admin = () => {
                                 <TableCell style={{ textAlign: "center" }}>
                                   <Button
                                     className="link_in_table"
-                                    onClick={() => handleShowProducts(vendor.email, "vendor")}
+                                    onClick={() =>
+                                      handleShowProducts(vendor.email, "vendor")
+                                    }
                                   >
                                     View
                                   </Button>
@@ -257,8 +287,9 @@ const Admin = () => {
 
               <div
                 id="companies"
-                className={`tab-pane ${activeTab === "companies" ? "active" : ""
-                  }`}
+                className={`tab-pane ${
+                  activeTab === "companies" ? "active" : ""
+                }`}
               >
                 <Grid item xs={12}>
                   <Paper elevation={3} style={{ padding: "20px" }}>
@@ -298,7 +329,9 @@ const Admin = () => {
                               <TableCell style={{ textAlign: "center" }}>
                                 <Button
                                   className="link_in_table"
-                                  onClick={() => handleShowProducts(company.email, "company")}
+                                  onClick={() =>
+                                    handleShowProducts(company.email, "company")
+                                  }
                                 >
                                   View
                                 </Button>
@@ -320,8 +353,9 @@ const Admin = () => {
 };
 
 export default Admin;
-// Backup of Boxes 
-{/* <div className="container" style={{ "width": "100%", "margin": "auto" }}>
+// Backup of Boxes
+{
+  /* <div className="container" style={{ "width": "100%", "margin": "auto" }}>
         <div className="row justify-content-center"> 
           <div className="col-md-5">
             <Box sx={{ border: '1px solid black', padding: '10px' }}>
@@ -396,4 +430,5 @@ export default Admin;
             </Box>
           </div>
         </div>
-      </div> */}
+      </div> */
+}

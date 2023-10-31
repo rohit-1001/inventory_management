@@ -37,7 +37,6 @@ const Orders = (props) => {
 
   useEffect(() => {
     getallOrders();
-    // console.log('Hello')
   }, []);
   useEffect(() => {
     getallOrders();

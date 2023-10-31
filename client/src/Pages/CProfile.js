@@ -26,7 +26,9 @@ function CProfile() {
       setNewUser({ name, email, phone })
     } catch (error) {
       if (error.response) {
-        toast.error(error.response.data.error)
+        toast.error(error.response.data.error);
+      } else {
+        toast.error("Some error occured");
       }
     }
   }
@@ -50,6 +52,18 @@ function CProfile() {
     dob: "01/01/2000",
   });
 
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const base64Image = event.target.result;
+        setCompanyInfo({ ...companyInfo, logo: base64Image });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const [openModal, setOpenModal] = useState(false);
 
   const handleOpenModal = async () => {
@@ -71,7 +85,9 @@ function CProfile() {
       }
     } catch (error) {
       if (error.response) {
-       toast.error(error.response.data.error)
+        toast.error(error.response.data.error);
+      } else {
+        toast.error("Some error occured");
       }
     }
     getUserInfo()
@@ -94,14 +110,30 @@ function CProfile() {
                 />
               </div>
               <div style={{ width: "100%", margin: "0 auto", display: "flex", justifyContent: "flex-start", alignItems: "flex-start", flexDirection: "column" }}>
-                <Typography variant="h5">{user.name}</Typography>
-                <Typography variant="subtitle1">Email: {user.email}</Typography>
-                <Typography variant="subtitle1">Contact Number: {user.phone}</Typography>
-                <Typography variant="subtitle1">Address: {companyInfo.address}</Typography>
-                <Typography variant="subtitle1">Company Type: {companyInfo.companyGenre}</Typography>
-                <Typography variant="subtitle1">GST No: {companyInfo.GSTNO}</Typography>
-                <Typography variant="subtitle1">Role: {companyInfo.Grole}</Typography>
-                <Typography variant="subtitle1">Date of Birth: {companyInfo.dob}</Typography>
+                <div style={{ marginBottom: '17px' }}>
+                  <Typography variant="h5">{user.name}</Typography>
+                </div>
+                <div style={{ marginBottom: '5px' }}>
+                  <Typography variant="subtitle1">Email: {user.email}</Typography>
+                </div>
+                <div style={{ marginBottom: '5px' }}>
+                  <Typography variant="subtitle1">Contact Number: {user.phone}</Typography>
+                </div>
+                <div style={{ marginBottom: '5px' }}>
+                  <Typography variant="subtitle1">Address: {companyInfo.address}</Typography>
+                </div>
+                <div style={{ marginBottom: '5px' }}>
+                  <Typography variant="subtitle1">Company Type: {companyInfo.companyGenre}</Typography>
+                </div>
+                <div style={{ marginBottom: '5px' }}>
+                  <Typography variant="subtitle1">GST No: {companyInfo.GSTNO}</Typography>
+                </div>
+                <div style={{ marginBottom: '5px' }}>
+                  <Typography variant="subtitle1">Role: {companyInfo.Grole}</Typography>
+                </div>
+                <div style={{ marginBottom: '5px' }}>
+                  <Typography variant="subtitle1">Date of Birth: {companyInfo.dob}</Typography>
+                </div>
               </div>
             </Paper>
             <br></br>
@@ -120,8 +152,9 @@ function CProfile() {
             position: 'absolute',
             top: '50%',
             left: '50%',
+            width: "600px",
             transform: 'translate(-50%, -50%)',
-            maxWidth: '90%', // Adjust the maximum width as needed
+            maxWidth: '100%', // Adjust the maximum width as needed
             bgcolor: 'background.paper',
             boxShadow: 24,
             p: 4,
@@ -133,6 +166,16 @@ function CProfile() {
             Edit Company Info
           </Typography>
           <br></br>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <img
+              src={companyInfo.logo}
+              alt="Company Logo"
+              style={{ width: '250px', height: '250px', borderRadius: '50%', marginBottom: '10px' }}
+            />
+            <input type="file" accept="image/*" onChange={handleImageUpload} />
+            <br></br>
+            <br></br>
+          </div>
           <form>
             <TextField
               label="Name"
@@ -193,7 +236,9 @@ function CProfile() {
             <TextField
               label="Date of Birth"
               fullWidth
-              value={companyInfo.dob}
+              type="date" // Use the date type input
+              value={companyInfo.dob} // Display the date as is
+              onChange={(e) => setCompanyInfo({ ...companyInfo, dob: e.target.value })}
             />
             <br></br>
             <br></br>

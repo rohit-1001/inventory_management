@@ -10,10 +10,8 @@ import ProductTable from "./ProductTable";
 import UpdateStockPopUp from "../UpdateStockPopUp";
 import { TextField, Button } from "@mui/material";
 import axios from "axios";
-import { createRoot } from 'react-dom/client';
-import {
-  Typography,
-} from "@mui/material";
+import { createRoot } from "react-dom/client";
+import { Typography } from "@mui/material";
 import ListItemText from "@mui/material/ListItemText";
 import ListItem from "@mui/material/ListItem";
 import List from "@mui/material/List";
@@ -21,9 +19,9 @@ import Divider from "@mui/material/Divider";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Slide from "@mui/material/Slide";
-import 'react-toastify/dist/ReactToastify.css';
-import 'react-toastify/dist/ReactToastify.css';
-import { toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 // const rows = [
 //   { id: 1, date: "2019-09-09", vendor: "Jon", productName: "Shampoo" },
@@ -48,9 +46,9 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const Products = (props) => {
   useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-    document.title = 'Sangrah | Products';
-  }, [])
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+    document.title = "Sangrah | Products";
+  }, []);
   // ======================================================
   const [isVisible, setIsVisible] = useState(false);
   const [currInput, setCurrInput] = useState("");
@@ -140,16 +138,54 @@ const Products = (props) => {
     event.preventDefault();
     searchPro();
   };
-  const onClickUpdate = async (name, quantity, category, pid,desc,  manufacturer, threshold, s_price, c_price) => {
+  const onClickUpdate = async (
+    name,
+    quantity,
+    category,
+    pid,
+    desc,
+    manufacturer,
+    threshold,
+    s_price,
+    c_price
+  ) => {
     setIsVisible(true);
     try {
       const c = await axios.get("/getallproducts", {
         withCredentials: true,
       });
-      const root = createRoot(document.getElementById('forShowingUpdateStockPopup'));
-      root.render(<UpdateStockPopUp details={{ pid, name, category, quantity, setIsVisible, setAllProducts, setFilteredProducts, currInput, allProducts, filteredProducts, role:props.items.role, desc, manufacturer, threshold, s_price, c_price }} />);
+      const root = createRoot(
+        document.getElementById("forShowingUpdateStockPopup")
+      );
+      root.render(
+        <UpdateStockPopUp
+          details={{
+            pid,
+            name,
+            category,
+            quantity,
+            setIsVisible,
+            setAllProducts,
+            setFilteredProducts,
+            currInput,
+            allProducts,
+            filteredProducts,
+            role: props.items.role,
+            desc,
+            manufacturer,
+            threshold,
+            s_price,
+            c_price,
+          }}
+        />
+      );
     } catch (error) {
-      toast.error("Some error occured")
+      console.log(error);
+      if (error.response) {
+        toast.error(error.response.data.error);
+      } else {
+        toast.error("Some error occured");
+      }
     }
   };
   const handleInputChange2 = (e) => {
@@ -159,7 +195,7 @@ const Products = (props) => {
     searchPro();
   }, [currInput]);
   useEffect(() => {
-    getAllProducts()
+    getAllProducts();
     searchPro();
   }, [isVisible]);
 
@@ -187,7 +223,12 @@ const Products = (props) => {
         });
         handleClose();
       } catch (error) {
-        toast.error("Internal server error");
+        console.log(error);
+        if (error.response) {
+          toast.error(error.response.data.error);
+        } else {
+          toast.error("Some error occured");
+        }
       }
     } else if (props.items.role === "company") {
       try {
@@ -211,8 +252,12 @@ const Products = (props) => {
         });
         handleClose();
       } catch (error) {
-        
-        toast.error("Internal server error");
+        console.log(error);
+        if (error.response) {
+          toast.error(error.response.data.error);
+        } else {
+          toast.error("Some error occured");
+        }
       }
     }
     getAllProducts();
@@ -371,6 +416,129 @@ const Products = (props) => {
         </div>
         {/* =========================================================================== */}
         <div>
+          <Dialog
+            fullScreen
+            open={openUpdateBox}
+            onClose={handleCloseUpdateBox}
+            TransitionComponent={Transition}
+          >
+            <AppBar sx={{ position: "relative" }}>
+              <Toolbar>
+                <Typography
+                  sx={{ ml: 2, flex: 1 }}
+                  variant="h6"
+                  component="div"
+                >
+                  Update Stock
+                </Typography>
+                <Button
+                  autoFocus
+                  color="inherit"
+                  onClick={handleCloseUpdateBox}
+                >
+                  Close
+                </Button>
+              </Toolbar>
+            </AppBar>
+            <div className="d-flex justify-content-center">
+              <form className="row g-10 m-5" onSubmit={onSubmitSearch}>
+                <div className="col-auto">
+                  <input
+                    type="text"
+                    readOnly
+                    className="form-control-plaintext"
+                    value="Enter Product ID / Name "
+                  />
+                </div>
+                <div className="col-auto">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="inputPassword2"
+                    placeholder="Product ID / Name"
+                    value={currInput}
+                    onChange={handleInputChange2}
+                    required
+                  />
+                </div>
+                <div className="col-auto">
+                  <button type="submit" className="btn btn-primary mb-3">
+                    Search
+                  </button>
+                </div>
+              </form>
+            </div>
+            <List>
+              <Divider />
+              {filteredProducts.length === 0 && currInput.length !== 0 ? (
+                <ListItemText
+                  primary="No products found"
+                  style={{
+                    textAlign: "left",
+                    marginLeft: "1rem",
+                    fontSize: "1.5rem",
+                  }}
+                />
+              ) : filteredProducts.length === 0 ? (
+                <ListItemText
+                  primary=""
+                  style={{
+                    textAlign: "left",
+                    marginLeft: "1rem",
+                    fontSize: "1.5rem",
+                  }}
+                />
+              ) : (
+                <>
+                  <List>
+                    <Typography variant="h5" style={{ margin: "10px" }}>
+                      Matching Results
+                    </Typography>
+                    <Divider />
+                    {filteredProducts.map((item, index) => (
+                      <div key={index}>
+                        <ListItem>
+                          <ListItemText primary={`Product ID: ${item.pid}`} />
+                          <ListItemText
+                            secondary={`Product Name: ${item.name}`}
+                          />
+                          <ListItemText
+                            secondary={`Category: ${item.category}`}
+                          />
+                          <ListItemText
+                            secondary={`Quantity: ${item.quantity}`}
+                          />
+                          <Button
+                            className="link_in_table"
+                            onClick={() => {
+                              onClickUpdate(
+                                item.name,
+                                item.quantity,
+                                item.category,
+                                item.pid,
+                                item.desc,
+                                props.items.role === "vendor"
+                                  ? item.manufacturer
+                                  : "",
+                                item.threshold,
+                                item.s_price,
+                                item.c_price
+                              );
+                            }}
+                          >
+                            Update
+                          </Button>
+                        </ListItem>
+                        <Divider />
+                      </div>
+                    ))}
+                  </List>
+                </>
+              )}
+            </List>
+            {isVisible && <div id="forShowingUpdateStockPopup"></div>}
+          </Dialog>
+        </div>
       <Dialog
         fullScreen
         open={openUpdateBox}

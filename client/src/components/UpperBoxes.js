@@ -49,7 +49,11 @@ const UpperBoxes = (props) => {
         const { profit, sales, tsales } = response.data;
         setData({ profit, sales, tsales });
       } catch (error) {
-        toast.success("Some error occurred");
+        if (error.response) {
+          toast.error(error.response.data.error);
+        } else {
+          toast.error("Some error occured");
+        }
       }
     }
   };

@@ -1014,7 +1014,18 @@ router.get("/prothreshold_v", async (req, res) => {
 });
 
 router.get('/monthlysales_v', async (req, res) => {
-  const email = req.body.email; // Use req.query to get the email from the query parameters
+  let email;
+  if (req.cookies) {
+    if (req.cookies.inv_man) {
+      if (req.cookies.inv_man.role) {
+        email = req.cookies.inv_man.email;
+      }
+    } else {
+      return res.status(500).json({ error: "Please login to continue" });
+    }
+  } else {
+    return res.status(500).json({ error: "Please login to continue" });
+  }
   const currentYear = new Date().getFullYear(); // Get the current year
 
   try {

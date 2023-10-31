@@ -17,6 +17,7 @@ const Login = (props) => {
     phone: "",
     password: "",
     cpassword: "",
+    role: "",
   });
   const [userData, setUserData] = useState({
     email: "",
@@ -113,6 +114,12 @@ const Login = (props) => {
   const signupForm = async (event) => {
     event.preventDefault();
     const { role } = event.target;
+    setUserDataSignUp({
+      ...userDataSignUp,
+      role: role.value,
+    });
+    // setTimeout(() => {
+    // }, 2000);-
     if (role.value === "company") {
       try {
         const res = await axios.post("/companyregister", userDataSignUp);
@@ -328,6 +335,12 @@ const Login = (props) => {
                     name="role"
                     id="register-checkbox-1"
                     value="company"
+                    onChange={(e)=>{
+                      setUserDataSignUp({
+                        ...userDataSignUp,
+                        role: e.target.value,
+                      });
+                    }}
                   />
                   <label htmlFor="register-checkbox-1">Company</label>
                 </span>
@@ -337,6 +350,12 @@ const Login = (props) => {
                     name="role"
                     id="register-checkbox-2"
                     value="vendor"
+                    onChange={(e)=>{
+                      setUserDataSignUp({
+                        ...userDataSignUp,
+                        role: e.target.value,
+                      });
+                    }}
                   />
                   <label htmlFor="register-checkbox-2">Vendor</label>
                 </span>

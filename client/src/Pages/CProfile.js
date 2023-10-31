@@ -16,14 +16,36 @@ function CProfile() {
     email: "",
     phone: null
   })
+  const [companyInfo, setCompanyInfo] = useState({
+    name: '',
+    email: '',
+    phone: 0,
+    address: '', // Add address
+    companyGenre: '', // Add company genre
+    logo: '',
+    GSTNO: 0,
+    Grole: "",
+    dob: "",
+  });
+  const [companyInfoEdit, setCompanyInfoEdit] = useState({
+    name: '',
+    email: '',
+    phone: 0,
+    address: '', // Add address
+    companyGenre: '', // Add company genre
+    logo: '',
+    GSTNO: 0,
+    Grole: "",
+    dob: "",
+  });
   const getUserInfo = async () => {
     try {
       const c = await axios.get('/profile', {
         withCredentials: true
       })
-      const { name, email, phone } = c.data
-      setUser({ name, email, phone })
-      setNewUser({ name, email, phone })
+      const { name, email, phone, address, companyGenre, logo, GSTNO, Grole, dob } = c.data
+      setCompanyInfo({ name, email, phone, address, companyGenre, logo, GSTNO, Grole, dob })
+      setCompanyInfoEdit({ name, email, phone, address, companyGenre, logo, GSTNO, Grole, dob })
     } catch (error) {
       if (error.response) {
         toast.error(error.response.data.error);
@@ -39,18 +61,6 @@ function CProfile() {
     getUserInfo()
   }, []);
 
-  const [companyInfo, setCompanyInfo] = useState({
-    name: 'Sample Company',
-    email: 'sample@email.com',
-    contactNumber: '+1234567890',
-    address: '123 Main St, City, Country', // Add address
-    companyGenre: 'Food', // Add company genre
-    logo: image1,
-    password: '123',
-    GSTNO: 3000423,
-    Grole: "Vendor",
-    dob: "01/01/2000",
-  });
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
@@ -58,7 +68,8 @@ function CProfile() {
       const reader = new FileReader();
       reader.onload = (event) => {
         const base64Image = event.target.result;
-        setCompanyInfo({ ...companyInfo, logo: base64Image });
+        console.log(base64Image)
+        setCompanyInfoEdit({ ...companyInfo, logo: base64Image });
       };
       reader.readAsDataURL(file);
     }
@@ -76,7 +87,7 @@ function CProfile() {
 
   const handleSubmit = async () => {
     try {
-      const c = await axios.post('/updateprofile', { name: newuser.name, email: newuser.email, phone: newuser.phone }, {
+      const c = await axios.post('/updateprofile', { name: companyInfoEdit.name, email: companyInfoEdit.email, phone: companyInfoEdit.phone, address:companyInfoEdit.address, companyGenre:companyInfoEdit.companyGenre, logo:companyInfoEdit.logo, GSTNO:companyInfoEdit.GSTNO, Grole:companyInfoEdit.Grole, dob:companyInfoEdit.dob }, {
         withCredentials: true
       })
 
@@ -111,13 +122,13 @@ function CProfile() {
               </div>
               <div style={{ width: "100%", margin: "0 auto", display: "flex", justifyContent: "flex-start", alignItems: "flex-start", flexDirection: "column" }}>
                 <div style={{ marginBottom: '17px' }}>
-                  <Typography variant="h5">{user.name}</Typography>
+                  <Typography variant="h5">{companyInfo.name}</Typography>
                 </div>
                 <div style={{ marginBottom: '5px' }}>
-                  <Typography variant="subtitle1">Email: {user.email}</Typography>
+                  <Typography variant="subtitle1">Email: {companyInfo.email}</Typography>
                 </div>
                 <div style={{ marginBottom: '5px' }}>
-                  <Typography variant="subtitle1">Contact Number: {user.phone}</Typography>
+                  <Typography variant="subtitle1">Contact Number: {companyInfo.phone}</Typography>
                 </div>
                 <div style={{ marginBottom: '5px' }}>
                   <Typography variant="subtitle1">Address: {companyInfo.address}</Typography>
@@ -126,10 +137,10 @@ function CProfile() {
                   <Typography variant="subtitle1">Company Type: {companyInfo.companyGenre}</Typography>
                 </div>
                 <div style={{ marginBottom: '5px' }}>
-                  <Typography variant="subtitle1">GST No: {companyInfo.GSTNO}</Typography>
+                  <Typography variant="subtitle1">GST No: {companyInfo.GSTNO===0 ? " ---" : companyInfo.GSTNO}</Typography>
                 </div>
                 <div style={{ marginBottom: '5px' }}>
-                  <Typography variant="subtitle1">Role: {companyInfo.Grole}</Typography>
+                  <Typography variant="subtitle1">Role: {companyInfo.Grole==="vendor" ? "Vendor" : "Company"}</Typography>
                 </div>
                 <div style={{ marginBottom: '5px' }}>
                   <Typography variant="subtitle1">Date of Birth: {companyInfo.dob}</Typography>
@@ -180,15 +191,15 @@ function CProfile() {
             <TextField
               label="Name"
               fullWidth
-              value={newuser.name}
-              onChange={(e) => setNewUser({ ...newuser, name: e.target.value })}
+              value={companyInfoEdit.name}
+              onChange={(e) => setCompanyInfoEdit({ ...companyInfoEdit, name: e.target.value })}
             />
             <br></br>
             <br></br>
             <TextField
               label="Email"
               fullWidth
-              value={newuser.email}
+              value={companyInfoEdit.email}
               disabled
             />
             <br></br>
@@ -196,39 +207,39 @@ function CProfile() {
             <TextField
               label="Contact Number"
               fullWidth
-              value={newuser.phone}
-              onChange={(e) => setNewUser({ ...newuser, phone: e.target.value })}
+              value={companyInfoEdit.phone}
+              onChange={(e) => setCompanyInfoEdit({ ...companyInfoEdit, phone: e.target.value })}
             />
             <br></br>
             <br></br>
             <TextField
               label="Address"
               fullWidth
-              value={companyInfo.address}
-
+              value={companyInfoEdit.address}
+              onChange={(e) => setCompanyInfoEdit({ ...companyInfoEdit, address: e.target.value })}
             />
             <br></br>
             <br></br>
             <TextField
               label="Company Type"
               fullWidth
-              value={companyInfo.companyGenre}
-
+              value={companyInfoEdit.companyGenre}
+              onChange={(e) => setCompanyInfoEdit({ ...companyInfoEdit, companyGenre: e.target.value })}
             />
             <br></br>
             <br></br>
             <TextField
               label="GST No"
               fullWidth
-              value={companyInfo.GSTNO}
-              disabled
+              value={companyInfoEdit.GSTNO}
+              onChange={(e) => setCompanyInfoEdit({ ...companyInfoEdit, GSTNO: e.target.value })}
             />
             <br></br>
             <br></br>
             <TextField
               label="Role"
               fullWidth
-              value={companyInfo.Grole}
+              value={companyInfo.Grole==="vendor" ? "Vendor" : "Company"}
               disabled
             />
             <br></br>
@@ -237,8 +248,8 @@ function CProfile() {
               label="Date of Birth"
               fullWidth
               type="date" // Use the date type input
-              value={companyInfo.dob} // Display the date as is
-              onChange={(e) => setCompanyInfo({ ...companyInfo, dob: e.target.value })}
+              value={companyInfoEdit.dob} // Display the date as is
+              onChange={(e) => setCompanyInfoEdit({ ...companyInfoEdit, dob: e.target.value })}
             />
             <br></br>
             <br></br>

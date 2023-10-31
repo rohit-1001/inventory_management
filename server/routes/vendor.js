@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
 const Vendor = require("../models/Vendor");
+const Profile = require("../models/Profile");
 const ContactForm = require("../models/Contact");
 const Order = require("../models/Order");
 const bcrypt = require("bcryptjs");
@@ -14,9 +15,8 @@ const Dashboard = require("../models/Dashboard");
 router.use(cookieParser());
 
 router.post("/vendorregister", async (req, res) => {
-  const { name, email, phone, password, cpassword } = req.body;
-
-  if (!name || !email || !phone || !password || !cpassword) {
+  const { name, email, phone, role, password, cpassword } = req.body;
+  if (!name || !email || !phone || !role || !password || !cpassword) {
     return res.status(422).json({ error: "All fields need to be filled" });
   }
 
@@ -29,6 +29,8 @@ router.post("/vendorregister", async (req, res) => {
     }
     const ven = new Vendor({ name, email, phone, password, cpassword });
     await ven.save();
+    const pro = new Profile({name:name, email:email, phone:phone, Grole:role})
+    await pro.save()
     return res.status(200).json({ msg: "Vendor registered successfully" });
   } catch (error) {
     console.log(error);
@@ -592,12 +594,11 @@ router.post("/ordercancellation", async (req, res) => {
 
 // vendor profile
 router.get("/profile", async (req, res) => {
-  let email, role;
+  let email
   if (req.cookies) {
     if (req.cookies.inv_man) {
       if (req.cookies.inv_man.role) {
         email = req.cookies.inv_man.email;
-        role = req.cookies.inv_man.role;
       }
     } else {
       return res.status(500).json({ error: "Please login to continue" });
@@ -607,19 +608,11 @@ router.get("/profile", async (req, res) => {
   }
 
   try {
-    if (role === "vendor") {
-      const vendor = await Vendor.findOne({ email: email });
-      if (!vendor) {
-        return res.status(400).json({ error: "Vendor not found" });
-      }
-      return res.status(200).json(vendor);
-    } else if (role === "company") {
-      const company = await Company.findOne({ email: email });
-      if (!company) {
-        return res.status(400).json({ error: "Company not found" });
-      }
-      return res.status(200).json(company);
+    const user = await Profile.findOne({email:email})
+    if (!user) {
+      return res.status(400).json({ error: "User not found" });
     }
+    return res.status(200).json(user);
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: "Internal server error" });
@@ -873,7 +866,7 @@ router.post("/declineConfirmation", async (req, res) => {
 });
 
 router.post("/updateprofile", async (req, res) => {
-  const { name, email, phone } = req.body;
+  const { name, email, phone, address, companyGenre, logo, GSTNO, dob } = req.body;
   let role;
   if (req.cookies) {
     if (req.cookies.inv_man) {
@@ -890,25 +883,19 @@ router.post("/updateprofile", async (req, res) => {
     return res.status(422).json({ error: "All fields need to be filled" });
   }
   try {
-    if (role === "vendor") {
-      const user = await Vendor.findOne({ email: email });
+    const user = await Profile.findOne({ email: email });
       if (!user) {
-        return res.status(400).send({ error: "Vendor not found" });
+        return res.status(400).send({ error: "User not found" });
       }
       user.name = name;
       user.phone = phone;
-      await Vendor.replaceOne({ email: email }, user);
+      user.address = address;
+      user.companyGenre = companyGenre;
+      user.logo = logo;
+      user.GSTNO = GSTNO;
+      user.dob = dob;
+      await Profile.replaceOne({ email: email }, user);
       return res.status(200).json({ msg: "Profile updated successfully" });
-    } else if (role === "company") {
-      const user = await Company.findOne({ email: email });
-      if (!user) {
-        return res.status(400).send({ error: "Company not found" });
-      }
-      user.name = name;
-      user.phone = phone;
-      await Company.replaceOne({ email: email }, user);
-      return res.status(200).json({ msg: "Profile updated successfully" });
-    }
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: "Internal server error" });

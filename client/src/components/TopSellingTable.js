@@ -44,8 +44,6 @@ export default function TopSellingTable(props) {
         setSelectionModel(newSelection.selectionModel);
     };
 
-    console.log("PROPS IN TOPSELLING TABLE: ", props.data)
-
     return (
         <div style={{ height: "100%", width: '100%' }}>
             <DataGrid

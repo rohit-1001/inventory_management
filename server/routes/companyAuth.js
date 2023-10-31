@@ -8,11 +8,12 @@ const Company = require("../models/Company");
 const Vendor = require("../models/Vendor");
 const Dashboard = require("../models/Dashboard");
 const Order = require("../models/Order");
+const Profile = require("../models/Profile");
 
 router.post("/companyregister", async (req, res) => {
-  const { name, email, phone, password, cpassword } = req.body;
+  const { name, email, phone, role, password, cpassword } = req.body;
 
-  if (!name || !email || !phone || !password || !cpassword) {
+  if (!name || !email || !phone || !role || !password || !cpassword) {
     return res.status(422).json({ error: "All fields need to be filled" });
   }
 
@@ -23,8 +24,11 @@ router.post("/companyregister", async (req, res) => {
     } else if (password != cpassword) {
       return res.status(422).json({ error: "Passwords do not match" });
     }
+
     const comp = new Company({ name, email, phone, password, cpassword });
     await comp.save();
+    const pro = new Profile({name:name, email:email, phone:phone, Grole:role})
+    await pro.save()
     return res.status(200).json({ msg: "Company registered successfully" });
   } catch (error) {
     console.log(error);

@@ -27,7 +27,7 @@ router.post("/companyregister", async (req, res) => {
 
     const comp = new Company({ name, email, phone, password, cpassword });
     await comp.save();
-    const pro = new Profile({name:name, email:email, phone:phone, Grole:role})
+    const pro = new Profile({ name: name, email: email, phone: phone, Grole: role })
     await pro.save()
     return res.status(200).json({ msg: "Company registered successfully" });
   } catch (error) {
@@ -360,18 +360,18 @@ router.post("/getupfields", async (req, res) => {
     if (!dashboard) {
       return res.status(200).json({ sales: 0, profit: 0, tsales: 0 });
     }
-    
+
     // Calculate the total sales and profits for the company based on the monthly data
     let tsales = 0;
     let profit = 0;
-    
+
     const date = new Date();
-    const month = (date.getMonth()+1).toString();
+    const month = (date.getMonth() + 1).toString();
     const year = date.getFullYear().toString();
     const monthData = dashboard.data.find(
       (monthData) => monthData.month === month && monthData.year === year
-      );
-      if (!monthData || !monthData.monthly_data) {
+    );
+    if (!monthData || !monthData.monthly_data) {
       return res.status(200).json({ sales: 0, profit: 0, tsales: 0 });
     }
     let sales = monthData.monthly_data.sales;
@@ -379,7 +379,7 @@ router.post("/getupfields", async (req, res) => {
       tsales += monthlyItem.monthly_data.sales;
       profit += monthlyItem.monthly_data.profit;
     });
-    
+
     return res.status(200).json({ sales, profit, tsales });
   } catch (error) {
     if (error.response) {
@@ -600,5 +600,38 @@ router.get("/prothreshold_c", async (req, res) => {
     return res.status(500).json({ error: "Internal server error" });
   }
 });
+
+
+
+router.get('/monthlysales_c', async (req, res) => {
+  const email = req.body.email; // Use req.query to get the email from the query parameters
+  const currentYear = new Date().getFullYear(); // Get the current year
+
+  try {
+    // Query the database to find the monthly sales data for the specified email and current year
+    const vendorSalesData = await Dashboard.find({
+      email,
+      'data.year': currentYear, // Filter by the current year
+    });
+
+    if (vendorSalesData.length === 0) {
+      // If no data is found for the email and current year, return an appropriate response
+      return res.status(404).json({ message: 'No data found for this vendor in the current year.' });
+    }
+
+    // If data is found, create a new array with just the "month" and "sales" from each "monthly_data" entry
+    const monthlySales = vendorSalesData[0].data.map((entry) => ({
+      month: entry.month,
+      sales: entry.monthly_data.sales,
+    }));
+
+    // Return the new array in the response
+    res.status(200).json(monthlySales);
+  } catch (err) {
+    // Handle any errors that may occur during the database query
+    res.status(500).json({ error: 'An error occurred while fetching data.' });
+  }
+});
+
 
 module.exports = router;

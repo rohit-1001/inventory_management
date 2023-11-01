@@ -69,7 +69,7 @@ function CProfile() {
       reader.onload = (event) => {
         const base64Image = event.target.result;
         console.log(base64Image)
-        setCompanyInfoEdit({ ...companyInfo, logo: base64Image });
+        setCompanyInfoEdit({ ...companyInfoEdit, logo: base64Image });
       };
       reader.readAsDataURL(file);
     }
@@ -179,7 +179,7 @@ function CProfile() {
           <br></br>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <img
-              src={companyInfo.logo}
+              src={companyInfoEdit.logo}
               alt="Company Logo"
               style={{ width: '250px', height: '250px', borderRadius: '50%', marginBottom: '10px' }}
             />

@@ -627,7 +627,7 @@ router.get('/monthlysales_c', async (req, res) => {
 
     if (vendorSalesData.length === 0) {
       // If no data is found for the email and current year, return an appropriate response
-      return res.status(404).json({ message: 'No data found for this vendor in the current year.' });
+      return res.status(404).json({ error: 'No data found for this vendor in the current year.' });
     }
 
     // If data is found, create a new array with just the "month" and "sales" from each "monthly_data" entry

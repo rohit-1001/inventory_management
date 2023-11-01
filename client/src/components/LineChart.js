@@ -28,7 +28,7 @@ function LineChart(props) {
         pointHoverBorderWidth: 2,
         pointRadius: 1,
         pointHitRadius: 10,
-        data: [65, 59, 80, 81, 56, 55],
+        data: [0, 0, 0, 0, 0, 0],
       },
     ],
   };
@@ -41,15 +41,18 @@ function LineChart(props) {
     if (props.details.role === "vendor") {
       const lineChart = axios.get('/monthlysales_v').then((res) => {
         const salesData = res.data;
+        console.log("res.data : ", salesData)
         const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-        setMonths(salesData.map(entry => monthNames[entry.month - 1])); // subtract 1 because array indices start at 0
+        setMonths(salesData.map(entry => monthNames[Number(entry.month) - 1])); // subtract 1 because array indices start at 0
         setSales(salesData.map(entry => entry.sales));
-
+        console.log("months : ", months)
+        console.log("sales : ", sales)
+        
         if (months.length === 0) {
           months.push(['January', 'February', 'March', 'April', 'May', 'June']);
-          sales.push([65, 59, 80, 81, 56, 55]);
+          sales.push([0, 0, 0, 0, 0, 0]);
         }
-
+        
         let chartData = {
           ...initialData,
           labels: months,
@@ -60,6 +63,7 @@ function LineChart(props) {
         };
 
         setLineChartData(chartData)
+        console.log("chart data : ", chartData)
       })
     }
 
@@ -67,7 +71,7 @@ function LineChart(props) {
       const lineChart = axios.get('/monthlysales_c').then((res) => {
         const salesData = res.data;
         const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-        setMonths(salesData.map(entry => monthNames[entry.month - 1])); // subtract 1 because array indices start at 0
+        setMonths(salesData.map(entry => monthNames[Number(entry.month) - 1])); // subtract 1 because array indices start at 0
         setSales(salesData.map(entry => entry.sales));
 
         if (months.length === 0) {

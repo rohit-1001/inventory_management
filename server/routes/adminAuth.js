@@ -150,59 +150,56 @@ router.post('/adminlogout', (req, res) => {
     return res.status(200).json({ msg: "Logged out successfully" })
 })
 
-// router.get('/monthlysalesadmin', async (req, res) => {
-//     const currentYear = new Date().getFullYear(); // Get the current year
+router.get('/adminLineChart', async (req, res) => {
+    const currentYear = new Date().getFullYear().toString();
+    console.log("currentYear : ",currentYear)
+    let arr = {
+        "1" : 0,
+        "2" : 0,
+        "3" : 0,
+        "4" : 0,
+        "5" : 0,
+        "6" : 0,
+        "7" : 0,
+        "8" : 0,
+        "9" : 0,
+        "10" : 0,
+        "11" : 0,
+        "12" : 0,
+    }
+    try {
+        const allEmails = await Dashboard.distinct('email');
 
-//     try {
-//         const allEmails = await Dashboard.distinct('email');
-
-//         if (allEmails.length === 0) {
-//             // If there are no emails in the database, return an appropriate response
-//             return res.status(404).json({ message: 'No emails found in the database.' });
-//         }
-
-//         const monthlySales = [];
-
-//         for (const email of allEmails) {
-//             const monthlyData = await Dashboard.find({
-//                 email,
-//                 'data.year': currentYear.toString(),
-//             });
-
-//             if (monthlyData.length > 0) {
-//                 // Calculate the total sales for each month
-//                 const monthlyTotalSales = {};
-//                 for (const data of monthlyData) {
-//                     for (const entry of data.data) {
-//                         if (entry.year === currentYear) {
-//                             if (!monthlyTotalSales[entry.month]) {
-//                                 monthlyTotalSales[entry.month] = 0;
-//                             }
-//                             monthlyTotalSales[entry.month] += entry.monthly_data.sales;
-//                         }
-//                     }
-//                 }
-
-//                 // Push the results into the response array
-//                 for (const month in monthlyTotalSales) {
-//                     monthlySales.push({ month, sales: monthlyTotalSales[month] });
-//                 }
-//             }
-//         }
-
-//         if (monthlySales.length === 0) {
-//             // If no data is found for the current year, return an appropriate response
-//             return res.status(404).json({ message: 'No data found for the current year.' });
-//         }
-
-//         // Return the array with the total sales for each month
-//         res.status(200).json(monthlySales);
-//     } catch (err) {
-//         // Handle any errors that may occur during the database queries
-//         console.error(err);
-//         res.status(500).json({ error: 'An error occurred while fetching data.' });
-//     }
-// });
+        if (allEmails.length === 0) {
+            return res.status(404).json({ message: 'No sale found.'});
+        }
+        for(const email of allEmails){
+            const monthlyData = await Dashboard.findOne({
+                email:email
+            });
+            const data = []
+            for(const m of monthlyData.data){
+                if(m.year===currentYear){
+                    data.push(m)
+                }
+            }
+            const months = []
+            for(const d of data){
+                if(d.year===currentYear){
+                    months.push(d)
+                }
+            }
+            for(const mon of months){
+                let currmon = mon.month
+                arr[currmon]+=mon.monthly_data.sales
+            }
+        }
+        return res.status(200).json(arr)
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({error: "Some error occured"})
+    }
+})
 
 module.exports = router;
 

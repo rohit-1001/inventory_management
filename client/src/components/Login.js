@@ -1,17 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import signin from "../assets/signin.png";
 import signup from "../assets/signup.png";
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 const Login = (props) => {
+<<<<<<< HEAD
   
+=======
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+    document.title = "Sangrah | Login";
+  }, []);
+>>>>>>> master
   const [userDataSignUp, setUserDataSignUp] = useState({
     name: "",
     email: "",
     phone: "",
     password: "",
     cpassword: "",
+    role: "",
   });
   const [userData, setUserData] = useState({
     email: "",
@@ -66,69 +76,89 @@ const Login = (props) => {
   const navigate = useNavigate();
   const loginForm = async (event) => {
     event.preventDefault();
-    const {role} = event.target
-    if(role.value==="company"){
+    const { role } = event.target;
+    if (role.value === "company") {
       try {
         const res = await axios.post("/companysignin", userData);
         if (res.status !== 200) {
-          window.alert(res.data.msg);
+          toast.error(res.data.msg);
         } else {
-          window.alert(res.data.msg);
+          toast.success(res.data.msg);
           const { setRole } = props.details;
-          setRole("company")
+          setRole("company");
           navigate("/codb");
         }
       } catch (error) {
-        window.alert("Invalid Credentials");
+        if (error.response) {
+          toast.error(error.response.data.error);
+        } else {
+          toast.error("Some error occured");
+        }
       }
-    }
-    else if(role.value==="vendor"){
+    } else if (role.value === "vendor") {
       try {
         const res = await axios.post("/vendorsignin", userData);
         if (res.status !== 200) {
-          window.alert(res.data.msg);
+          toast.error(res.data.msg);
         } else {
-          window.alert(res.data.msg);
+          toast.success(res.data.msg);
           const { setRole } = props.details;
-          setRole("vendor")
+          setRole("vendor");
           navigate("/codb");
         }
       } catch (error) {
-        window.alert("Invalid Credentials");
+        if (error.response) {
+          toast.error(error.response.data.error);
+        } else {
+          toast.error("Some error occured");
+        }
       }
     }
   };
   const signupForm = async (event) => {
     event.preventDefault();
-    const {role} = event.target
-    if(role.value==="company"){
+    const { role } = event.target;
+    setUserDataSignUp({
+      ...userDataSignUp,
+      role: role.value,
+    });
+    // setTimeout(() => {
+    // }, 2000);-
+    if (role.value === "company") {
       try {
         const res = await axios.post("/companyregister", userDataSignUp);
-  
+
         if (res.status === 200) {
-          window.alert("User registered successfully");
+          toast.success("User registered successfully");
         } else {
-          window.alert("User registration failed" + res.msg);
+          toast.error("User registration failed" + res.msg);
         }
         onclick_sign_in_btn();
         onclick_sign_in_btn2();
       } catch (error) {
-        window.alert("Vendor registration unsuccessful ");
+        if (error.response) {
+          toast.error(error.response.data.error);
+        } else {
+          toast.error("Some error occured");
+        }
       }
-    }
-    else if(role.value==="vendor"){
+    } else if (role.value === "vendor") {
       try {
         const res = await axios.post("/vendorregister", userDataSignUp);
-  
+
         if (res.status === 200) {
-          window.alert("User registered successfully");
+          toast.success("User registered successfully");
         } else {
-          window.alert("User registration failed" + res.msg);
+          toast.error("User registration failed" + res.msg);
         }
         onclick_sign_in_btn();
         onclick_sign_in_btn2();
       } catch (error) {
-        window.alert("Company registration unsuccessful ");
+        if (error.response) {
+          toast.error(error.response.data.error);
+        } else {
+          toast.error("Some error occured");
+        }
       }
     }
   };
@@ -176,11 +206,21 @@ const Login = (props) => {
               <div className="register-checkboxes">
                 <span>Sign In as: </span>
                 <span>
-                  <input type="radio" name="role" id="register-checkbox-11" value="company"/>
+                  <input
+                    type="radio"
+                    name="role"
+                    id="register-checkbox-11"
+                    value="company"
+                  />
                   <label htmlFor="register-checkbox-11">Company</label>
                 </span>
                 <span>
-                  <input type="radio" name="role" id="register-checkbox-22" value="vendor"/>
+                  <input
+                    type="radio"
+                    name="role"
+                    id="register-checkbox-22"
+                    value="vendor"
+                  />
                   <label htmlFor="register-checkbox-22">Vendor</label>
                 </span>
               </div>
@@ -189,16 +229,32 @@ const Login = (props) => {
               </button>
               <p className="social-text123">Or Sign in to our Community</p>
               <div className="social-media123">
-                <a href="/" className="social-icon123">
+                <a
+                  target="_blank"
+                  href="https://www.facebook.com/"
+                  className="social-icon123"
+                >
                   <i className="fab fa-facebook"></i>
                 </a>
-                <a href="/" className="social-icon123">
+                <a
+                  target="_blank"
+                  href="https://twitter.com/"
+                  className="social-icon123"
+                >
                   <i className="fab fa-twitter"></i>
                 </a>
-                <a href="/" className="social-icon123">
+                <a
+                  target="_blank"
+                  href="https://www.google.com/"
+                  className="social-icon123"
+                >
                   <i className="fab fa-google"></i>
                 </a>
-                <a href="/" className="social-icon123">
+                <a
+                  target="_blank"
+                  href="https://in.linkedin.com/"
+                  className="social-icon123"
+                >
                   <i className="fab fa-linkedin-in"></i>
                 </a>
               </div>
@@ -279,11 +335,33 @@ const Login = (props) => {
               <div className="register-checkboxes">
                 <span>Register As: </span>
                 <span>
-                  <input type="radio" name="role" id="register-checkbox-1" value="company"/>
+                  <input
+                    type="radio"
+                    name="role"
+                    id="register-checkbox-1"
+                    value="company"
+                    onChange={(e)=>{
+                      setUserDataSignUp({
+                        ...userDataSignUp,
+                        role: e.target.value,
+                      });
+                    }}
+                  />
                   <label htmlFor="register-checkbox-1">Company</label>
                 </span>
                 <span>
-                  <input type="radio" name="role" id="register-checkbox-2" value="vendor"/>
+                  <input
+                    type="radio"
+                    name="role"
+                    id="register-checkbox-2"
+                    value="vendor"
+                    onChange={(e)=>{
+                      setUserDataSignUp({
+                        ...userDataSignUp,
+                        role: e.target.value,
+                      });
+                    }}
+                  />
                   <label htmlFor="register-checkbox-2">Vendor</label>
                 </span>
               </div>
@@ -292,16 +370,32 @@ const Login = (props) => {
               </button>
               <p className="social-text123">Or Sign in with social platform</p>
               <div className="social-media123">
-                <a href="/" className="social-icon123">
+                <a
+                  target="_blank"
+                  href="https://www.facebook.com/"
+                  className="social-icon123"
+                >
                   <i className="fab fa-facebook"></i>
                 </a>
-                <a href="/" className="social-icon123">
+                <a
+                  target="_blank"
+                  href="https://twitter.com/"
+                  className="social-icon123"
+                >
                   <i className="fab fa-twitter"></i>
                 </a>
-                <a href="/" className="social-icon123">
+                <a
+                  target="_blank"
+                  href="https://www.google.com/"
+                  className="social-icon123"
+                >
                   <i className="fab fa-google"></i>
                 </a>
-                <a href="/" className="social-icon123">
+                <a
+                  target="_blank"
+                  href="https://in.linkedin.com/"
+                  className="social-icon123"
+                >
                   <i className="fab fa-linkedin-in"></i>
                 </a>
               </div>
@@ -322,7 +416,9 @@ const Login = (props) => {
               <div className="content123">
                 <h3>Member of our Community?</h3>
                 <p>
-                  By logging in, you become part of our mission to create a more efficient and sustainable supply chain. Together, we can make a lasting impact on the world.
+                  By logging in, you become part of our mission to create a more
+                  efficient and sustainable supply chain. Together, we can make
+                  a lasting impact on the world.
                 </p>
                 <button
                   className="btn123"
@@ -338,7 +434,8 @@ const Login = (props) => {
               <div className="content123">
                 <h3>New to our Community?</h3>
                 <p>
-                Join our community and help us create a more efficient and sustainable world through better inventory management.
+                  Join our community and help us create a more efficient and
+                  sustainable world through better inventory management.
                 </p>
                 <button
                   className="btn123"

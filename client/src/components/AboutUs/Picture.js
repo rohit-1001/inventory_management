@@ -7,7 +7,7 @@ const Picture = () => {
     <article className={adwaitStyles.adwaitArticle}>
       <picture className={adwaitStyles.adwaitPicture}>
         <source media="(min-width: 0px)" srcSet={adwaitBackground} />
-        <img src={adwaitBackground} alt="background" />
+        <img className="img123" src={adwaitBackground} alt="background" />
       </picture>
       <h1 className={adwaitStyles.adwaitHeader}>About Us</h1>
     </article>

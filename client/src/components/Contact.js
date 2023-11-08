@@ -1,5 +1,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 const Contact = () => {
   const [contact, setcontact] = useState({
@@ -23,6 +25,7 @@ const Contact = () => {
           throw new Error('No login found')
         }
       } catch (error) {
+        // Kept purposely to avoid empty catch error if it exists
         console.log(error)
       }
   }
@@ -40,10 +43,10 @@ const Contact = () => {
     const res = await axios.post('/contactform', contact)
 
     if(res.status!==200){
-      window.alert("Form submission failed")
+      toast.error("Form submission failed")
     }
     else{
-      window.alert("Form submitted successfully")
+      toast.success("Form submitted successfully")
     }
 
   }

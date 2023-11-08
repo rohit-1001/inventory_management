@@ -1,12 +1,16 @@
 import React from 'react'
 import about from '../../assets/about.jpg'
 import './About.css'
-
+import { useEffect } from 'react'
 const About = () => {
+    useEffect(() => {
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+        document.title = 'Sangrah | About';
+    }, [])
     return (
         <div className='adwaitAbout' id='about'>
             <div className='adwaitContainer'>
-                <img src={about} alt='adwaitAbout' />
+                <img className='img123' src={about} alt='adwaitAbout' />
                 <div className='adwaitCol-2'>
                     <h2>About</h2>
                     <span className='adwaitLine'></span>

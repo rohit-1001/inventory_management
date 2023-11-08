@@ -43,12 +43,9 @@ function LineChart(props) {
       try {
         const lineChart = await axios.get('/monthlysales_v').then((res) => {
           const salesData = res.data;
-          console.log("res.data : ", salesData)
           const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
           setMonths(salesData.map(entry => monthNames[Number(entry.month) - 1])); // subtract 1 because array indices start at 0
           setSales(salesData.map(entry => entry.sales));
-          console.log("months : ", months)
-          console.log("sales : ", sales)
           
           // if (months.length === 0) {
           //   months.push(['January', 'February', 'March', 'April', 'May', 'June']);
@@ -92,6 +89,50 @@ function LineChart(props) {
     else if (props.details.role === "company") {
       try {
         const lineChart = await axios.get('/monthlysales_c').then((res) => {
+          const salesData = res.data;
+          const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+          setMonths(salesData.map(entry => monthNames[Number(entry.month) - 1])); // subtract 1 because array indices start at 0
+          setSales(salesData.map(entry => entry.sales));
+          // if (months.length === 0) {
+          //   months.push(['January', 'February', 'March', 'April', 'May', 'June']);
+          //   sales.push([10, 20, 30, 40, 50, 60]);
+          // }
+      
+          // let chartData = {
+          //   ...initialData,
+          //   labels: months,
+          //   datasets: initialData.datasets.map(dataset => ({
+          //     ...dataset,
+          //     data: sales,
+          //   })),
+          // };
+      
+          // setLineChartData(chartData)
+         
+        })
+      } catch (error) {
+        if (error.response) {
+          // toast.error(error.response.data.error);
+          setMonths(['January', 'February', 'March', 'April', 'May', 'June']);
+          setSales([0,0,0,0,0,0]);
+          // let chartData = {
+          //   ...initialData,
+          //   labels: months,
+          //   datasets: initialData.datasets.map(dataset => ({
+          //     ...dataset,
+          //     data: sales,
+          //   })),
+          // };
+  
+          // setLineChartData(chartData)   
+        } else {
+          toast.error("Some error occured");
+        }
+      }
+    }
+    else if (props.details.role === "admin") {
+      try {
+        const lineChart = await axios.get('/adminLineChart').then((res) => {
           const salesData = res.data;
           const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
           setMonths(salesData.map(entry => monthNames[Number(entry.month) - 1])); // subtract 1 because array indices start at 0

@@ -152,7 +152,6 @@ router.post('/adminlogout', (req, res) => {
 
 router.get('/adminLineChart', async (req, res) => {
     const currentYear = new Date().getFullYear().toString();
-    console.log("currentYear : ",currentYear)
     let arr = {
         "1" : 0,
         "2" : 0,
@@ -167,6 +166,7 @@ router.get('/adminLineChart', async (req, res) => {
         "11" : 0,
         "12" : 0,
     }
+    let arr1 = []
     try {
         const allEmails = await Dashboard.distinct('email');
 
@@ -194,7 +194,10 @@ router.get('/adminLineChart', async (req, res) => {
                 arr[currmon]+=mon.monthly_data.sales
             }
         }
-        return res.status(200).json(arr)
+        for(const key in arr){
+            arr1.push({month:key,sales:arr[key]})
+        }
+        return res.status(200).json(arr1)
     } catch (error) {
         console.log(error)
         return res.status(500).json({error: "Some error occured"})
@@ -202,4 +205,3 @@ router.get('/adminLineChart', async (req, res) => {
 })
 
 module.exports = router;
-

@@ -24,7 +24,7 @@ import {
 } from "@mui/material";
 import ViewProductsPopup from "./ViewProductsPopup.js";
 
-const Admin = () => {
+const Admin = (props) => {
   const [activeTab, setActiveTab] = useState("vendors");
   const [companies, setCompanies] = useState([]);
   const [vendors, setVendors] = useState([]);
@@ -183,7 +183,7 @@ const Admin = () => {
             maxWidth: "50%",
           }}
         >
-          <LineChart />
+          <LineChart details={{ role: props.details.role}} />
         </div>
       </div>
 
@@ -334,7 +334,7 @@ const Admin = () => {
                                   }
                                 >
                                   View
-                                </Button>
+                                </Button>   
                               </TableCell>
                             </TableRow>
                           ))}

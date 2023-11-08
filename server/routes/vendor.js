@@ -1054,8 +1054,4 @@ router.get('/monthlysales_v', async (req, res) => {
   }
 });
 
-
-
-
-
 module.exports = router;

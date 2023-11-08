@@ -270,8 +270,8 @@ function App() {
         <>
           <Navbar3 details={{ setRole }} />
           <Routes>
-            <Route exact path="/" element={<Admin />} />
-            <Route path="/adminDashboard" element={<Admin />} />
+            <Route exact path="/" element={<Admin details={{ role }}/>} />
+            <Route path="/adminDashboard" element={<Admin details={{ role }}/>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </>

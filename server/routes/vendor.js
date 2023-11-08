@@ -1054,4 +1054,59 @@ router.get('/monthlysales_v', async (req, res) => {
   }
 });
 
+router.post('/getcurrorderinfo', async (req, res) => {
+  const id = req.body.id;
+  try {
+    const order = await Order.findOne({ _id: id });
+    const email = order.c_email;
+    const company = await Company.findOne({ email: email });
+    if (!order) {
+      return res.status(400).json({ error: "No order found" });
+    }
+    let totalprice = 0;
+    for (const product of order.products) {
+      const companyProduct = company.products.find(
+        (item) => item.pid === product.pid
+      );
+      totalprice += (companyProduct.s_price * product.quantity);
+    }
+    console.log(order.products);
+    return res.status(200).json({ totalprice: totalprice, products: order.products, c_email: order.c_email, v_email: order.v_email });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+})
+
+require('dotenv').config();
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+
+router.post("/create-checkout-session", async (req, res) => {
+  const { products } = req.body;
+  console.log(products);
+  // Create lineItems dynamically based on products
+  const lineItem = {
+      price_data: {
+          currency: "inr",
+          product_data: {
+              name: products.email, // Assuming each product has a 'name' property
+              images: [], // You can add images if you have them
+          },
+          unit_amount: products.price * 100, // Assuming each product has a 'donationAmount' property
+      },
+      quantity: 1, // You can adjust the quantity as needed
+  };
+  console.log(lineItem);
+
+  const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      line_items: [lineItem],
+      mode: "payment",
+      success_url: "http://localhost:3000/orders",
+      cancel_url: "http://localhost:3000/codb",
+  });
+
+  res.json({ id: session.id });
+});
+
 module.exports = router;

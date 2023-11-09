@@ -1091,5 +1091,35 @@ router.get('/getcompanylogos', async (req, res) => {
     return res.status(500).json({ error: "Internal server error" });
   }
 })
+require('dotenv').config();
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+
+router.post("/create-checkout-session", async (req, res) => {
+  const { products } = req.body;
+  console.log(products);
+  // Create lineItems dynamically based on products
+  const lineItem = {
+      price_data: {
+          currency: "inr",
+          product_data: {
+              name: products.email, // Assuming each product has a 'name' property
+              images: [], // You can add images if you have them
+          },
+          unit_amount: products.price * 100, // Assuming each product has a 'donationAmount' property
+      },
+      quantity: 1, // You can adjust the quantity as needed
+  };
+  console.log(lineItem);
+
+  const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      line_items: [lineItem],
+      mode: "payment",
+      success_url: "http://localhost:3000/orders",
+      cancel_url: "http://localhost:3000/codb",
+  });
+
+  res.json({ id: session.id });
+});
 
 module.exports = router;

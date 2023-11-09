@@ -1054,4 +1054,42 @@ router.get('/monthlysales_v', async (req, res) => {
   }
 });
 
+router.post('/getcurrorderinfo', async (req, res) => {
+  const id = req.body.id;
+  try {
+    const order = await Order.findOne({ _id: id });
+    const email = order.c_email;
+    const company = await Company.findOne({ email: email });
+    if (!order) {
+      return res.status(400).json({ error: "No order found" });
+    }
+    let totalprice = 0;
+    for (const product of order.products) {
+      const companyProduct = company.products.find(
+        (item) => item.pid === product.pid
+      );
+      totalprice += (companyProduct.s_price * product.quantity);
+    }
+    return res.status(200).json({ totalprice: totalprice, products: order.products, c_email: order.c_email, v_email: order.v_email });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+})
+
+router.get('/getcompanylogos', async (req, res) => {
+  try {
+    const companies = await Profile.find({ Grole: "company" });
+    let logos = [];
+    for(company of companies){
+      logos.push({email: company.email, logo: company.logo});
+    }
+
+    res.status(200).json(logos);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+})
+
 module.exports = router;

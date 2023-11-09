@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  server:
+    image: "inv_man_server_docker_image"
+    ports:
+      - "8000:8000"
+    networks:
+      - inventory
+
+
+  client:
+    image: "inv_man_client_docker_image"
+    ports:
+      - "3000:3000"
+    environment:
+      - API_URL=http://server:8000
+      - HTTP_PROXY=http://server:8000
+      - HTTPS_PROXY=http://server:8000
+    depends_on:
+      - server
+    networks:
+      - inventory
+
+
+networks:
+  inventory:
+    driver: bridge
+      - HTTPS_PROXY=http://localhost:8000
+    # depends_on:
+    #   - server
+    # networks:
+    #   - inventory
+    
+

@@ -13,6 +13,7 @@ import { Button } from "@mui/material";
 import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
+import {loadStripe} from '@stripe/stripe-js';
 
 function CustomToolbar() {
   return (
@@ -138,13 +139,65 @@ export default function OrderTable(props) {
   };
   const confirmDelivery = async (id) => {
     try {
-      const c = await axios.post(
-        "/confirmDelivery",
-        { id },
-        {
-          withCredentials: true,
-        }
-      );
+      const dataaa = await axios.post("/getcurrorderinfo", { id }, { withCredentials: true });
+      
+  
+      if (dataaa.status === 200) {
+        const { totalprice, products, c_email, v_email } = dataaa.data;
+        console.log(v_email);
+        console.log(totalprice);
+        console.log(products);
+  
+        const makePayment = async () => {
+          try {
+            const data = {
+              email: v_email,
+              price: totalprice,
+            };
+  
+            const stripe = await loadStripe("pk_test_51NoPhzSDorTgDdu4kL6wVjVUHIfN6t9nU5lphavBmFhm8w7OCFx9T8ffZ1pfCKpTj2HyqLn2XMNKBCAliKCJ38Ke00zP4A69Yi");
+  
+            const body = {
+              products: data,
+            };
+            const headers = {
+              "Content-Type": "application/json",
+            };
+  
+            const response = await fetch("/create-checkout-session", {
+              method: "POST",
+              headers: headers,
+              body: JSON.stringify(body),
+            });
+  
+            const session = await response.json();
+  
+            const result = await stripe.redirectToCheckout({
+              sessionId: session.id,
+            });
+            console.log("Stripe Checkout result:", result);
+  
+            if (result.error) {
+              console.error(result.error);
+            }
+          } catch (paymentError) {
+            console.error("Payment error:", paymentError);
+          }
+        };
+  
+        // Call the makePayment function if needed
+        makePayment();
+      }
+    } catch (error) {
+      if (error.response) {
+        toast.error(error.response.data.error);
+      } else {
+        toast.error("Some error occurred");
+      }
+    }
+  
+    try {
+      const c = await axios.post("/confirmDelivery", { id }, { withCredentials: true });
       if (c.status === 200) {
         toast.success(c.data.msg);
       }
@@ -152,11 +205,13 @@ export default function OrderTable(props) {
       if (error.response) {
         toast.error(error.response.data.error);
       } else {
-        toast.error("Some error occured");
+        toast.error("Some error occurred");
       }
     }
+  
     props.data.setCall(true);
   };
+  
   const declineConfirmation = async (id) => {
     try {
       const c = await axios.post(
@@ -222,144 +277,144 @@ export default function OrderTable(props) {
     { field: "status", headerName: "Status", width: 150, align: 'center', headerAlign: 'center' },
     props.data.role === "vendor"
       ? {
-          field: "action",
-          headerName: "Action",
-          headerAlign: "center",
-          headerWidth: 200,
-          align: 'center',
-      headerAlign: 'center',
-          renderCell: (params) => {
-            const status = params.row.status;
+        field: "action",
+        headerName: "Action",
+        headerAlign: "center",
+        headerWidth: 200,
+        align: 'center',
+        headerAlign: 'center',
+        renderCell: (params) => {
+          const status = params.row.status;
 
-            switch (status) {
-              case "Requested":
-                return (
-                  <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
-                    <Button
-                      className="link_in_table"
-                      onClick={() => {
-                        revokeRequest(params.row.id);
-                      }}
-                      style={{
-                        color: "red",
-                      }}
-                    >
-                      Revoke
-                    </Button>
-                  </div>
-                );
-              case "Confirmation pending":
-                return (
-                  <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
-                    <Button
-                      className="link_in_table"
-                      onClick={() => {
-                        confirmDelivery(params.row.id);
-                      }}
-                      style={{
-                        color: "green",
-                      }}
-                    >
-                      Confirm
-                    </Button>
-                    <Button
-                      className="link_in_table"
-                      onClick={() => {
-                        declineConfirmation(params.row.id);
-                      }}
-                      style={{
-                        color: "red",
-                      }}
-                    >
-                      Decline
-                    </Button>
-                  </div>
-                );
-              default:
-                return null;
-            }
-          },
-          width: 350,
-        }
-      : {
-          field: "action",
-          headerName: "Action",
-          headerAlign: "center",
-          headerWidth: 200,
-          align: 'center',
-          renderCell: (params) => {
-            const status = params.row.status;
-
-            switch (status) {
-              case "Requested":
-                return (
-                  <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
-                    <Button
-                      className="link_in_table"
-                      onClick={() => {
-                        acceptRequest(params.row.id);
-                      }}
-                      style={{
-                        color: "green",
-  
-                      }}
-                    >
-                      Accept
-                    </Button>
-                    <Button
-                      className="link_in_table"
-                      onClick={() => {
-                        rejectRequest(params.row.id);
-                      }}
-                      style={{
-                        color: "red",
-  
-                      }}
-                    >
-                      Reject
-                    </Button>
-                  </div>
-                );
-              case "Accepted":
-                return (
-                  <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
-                    <Button
-                      className="link_in_table"
-                      onClick={() => {
-                        dispatchRequest(params.row.id);
-                      }}
-                      style={{
-                        color: "green",
-  
-                      }}
-                    >
-                      Dispatch
-                    </Button>
-                  </div>
-                );
-              case "Dispatched":
-                return (
-                  <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
-                    <Button
-                      className="link_in_table"
-                      onClick={() => {
-                        confirmationPending(params.row.id);
-                      }}
-                      style={{
-                        color: "green",
-  
-                      }}
-                    >
-                      Request Confirmation
-                    </Button>
-                  </div>
-                );
-              default:
-                return null;
-            }
-          },
-          width: 200,
+          switch (status) {
+            case "Requested":
+              return (
+                <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
+                  <Button
+                    className="link_in_table"
+                    onClick={() => {
+                      revokeRequest(params.row.id);
+                    }}
+                    style={{
+                      color: "red",
+                    }}
+                  >
+                    Revoke
+                  </Button>
+                </div>
+              );
+            case "Confirmation pending":
+              return (
+                <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
+                  <Button
+                    className="link_in_table"
+                    onClick={() => {
+                      confirmDelivery(params.row.id);
+                    }}
+                    style={{
+                      color: "green",
+                    }}
+                  >
+                    Confirm
+                  </Button>
+                  <Button
+                    className="link_in_table"
+                    onClick={() => {
+                      declineConfirmation(params.row.id);
+                    }}
+                    style={{
+                      color: "red",
+                    }}
+                  >
+                    Decline
+                  </Button>
+                </div>
+              );
+            default:
+              return null;
+          }
         },
+        width: 350,
+      }
+      : {
+        field: "action",
+        headerName: "Action",
+        headerAlign: "center",
+        headerWidth: 200,
+        align: 'center',
+        renderCell: (params) => {
+          const status = params.row.status;
+
+          switch (status) {
+            case "Requested":
+              return (
+                <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
+                  <Button
+                    className="link_in_table"
+                    onClick={() => {
+                      acceptRequest(params.row.id);
+                    }}
+                    style={{
+                      color: "green",
+
+                    }}
+                  >
+                    Accept
+                  </Button>
+                  <Button
+                    className="link_in_table"
+                    onClick={() => {
+                      rejectRequest(params.row.id);
+                    }}
+                    style={{
+                      color: "red",
+
+                    }}
+                  >
+                    Reject
+                  </Button>
+                </div>
+              );
+            case "Accepted":
+              return (
+                <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
+                  <Button
+                    className="link_in_table"
+                    onClick={() => {
+                      dispatchRequest(params.row.id);
+                    }}
+                    style={{
+                      color: "green",
+
+                    }}
+                  >
+                    Dispatch
+                  </Button>
+                </div>
+              );
+            case "Dispatched":
+              return (
+                <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
+                  <Button
+                    className="link_in_table"
+                    onClick={() => {
+                      confirmationPending(params.row.id);
+                    }}
+                    style={{
+                      color: "green",
+
+                    }}
+                  >
+                    Request Confirmation
+                  </Button>
+                </div>
+              );
+            default:
+              return null;
+          }
+        },
+        width: 200,
+      },
   ];
   const [selectionModel, setSelectionModel] = React.useState([]);
 

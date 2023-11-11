@@ -31,6 +31,7 @@ const Admin = (props) => {
   const [totalSales, setTotalSales] = useState();
   const [totalProducts, setTotalProducts] = useState();
   const [isVisible, setIsVisible] = useState(false);
+
   const getData = async () => {
     try {
       const c = await axios.get("/allcompanies");
@@ -183,7 +184,7 @@ const Admin = (props) => {
             maxWidth: "50%",
           }}
         >
-          <LineChart details={{ role: props.details.role}} />
+          <LineChart details={{ role: props.details.role }} />
         </div>
       </div>
 
@@ -198,9 +199,8 @@ const Admin = (props) => {
             <ul className="nav nav-tabs">
               <li className="nav-item">
                 <a
-                  className={`nav-link ${
-                    activeTab === "vendors" ? "active" : ""
-                  }`}
+                  className={`nav-link ${activeTab === "vendors" ? "active" : ""
+                    }`}
                   href="#vendors"
                   onClick={() => handleTabClick("vendors")}
                 >
@@ -209,9 +209,8 @@ const Admin = (props) => {
               </li>
               <li className="nav-item">
                 <a
-                  className={`nav-link ${
-                    activeTab === "companies" ? "active" : ""
-                  }`}
+                  className={`nav-link ${activeTab === "companies" ? "active" : ""
+                    }`}
                   href="#companies"
                   onClick={() => handleTabClick("companies")}
                 >
@@ -223,9 +222,8 @@ const Admin = (props) => {
             <div className="tab-content">
               <div
                 id="vendors"
-                className={`tab-pane ${
-                  activeTab === "vendors" ? "active" : ""
-                }`}
+                className={`tab-pane ${activeTab === "vendors" ? "active" : ""
+                  }`}
               >
                 {!vendors ? (
                   <h1>No Vendors Found</h1>
@@ -287,9 +285,8 @@ const Admin = (props) => {
 
               <div
                 id="companies"
-                className={`tab-pane ${
-                  activeTab === "companies" ? "active" : ""
-                }`}
+                className={`tab-pane ${activeTab === "companies" ? "active" : ""
+                  }`}
               >
                 <Grid item xs={12}>
                   <Paper elevation={3} style={{ padding: "20px" }}>
@@ -334,7 +331,7 @@ const Admin = (props) => {
                                   }
                                 >
                                   View
-                                </Button>   
+                                </Button>
                               </TableCell>
                             </TableRow>
                           ))}

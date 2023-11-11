@@ -16,6 +16,13 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
+import { gapi } from 'gapi-script'
+import { useEffect } from 'react';
+import Login2 from './Login2';
+// import Logout2 from './Logout2';
+// import { GoogleLogin } from 'react-google-login'
+const clientId = "114263541606-9lf0mrh7gl51q7skf8d2ja8rq4rqr4pe.apps.googleusercontent.com"
+
 
 function Copyright(props) {
   return (
@@ -34,32 +41,44 @@ function Copyright(props) {
 
 const defaultTheme = createTheme();
 
-export default function Adminlogin (props123) {
+export default function Adminlogin(props123) {
+
+  useEffect(() => {
+    function start() {
+      gapi.client.init({
+        clientId: clientId,
+        scope: 'email'
+      })
+
+    }
+    gapi.load('client:auth2', start)
+  });
+
   const navigate = useNavigate()
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const adminData = {
-        email: data.get('email'),
-        password: data.get('password')
+      email: data.get('email'),
+      password: data.get('password')
     }
     try {
-        const res = await axios.post("/adminlogin", adminData);
-        if (res.status !== 200) {
-          toast.warning(res.data.msg);
-        } else {
-          toast.success(res.data.msg);
-          const {setRole} = props123.details
-          setRole("admin")
-          navigate("/adminDashboard");
-        }
-      } catch (error) {
-        if (error.response) {
-          toast.error(error.response.data.error);
-        } else {
-          toast.error("Some error occured");
-        }
+      const res = await axios.post("/adminlogin", adminData);
+      if (res.status !== 200) {
+        toast.warning(res.data.msg);
+      } else {
+        toast.success(res.data.msg);
+        const { setRole } = props123.details
+        setRole("admin")
+        navigate("/adminDashboard");
       }
+    } catch (error) {
+      if (error.response) {
+        toast.error(error.response.data.error);
+      } else {
+        toast.error("Some error occured");
+      }
+    }
   };
 
   return (
@@ -112,6 +131,10 @@ export default function Adminlogin (props123) {
           </Box>
         </Box>
       </Container>
+      <Login2></Login2>
+      {/* <Logout2></Logout2> */}
+
+
     </ThemeProvider>
   );
 }

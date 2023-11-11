@@ -82,7 +82,7 @@ const Compchta = (props) => {
                 // const backgroundColor = ['blue', 'lightblue', 'deepskyblue', 'dodgerblue', 'royalblue']
                 // const backgroundColor = ['rgb(124, 146, 230)', 'rgb(198, 221, 110)', 'rgb(25, 25, 112)', 'rgb(127, 255, 0)', 'rgb(0, 128, 128)'];
                 // const backgroundColor = ['rgb(124, 146, 230)', 'rgb(198, 221, 110)', 'rgb(172, 190, 223)', 'rgb(150, 207, 139)', 'rgb(126, 144, 120)'];
-                const backgroundColor = ['rgb(124, 146, 230)', 'rgb(198, 221, 110)', 'rgb(92, 124, 114)', 'rgb(135, 206, 235)', 'rgb(78, 118, 155)'];
+                const backgroundColor = ['rgb(124, 146, 230)', 'rgb(198, 221, 110)', 'rgb(92, 124, 114)', 'rgb(135, 206, 235)', 'rgb(78, 118, 155)', 'rgb(0, 128, 128)'];
 
                 const chartData = {
                     labels: labels,

@@ -895,6 +895,20 @@ router.post("/updateprofile", async (req, res) => {
     user.GSTNO = GSTNO;
     user.dob = dob;
     await Profile.replaceOne({ email: email }, user);
+
+    let user1 = await Vendor.findOne({ email: email });
+    if (!user1) {
+      user1 = await Company.findOne({ email: email });
+      user1.name = name;
+      user1.phone = phone;
+      await Company.replaceOne({ email: email }, user1);
+    }
+    else{
+      user1.name = name;
+      user1.phone = phone;
+      await Vendor.replaceOne({ email: email }, user1);
+    }
+
     return res.status(200).json({ msg: "Profile updated successfully" });
   } catch (error) {
     console.error(error);

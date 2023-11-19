@@ -14,8 +14,17 @@ const profileSchema = new mongoose.Schema({
         required: true
     },
     address: {
-        type: String,
-        default:"Not Set"
+        lat: {
+            type: Number,
+            default: -1
+        },
+        long: {
+            type: Number,
+            default: -1
+        },
+        address: {
+            type: String,
+        },
     },
     companyGenre: {
         type: String,

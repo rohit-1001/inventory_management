@@ -9,8 +9,12 @@ const bcrypt = require("bcryptjs");
 const vendorAuthenticate = require("../middleware/vendorAuthenticate");
 const authenticateContact = require("../middleware/authenticateContact");
 const cookieParser = require("cookie-parser");
+const PriceModel = require("../models/PricesModel");
 const Company = require("../models/Company");
 const Dashboard = require("../models/Dashboard");
+const cheerio = require('cheerio');
+const axios = require('axios');
+const fuzzyset = require('fuzzyset'); // Import fuzzyset
 // const Fuse = require('fuse.js');
 router.use(cookieParser());
 
@@ -1149,5 +1153,90 @@ router.post('/selectedprofile', async(req, res) => {
     return res.status(500).json({ error: "Internal server error" });
   }
 })
+
+router.get('/prices', async (req, res) => {
+  try {
+    // console.log("Inside Prices");
+    const url = 'https://www.numbeo.com/cost-of-living/country_result.jsp?country=India';
+
+    // Attempt to make the request
+    let response;
+    try {
+      response = await axios.get(url);
+      console.log("Response Status:", response.status);
+    } catch (error) {
+      console.error("Error making request:", error.message);
+      throw error; // Rethrow the error to trigger the catch block below
+    }
+
+    const $ = cheerio.load(response.data);
+
+    // Update the selector according to the structure of the webpage
+    const itemSelector = '.tr_highlighted';
+    const priceSelector = 'td.priceValue';
+
+    const prices = [];
+
+    $('.data_wide_table tr').each((i, element) => {
+      const item = $(element).find(itemSelector).text().trim();
+      const price = $(element).find(priceSelector).text().trim();
+      console.log("Item: Price:", item, price)
+      if (item && price) {
+        prices.push({ item, price });
+      }
+    });
+
+    // console.log("Prices:", prices);
+    await PriceModel.insertMany(prices);
+    res.json(prices);
+  } catch (error) {
+    console.error("Error:", error.message);
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// Function to create a fuzzy set with items from the PriceModel
+const createFuzzySet = async () => {
+  const priceModelNames = await PriceModel.distinct('item');
+  return fuzzyset(priceModelNames);
+};
+
+let priceModelFuzzySet;
+
+// Initialize the fuzzy set
+createFuzzySet().then((result) => {
+  priceModelFuzzySet = result;
+});
+// API route for getting prices with partial matching
+router.get('/getPrice', async (req, res) => {
+  try {
+    const productName = req.query.productName;
+
+    if (!priceModelFuzzySet) {
+      res.status(500).json({ message: 'Fuzzy set not initialized' });
+      return;
+    }
+
+    // Create a regular expression for partial matching
+    const regex = new RegExp(productName, 'i'); // 'i' for case-insensitive matching
+
+    // Use aggregation to get unique items
+    const prices = await PriceModel.aggregate([
+      { $match: { item: regex } },
+      { $group: { _id: '$item', prices: { $addToSet: '$price' } } }
+    ]);
+    
+    // console.log("Prices in getPrice:", prices);
+    res.json(prices);
+  } catch (error) {
+    console.error('Error fetching prices:', error.message);
+    res.status(500).json({ message: error.message });
+  }
+});
+
+module.exports = router;
+
+
+
 
 module.exports = router;

@@ -22,6 +22,7 @@
     "chart.js": "^4.4.0",
     "dotenv": "^16.3.1",
     "dotenv-webpack": "^8.0.1",
+    "fuzzyset": "^1.0.7",
     "gapi-script": "^1.2.0",
     "js-cookie": "^3.0.5",
     "mapbox-gl": "^2.15.0",

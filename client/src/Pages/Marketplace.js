@@ -22,8 +22,9 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Slide from "@mui/material/Slide";
 import axios from "axios";
-import "react-toastify/dist/ReactToastify.css";
+import ProductPriceSearch from "../components/ProductPriceSearch";
 import { toast } from "react-toastify";
+ // Import the PriceModel
 const useStyles = makeStyles((theme) => ({
   card: {
     maxWidth: 345,
@@ -58,9 +59,22 @@ const Marketplace = () => {
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [companies, setCompanies] = useState([]);
   const [selectedProductPrice, setSelectedProductPrice] = useState(0);
+  const [selectedProductAvgPrice, setSelectedProductAvgPrice] = useState("No Information Available");
   const [selectedProductQuantity, setSelectedProductQuantity] = useState(0);
   const [selectedProduct, setSelectedProduct] = useState("NaN");
   const [selectedProductPid, setSelectedProductPid] = useState("NaN");
+  const [error, setError] = useState(null);
+  const [prices, setPrices] = useState([]);
+  const [pricesWebCrawling, setPricesWebCrawling] = useState("No Information Available");
+  useEffect(() => {
+    
+    const fetchPrices = async () => {
+      const response = await axios.get('/prices');
+      setPrices(response.data);
+    };
+
+    fetchPrices();
+  }, []);
 
   useEffect(() => {
     // Initialize the previousColor as an invalid color to start
@@ -83,15 +97,35 @@ const Marketplace = () => {
       });
   }, []);
 
-  const handleProductSelect = (e) => {
-    const selectedProduct = e.target.value;
-    const product = currcompany.products.find(
-      (p) => p.name === selectedProduct
-    );
+
+  const handleProductSelect = async (e) => {
+    const productName = e.target.value;
+    const product = currcompany.products.find((p) => p.name === productName);
+
     if (product) {
       setSelectedProduct(product.name);
       setSelectedProductPid(product.pid);
       setSelectedProductPrice(product.s_price);
+
+      try {
+        const response = await axios.get(`/getPrice?productName=${encodeURIComponent(productName)}`);
+
+        if (response.status === 200) {
+          const pricesWithoutSymbol = response.data[0].prices.map(price => price.replace('₹', '').trim());
+          console.log("Response: ", response.data)
+          setPricesWebCrawling(pricesWithoutSymbol);
+          setError(null);
+        } else {
+          console.error('Error in response:', response.statusText);
+          setError(`Error: ${response.statusText}`);
+          setPricesWebCrawling([]);
+        }
+      } catch (error) {
+        console.error('Error fetching prices:', error.message);
+        setError(`Error: ${error.message}`);
+        setPricesWebCrawling("No Information Available");
+      }
+
     } else {
       setSelectedProduct("NaN");
       setSelectedProductPid("NaN");
@@ -172,6 +206,18 @@ const Marketplace = () => {
   };
   return (
     <div>
+      <div>
+      <h1>Products after Web Crawler</h1>
+      <div className="card-container">
+        {prices.map((price, index) => (
+          <div key={index} className="card">
+            <h2>{price.item}</h2>
+            <p>{price.price}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+    
       <form
         style={{
           display: "flex",
@@ -196,7 +242,7 @@ const Marketplace = () => {
             padding: "10px",
             margin: "1rem",
             width: "30%",
-            border: "1px solid #545e6f",
+            // border: "1px solid #545e6f",
           }}
         />
         <SearchIcon
@@ -364,7 +410,8 @@ const Marketplace = () => {
               style={{
                 display: "flex",
                 flexDirection: "row",
-                justifyContent: "space-around",
+                justifyContent: "space-between",
+                border: "1px solid #545e6f",
                 alignItems: "center",
                 width: "100%",
                 backgroundColor: "#f5f5f5",
@@ -378,7 +425,7 @@ const Marketplace = () => {
               >
                 <ListItem
                   style={{
-                    width: "300px",
+                    width: "250px",
                   }}
                 >
                   <ListItemText primary="Select Product" />
@@ -404,7 +451,7 @@ const Marketplace = () => {
               <Divider />
               <div
                 style={{
-                  // backgroundColor: '#f5f5f5',
+                  // backgroundColor: 'black',
                   width: "400px",
                 }}
               >
@@ -422,7 +469,7 @@ const Marketplace = () => {
               <Divider />
               <div
                 style={{
-                  // backgroundColor: '#f5f5f5',
+                  // backgroundColor: 'black',
                   width: "500px",
                 }}
               >
@@ -453,7 +500,7 @@ const Marketplace = () => {
               >
                 <ListItem
                   style={{
-                    width: "300px",
+                    width: "200px",
                   }}
                 >
                   <ListItemText primary="Total Price:" />
@@ -467,7 +514,31 @@ const Marketplace = () => {
               </div>
 
               <Divider />
-              <ListItem>
+              <div
+                style={{
+                  // backgroundColor: 'red',
+                  width: "700px",
+                }}
+              >
+                <ListItem
+                  style={{
+                    width: "100%",
+                  }}
+                >
+                  <ListItemText primary="Average Market Price:" />
+                  {selectedProductPrice && (
+                    <ListItemText>
+                      ₹{pricesWebCrawling}
+                    </ListItemText>
+                  )}
+                </ListItem>
+              </div>
+
+              <Divider />
+              <ListItem style={{
+                width: "300px",
+              
+              }}>
                 <Button
                   variant="outlined"
                   onClick={() => {
@@ -503,6 +574,7 @@ const Marketplace = () => {
           </List>
         </Dialog>
       </div>
+      <ProductPriceSearch />
     </div>
   );
 };

@@ -22,7 +22,7 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Slide from "@mui/material/Slide";
 import axios from "axios";
-import ProductPriceSearch from "../components/ProductPriceSearch";
+// import ProductPriceSearch from "../components/ProductPriceSearch";
 import { toast } from "react-toastify";
 // Import the PriceModel
 const useStyles = makeStyles((theme) => ({
@@ -206,18 +206,18 @@ const Marketplace = () => {
   };
   return (
     <div>
-      <div>
-        <h1>Products after Web Crawler</h1>
-        <div className="card-container">
-          {prices.map((price, index) => (
-            <div key={index} className="card">
-              <h2>{price.item}</h2>
-              <p>{price.price}</p>
-            </div>
-          ))}
-        </div>
+      {/* <div>
+      <h1>Products after Web Crawler</h1>
+      <div className="card-container">
+        {prices.map((price, index) => (
+          <div key={index} className="card">
+            <h2>{price.item}</h2>
+            <p>{price.price}</p>
+          </div>
+        ))}
       </div>
-
+    </div> */}
+    
       <form
         style={{
           display: "flex",
@@ -584,7 +584,7 @@ const Marketplace = () => {
           </List>
         </Dialog>
       </div>
-      <ProductPriceSearch />
+      {/* <ProductPriceSearch /> */}
     </div>
   );
 };

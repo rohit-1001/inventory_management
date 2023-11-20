@@ -24,7 +24,7 @@ import Slide from "@mui/material/Slide";
 import axios from "axios";
 import ProductPriceSearch from "../components/ProductPriceSearch";
 import { toast } from "react-toastify";
- // Import the PriceModel
+// Import the PriceModel
 const useStyles = makeStyles((theme) => ({
   card: {
     maxWidth: 345,
@@ -67,7 +67,7 @@ const Marketplace = () => {
   const [prices, setPrices] = useState([]);
   const [pricesWebCrawling, setPricesWebCrawling] = useState("No Information Available");
   useEffect(() => {
-    
+
     const fetchPrices = async () => {
       const response = await axios.get('/prices');
       setPrices(response.data);
@@ -88,7 +88,7 @@ const Marketplace = () => {
 
   useEffect(() => {
     axios
-      .get("/allcompanies")
+      .get("/allprofile")
       .then((res) => {
         setCompanies(res.data);
       })
@@ -155,8 +155,8 @@ const Marketplace = () => {
     return newColor;
   }
   function handleClickOpen(company) {
-      setcurrcompany(company);
-      setOpen(true);
+    setcurrcompany(company);
+    setOpen(true);
   }
 
   const handleOrderSubmit = async () => {
@@ -207,17 +207,17 @@ const Marketplace = () => {
   return (
     <div>
       <div>
-      <h1>Products after Web Crawler</h1>
-      <div className="card-container">
-        {prices.map((price, index) => (
-          <div key={index} className="card">
-            <h2>{price.item}</h2>
-            <p>{price.price}</p>
-          </div>
-        ))}
+        <h1>Products after Web Crawler</h1>
+        <div className="card-container">
+          {prices.map((price, index) => (
+            <div key={index} className="card">
+              <h2>{price.item}</h2>
+              <p>{price.price}</p>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
-    
+
       <form
         style={{
           display: "flex",
@@ -290,6 +290,16 @@ const Marketplace = () => {
                                     image={company.logo}
                                     title={company.name}
                                 /> */}
+                <CardMedia
+                  className={classes.media}
+                  component="img" // Make sure to specify the component type
+                  alt={company.name}
+                  src={company.logo}
+                  title={company.name}
+                  // onError={(e) => {
+                  //   e.target.src = "fallback-image-url"; // Provide a fallback image URL
+                  // }}
+                />
                 <CardContent>
                   <Typography variant="h6" component="div">
                     {company.name}
@@ -327,12 +337,12 @@ const Marketplace = () => {
                 color="inherit"
                 aria-label="close"
                 onClick={() => {
-                    handleClose();
-                    setcurrcompany("undefined");
-                    setSelectedProducts([]);
-                  }}
+                  handleClose();
+                  setcurrcompany("undefined");
+                  setSelectedProducts([]);
+                }}
               >
-                <CloseIcon/>
+                <CloseIcon />
               </IconButton>
               <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
                 Order Details
@@ -537,7 +547,7 @@ const Marketplace = () => {
               <Divider />
               <ListItem style={{
                 width: "300px",
-              
+
               }}>
                 <Button
                   variant="outlined"

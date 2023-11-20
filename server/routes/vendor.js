@@ -1154,6 +1154,34 @@ router.post('/selectedprofile', async(req, res) => {
   }
 })
 
+// try {
+//   // Use the Company model to find all companies in the database
+//   const companies = await Company.find();
+
+//   if (!companies || companies.length === 0) {
+//       return res.status(404).json({ error: 'No companies found' });
+//   }
+
+//   // Send the list of companies as a JSON response
+//   return res.status(200).json(companies);
+// } catch (error) {
+//   console.error(error);
+//   return res.status(500).json({ error: 'Internal server error' });
+// }
+
+router.get('/allprofile', async(req, res) => {
+  try {
+    const profile = await Profile.find();
+    if (!profile || profile.length === 0) {
+      return res.status(404).json({ error: "Profile not found" });
+    }
+    return res.status(200).json(profile);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+})
+
 router.get('/prices', async (req, res) => {
   try {
     // console.log("Inside Prices");

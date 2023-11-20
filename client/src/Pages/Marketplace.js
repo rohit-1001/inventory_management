@@ -296,9 +296,9 @@ const Marketplace = () => {
                   alt={company.name}
                   src={company.logo}
                   title={company.name}
-                  // onError={(e) => {
-                  //   e.target.src = "fallback-image-url"; // Provide a fallback image URL
-                  // }}
+                  onError={(e) => {
+                    e.target.src = "https://t4.ftcdn.net/jpg/05/49/98/39/360_F_549983970_bRCkYfk0P6PP5fKbMhZMIb07mCJ6esXL.jpg"; 
+                  }}
                 />
                 <CardContent>
                   <Typography variant="h6" component="div">

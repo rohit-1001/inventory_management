@@ -217,7 +217,7 @@ const Marketplace = () => {
         ))}
       </div>
     </div> */}
-    
+
       <form
         style={{
           display: "flex",
@@ -275,7 +275,7 @@ const Marketplace = () => {
                 className={classes.card}
                 style={{
                   display: "flex",
-                  flexDirection: "row",
+                  flexDirection: "column", // Changed to column for better alignment
                   justifyContent: "space-between",
                   backgroundColor: cardColors[index],
                   height: "100%",
@@ -285,20 +285,16 @@ const Marketplace = () => {
                     "rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px",
                 }}
               >
-                {/* <CardMedia
-                                    className={classes.media}
-                                    image={company.logo}
-                                    title={company.name}
-                                /> */}
                 <CardMedia
                   className={classes.media}
-                  component="img" // Make sure to specify the component type
+                  component="img"
                   alt={company.name}
                   src={company.logo}
                   title={company.name}
                   onError={(e) => {
-                    e.target.src = "https://t4.ftcdn.net/jpg/05/49/98/39/360_F_549983970_bRCkYfk0P6PP5fKbMhZMIb07mCJ6esXL.jpg"; 
+                    e.target.src = "https://t4.ftcdn.net/jpg/05/49/98/39/360_F_549983970_bRCkYfk0P6PP5fKbMhZMIb07mCJ6esXL.jpg";
                   }}
+                  style={{ maxHeight: "150px", objectFit: "contain" }} // Adjust image size and fit
                 />
                 <CardContent>
                   <Typography variant="h6" component="div">
@@ -314,12 +310,14 @@ const Marketplace = () => {
                     e.preventDefault();
                     handleClickOpen(company);
                   }}
+                  style={{ marginTop: "1rem" }} // Adjust button position
                 >
                   Order
                 </Button>
               </Card>
             </Grid>
           ))}
+
         </Grid>
       </Container>
 

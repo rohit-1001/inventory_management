@@ -23,6 +23,7 @@ import {
   Box,
 } from "@mui/material";
 import ViewProductsPopup from "./ViewProductsPopup.js";
+import ShowInfo from "./Orders/ShowInfo.js";
 
 const Admin = (props) => {
   const [activeTab, setActiveTab] = useState("vendors");
@@ -31,11 +32,11 @@ const Admin = (props) => {
   const [totalSales, setTotalSales] = useState();
   const [totalProducts, setTotalProducts] = useState();
   const [isVisible, setIsVisible] = useState(false);
-
+  
   const getData = async () => {
     try {
       const c = await axios.get("/allcompanies");
-
+      
       setCompanies(c.data);
     } catch (error) {
       if (error.response) {
@@ -46,7 +47,7 @@ const Admin = (props) => {
     }
     try {
       const v = await axios.get("/allvendors");
-
+      
       setVendors(v.data);
     } catch (error) {
       if (error.response) {
@@ -72,11 +73,11 @@ const Admin = (props) => {
   useEffect(() => {
     getData();
   }, []);
-
+  
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
-
+  
   const handleShowProducts = async (email, role) => {
     setIsVisible(true);
     const param = {
@@ -89,22 +90,22 @@ const Admin = (props) => {
         const root = createRoot(document.getElementById("forShowingProducts"));
         root.render(
           <ViewProductsPopup
-            details={{ products: p.data, setIsVisible: setIsVisible }}
+          details={{ products: p.data, setIsVisible: setIsVisible }}
           />
-        );
-      } else {
-        const root = createRoot(document.getElementById("forShowingProducts"));
-        root.render(toast.warning("No product exists"));
+          );
+        } else {
+          const root = createRoot(document.getElementById("forShowingProducts"));
+          root.render(toast.warning("No product exists"));
+        }
+      } catch (error) {
+        if (error.response) {
+          toast.error(error.response.data.error);
+        } else {
+          toast.error("Some error occured");
+        }
       }
-    } catch (error) {
-      if (error.response) {
-        toast.error(error.response.data.error);
-      } else {
-        toast.error("Some error occured");
-      }
-    }
-  };
-
+    };
+    
   const data = {
     nvendors: vendors ? vendors.length : 0,
     ncompany: companies ? companies.length : 0,

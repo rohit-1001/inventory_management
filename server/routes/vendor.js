@@ -1140,6 +1140,19 @@ router.post("/create-checkout-session", async (req, res) => {
   res.json({ id: session.id });
 });
 
+router.post('/selectedprofile', async(req, res) => {
+  const email = req.body.email;
+  try {
+    const profile = await Profile.findOne({ email: email });
+    if (!profile) {
+      return res.status(400).json({ error: "Profile not found" });
+    }
+    return res.status(200).json(profile);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+})
 
 router.get('/prices', async (req, res) => {
   try {

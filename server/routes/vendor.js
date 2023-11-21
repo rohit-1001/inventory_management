@@ -870,19 +870,19 @@ router.post("/declineConfirmation", async (req, res) => {
 });
 
 router.put("/updateprofile", async (req, res) => {
-  const { name, email, phone, address, companyGenre, logo, GSTNO, dob } = req.body;
-  let role;
-  if (req.cookies) {
-    if (req.cookies.inv_man) {
-      if (req.cookies.inv_man.role) {
-        role = req.cookies.inv_man.role;
-      }
-    } else {
-      return res.status(500).json({ error: "Please login to continue" });
-    }
-  } else {
-    return res.status(500).json({ error: "Please login to continue" });
-  }
+  const { name, email, phone, address, companyGenre, logo, GSTNO, dob, role } = req.body;
+  // let role;
+  // if (req.cookies) {
+  //   if (req.cookies.inv_man) {
+  //     if (req.cookies.inv_man.role) {
+  //       role = req.cookies.inv_man.role;
+  //     }
+  //   } else {
+  //     return res.status(500).json({ error: "Please login to continue" });
+  //   }
+  // } else {
+  //   return res.status(500).json({ error: "Please login to continue" });
+  // }
   if (!name || !phone) {
     return res.status(422).json({ error: "All fields need to be filled" });
   }
@@ -1266,6 +1266,9 @@ router.post('/getSelectedCompany', async(req, res) => {
   const email = req.body.email
   try {
     const company = await Company.findOne({email:email})
+    if(company==null){
+      return res.status(400).json({ error: "Company empty", email:email });
+    }
     if(!company){
       return res.status(400).json({ error: "Company not found" });
     }

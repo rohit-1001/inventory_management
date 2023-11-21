@@ -869,7 +869,7 @@ router.post("/declineConfirmation", async (req, res) => {
   }
 });
 
-router.post("/updateprofile", async (req, res) => {
+router.put("/updateprofile", async (req, res) => {
   const { name, email, phone, address, companyGenre, logo, GSTNO, dob } = req.body;
   let role;
   if (req.cookies) {

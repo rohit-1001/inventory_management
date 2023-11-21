@@ -208,7 +208,7 @@ function CProfile() {
 
   const handleSubmit = async () => {
     try {
-      const c = await axios.post(
+      const c = await axios.put(
         "/updateprofile",
         {
           name: companyInfoEdit.name,

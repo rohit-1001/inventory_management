@@ -1171,7 +1171,7 @@ router.post('/selectedprofile', async(req, res) => {
 
 router.get('/allprofile', async(req, res) => {
   try {
-    const profile = await Profile.find();
+    const profile = await Profile.find({Grole: "company"});
     if (!profile || profile.length === 0) {
       return res.status(404).json({ error: "Profile not found" });
     }
@@ -1262,9 +1262,17 @@ router.get('/getPrice', async (req, res) => {
   }
 });
 
-module.exports = router;
-
-
-
+router.post('/getSelectedCompany', async(req, res) => {
+  const email = req.body.email
+  try {
+    const company = await Company.findOne({email:email})
+    if(!company){
+      return res.status(400).json({ error: "Company not found" });
+    }
+    return res.status(200).json(company)
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+})
 
 module.exports = router;

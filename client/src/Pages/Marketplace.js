@@ -154,9 +154,18 @@ const Marketplace = () => {
     } while (newColor === previousColor); // Keep generating until a different color is obtained
     return newColor;
   }
-  function handleClickOpen(company) {
-    setcurrcompany(company);
-    setOpen(true);
+  async function handleClickOpen(company) {
+    try {
+      const c = await axios.post("/getSelectedCompany", {email : company.email}, {withCredentials: true})
+      setcurrcompany(c.data);
+      setOpen(true);
+    } catch (error) {
+      if (error.response) {
+        toast.error(error.response.data.error);
+      } else {
+        toast.error("Some error occured");
+      }
+    }
   }
 
   const handleOrderSubmit = async () => {

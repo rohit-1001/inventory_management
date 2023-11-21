@@ -13,10 +13,6 @@ services:
     image: "client_image"
     ports:
       - "3000:3000"
-    environment:
-      - API_URL=http://server:8000
-      - HTTP_PROXY=http://server:8000
-      - HTTPS_PROXY=http://server:8000
     depends_on:
       - server
     networks:
@@ -26,6 +22,4 @@ services:
 networks:
   inventory:
     driver: bridge
-      - HTTPS_PROXY=http://localhost:8000
     
-

@@ -290,16 +290,19 @@ function CProfile() {
                     Contact Number: {companyInfo.phone}
                   </Typography>
                 </div>
-                <div style={{ marginBottom: "5px" }}>
-                  <Typography variant="subtitle1">
-                    Address: {companyInfo.address.address ? companyInfo.address.address : " ---"}
+                <div style={{ marginBottom: "5px", display: 'flex', flexDirection:'column', justifyContent: 'flex-end' }}>
+                  <Typography variant="subtitle1" style={{
+                    textAlign: 'left',
+                    padding: '0px',
+                  }}>
+                  Address: {companyInfo.address.address ? companyInfo.address.address : " ---"}
                   </Typography>
                   {companyInfo.address.address ? 
                   <div
                     style={{
                       display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
+                      justifyContent: "left",
+                      alignItems: "left",
                     }}
                   >
                     <Button
@@ -332,7 +335,7 @@ function CProfile() {
                         maxHeight: "90vh", // Limit the maximum height to the viewport height
                       }}
                     >
-                      <Typography variant="h6" gutterBottom>
+                      <Typography variant="subtitle1" gutterBottom>
                         Address : {companyInfo.address.address}
                       </Typography>
                       <br></br>

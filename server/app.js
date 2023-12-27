@@ -6,7 +6,6 @@ dotenv.config({ path: './config.env' });
 const PORT = process.env.PORT;
 app.use(express.json());
 require('./db/conn');
-app.use(cors({ origin: 'http://localhost:3000' }));
 app.use(cors({ origin: 'https://rohit-sangrah.netlify.app' }));
 app.use(require('./routes/auth'));
 app.use(require('./routes/vendor'));

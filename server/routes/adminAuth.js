@@ -56,7 +56,6 @@ router.get('/allcompanies', async (req, res) => {
     }
 });
 
-
 //get all vendors
 router.get('/allvendors', async (req, res) => {
     try {

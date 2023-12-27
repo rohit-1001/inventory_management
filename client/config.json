@@ -1,8 +1,8 @@
 {
   "proxies": {
     "default": {
-      "httpProxy": "http://localhost:8000",
-      "httpsProxy": "http://localhost:8000"
+      "httpProxy": "https://sangrah-29z9.onrender.com",
+      "httpsProxy": "https://sangrah-29z9.onrender.com"
     }
   }
 }

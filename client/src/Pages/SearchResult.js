@@ -106,7 +106,7 @@ const SearchResult = () => {
 
     const getFilteredCompanies = async (det) => {
         const search = det;
-        const endpoint = `http://localhost:8000/getFilteredCompanies`;
+        const endpoint = `https://sangrah-29z9.onrender.com/getFilteredCompanies`;
         const payload = {
             search: search,
         }

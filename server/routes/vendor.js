@@ -736,7 +736,7 @@ router.post("/getFilteredCompanies", async (req, res) => {
 
     return res.json(companies);
   } catch (error) {
-    return res.status(500).json({ error: "Server Error in searchRecipes" });
+    return res.status(500).json({ error: "Server Error" });
   }
 });
 

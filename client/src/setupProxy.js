@@ -4,7 +4,7 @@ module.exports = function (app) {
     app.use(
         '/allcompanies',
         createProxyMiddleware({
-            target: 'http://localhost:8000',
+            target: 'https://sangrah-29z9.onrender.com',
             changeOrigin: true,
         })
     );

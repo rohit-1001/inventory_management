@@ -30,6 +30,8 @@ import SearchResult from './Pages/SearchResult';
 // import {reducer, initialState} from '../reducer/UserReducer'
 import axios from 'axios'
 
+axios.defaults.withCredentials = true;
+
 // export const context = createContext();
 
 // const DUMMY_ORDERS = [

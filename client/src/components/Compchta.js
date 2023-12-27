@@ -51,7 +51,7 @@ const Compchta = (props) => {
 
     useEffect(() => {
         if (props.details.role === "vendor") {
-            const stockalert = axios.get('/topselling_v').then((res) => {
+            const stockalert = axios.get('https://sangrah-29z9.onrender.com/topselling_v').then((res) => {
                 const data = res.data
                 const top5Products = data.top5Products;
                 const others = data.others;
@@ -98,7 +98,7 @@ const Compchta = (props) => {
             })
         }
         else if (props.details.role === "company") {
-            const stockalert = axios.get('/topselling_c').then((res) => {
+            const stockalert = axios.get('https://sangrah-29z9.onrender.com/topselling_c').then((res) => {
                 const data = res.data
                 const top5Products = data.top5Products;
                 const others = data.others;

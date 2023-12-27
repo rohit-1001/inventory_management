@@ -56,7 +56,7 @@ const Products = (props) => {
   // ======================================================
   const [allProducts, setAllProducts] = useState([]);
   const getAllProducts = async () => {
-    const c = await axios.get("/getallproducts", {
+    const c = await axios.get("https://sangrah-29z9.onrender.com/getallproducts", {
       withCredentials: true,
     });
     setAllProducts(c.data);
@@ -151,7 +151,7 @@ const Products = (props) => {
   ) => {
     setIsVisible(true);
     try {
-      const c = await axios.get("/getallproducts", {
+      const c = await axios.get("https://sangrah-29z9.onrender.com/getallproducts", {
         withCredentials: true,
       });
       const root = createRoot(
@@ -203,7 +203,7 @@ const Products = (props) => {
     e.preventDefault();
     if (props.items.role === "vendor") {
       try {
-        const res = await axios.post("/addproducts_v", product);
+        const res = await axios.post("https://sangrah-29z9.onrender.com/addproducts_v", product);
 
         if (res.status === 201) {
           toast.success(res.data.message);
@@ -232,7 +232,7 @@ const Products = (props) => {
       }
     } else if (props.items.role === "company") {
       try {
-        const res = await axios.post("/addproducts_c", product);
+        const res = await axios.post("https://sangrah-29z9.onrender.com/addproducts_c", product);
 
         if (res.status === 201) {
           toast.success(res.data.message);

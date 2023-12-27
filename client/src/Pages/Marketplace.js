@@ -69,7 +69,7 @@ const Marketplace = () => {
   useEffect(() => {
 
     const fetchPrices = async () => {
-      const response = await axios.get('/prices');
+      const response = await axios.get('https://sangrah-29z9.onrender.com/prices');
       setPrices(response.data);
     };
 
@@ -88,7 +88,7 @@ const Marketplace = () => {
 
   useEffect(() => {
     axios
-      .get("/allprofile")
+      .get("https://sangrah-29z9.onrender.com/allprofile")
       .then((res) => {
         setCompanies(res.data);
       })
@@ -156,7 +156,7 @@ const Marketplace = () => {
   }
   async function handleClickOpen(company) {
     try {
-      const c = await axios.post("/getSelectedCompany", {email : company.email}, {withCredentials: true})
+      const c = await axios.post("https://sangrah-29z9.onrender.com/getSelectedCompany", {email : company.email}, {withCredentials: true})
       setcurrcompany(c.data);
       setOpen(true);
     } catch (error) {
@@ -171,7 +171,7 @@ const Marketplace = () => {
   const handleOrderSubmit = async () => {
     if (selectedProducts.length !== 0) {
       try {
-        const c = await axios.post("/request", {
+        const c = await axios.post("https://sangrah-29z9.onrender.com/request", {
           c_email: currcompany.email,
           product: selectedProducts,
         });

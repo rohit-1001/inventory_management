@@ -16,7 +16,7 @@ const Signup = () => {
   const signupForm = async (event) => {
     event.preventDefault();
     try {
-      const res = await axios.post("/register", user);
+      const res = await axios.post("https://sangrah-29z9.onrender.com/register", user);
 
       if (res.status === 200) {
         toast.success("User registered successfully");

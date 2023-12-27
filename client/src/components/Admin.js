@@ -35,7 +35,7 @@ const Admin = (props) => {
   
   const getData = async () => {
     try {
-      const c = await axios.get("/allcompanies");
+      const c = await axios.get("https://sangrah-29z9.onrender.com/allcompanies");
       
       setCompanies(c.data);
     } catch (error) {
@@ -46,7 +46,7 @@ const Admin = (props) => {
       }
     }
     try {
-      const v = await axios.get("/allvendors");
+      const v = await axios.get("https://sangrah-29z9.onrender.com/allvendors");
       
       setVendors(v.data);
     } catch (error) {
@@ -57,7 +57,7 @@ const Admin = (props) => {
       }
     }
     try {
-      const v = await axios.get("/totaluppervalues");
+      const v = await axios.get("https://sangrah-29z9.onrender.com/totaluppervalues");
       const { tpro, tsales } = v.data;
       setTotalProducts(tpro);
       setTotalSales(tsales);
@@ -85,7 +85,7 @@ const Admin = (props) => {
       role: role,
     };
     try {
-      const p = await axios.post("/allproductsadmin", param);
+      const p = await axios.post("https://sangrah-29z9.onrender.com/allproductsadmin", param);
       if (p.data.length > 0) {
         const root = createRoot(document.getElementById("forShowingProducts"));
         root.render(

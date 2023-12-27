@@ -49,7 +49,7 @@ const ShowInfo = (props) => {
 
   const handleOpen = async () => {
     try {
-      const c = await axios.post('/selectedprofile', {email:props.email}, {
+      const c = await axios.post('https://sangrah-29z9.onrender.com/selectedprofile', {email:props.email}, {
         withCredentials: true
       })
       const { name, email, phone, address, companyGenre, logo, GSTNO, Grole, dob } = c.data

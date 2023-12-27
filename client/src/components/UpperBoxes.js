@@ -45,7 +45,7 @@ const UpperBoxes = (props) => {
   const getData = async () => {
     if(props.details.role!=='admin'){
       try {
-        const response = await axios.post("/getupfields");
+        const response = await axios.post("https://sangrah-29z9.onrender.com/getupfields");
         const { profit, sales, tsales } = response.data;
         setData({ profit, sales, tsales });
       } catch (error) {

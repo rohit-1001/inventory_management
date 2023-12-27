@@ -195,7 +195,7 @@ function App() {
   // const [state, dispatch] = useReducer(reducer, initialState);
   const [role, setRole] = useState("visitor");
   const getRole = async () => {
-    const c = await axios.get('/getrole', {
+    const c = await axios.get('https://sangrah-29z9.onrender.com/getrole', {
       withCredentials: true
     });
     setRole(c.data.role)

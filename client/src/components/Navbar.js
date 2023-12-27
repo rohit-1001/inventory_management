@@ -45,7 +45,7 @@ const Navbar = (props) => {
     if (confirmLogout) {
       if (role === "vendor") {
         try {
-          const res = await axios.post("/vendorlogout", {
+          const res = await axios.post("https://sangrah-29z9.onrender.com/vendorlogout", {
             withCredentials: true,
           });
 
@@ -63,7 +63,7 @@ const Navbar = (props) => {
         }
       } else if (role === "company") {
         try {
-          const res = await axios.post("/companylogout", {
+          const res = await axios.post("https://sangrah-29z9.onrender.com/companylogout", {
             withCredentials: true,
           });
 

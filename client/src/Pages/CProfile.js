@@ -68,7 +68,7 @@ function CProfile() {
   });
   const getUserInfo = async () => {
     try {
-      const c = await axios.get("/profile", {
+      const c = await axios.get("https://sangrah-29z9.onrender.com/profile", {
         withCredentials: true,
       });
       const {
@@ -209,7 +209,7 @@ function CProfile() {
   const handleSubmit = async () => {
     try {
       const c = await axios.put(
-        "/updateprofile",
+        "https://sangrah-29z9.onrender.com/updateprofile",
         {
           name: companyInfoEdit.name,
           email: companyInfoEdit.email,

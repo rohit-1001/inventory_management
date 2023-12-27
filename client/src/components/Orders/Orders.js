@@ -22,13 +22,13 @@ const Orders = (props) => {
   const [call, setCall] = useState(false);
   const getallOrders = async () => {
     if(props.details.role==="vendor"){
-      const c = await axios.get("/orders_v", {
+      const c = await axios.get("https://sangrah-29z9.onrender.com/orders_v", {
         withCredentials: true,
       });
       setallorders(c.data);
     }
     else if(props.details.role==="company"){
-      const c = await axios.get("/orders_c", {
+      const c = await axios.get("https://sangrah-29z9.onrender.com/orders_c", {
         withCredentials: true,
       });
       setallorders(c.data);

@@ -41,7 +41,7 @@ const Navbar3 = (props) => {
     if (confirmLogout) {
       const { setRole } = props.details;
       try {
-        const res = await axios.post("/adminlogout", {
+        const res = await axios.post("https://sangrah-29z9.onrender.com/adminlogout", {
           withCredentials: true,
         });
 

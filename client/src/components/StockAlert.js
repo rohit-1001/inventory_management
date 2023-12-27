@@ -60,7 +60,7 @@ const StockAlert = (props) => {
 
   useEffect(() => {
     if (props.details.role === "vendor") {
-      const stockalert = axios.get('/prothreshold_v').then((res) => {
+      const stockalert = axios.get('https://sangrah-29z9.onrender.com/prothreshold_v').then((res) => {
         const data = res.data
         let labels = [];
         let quantity = [];
@@ -92,7 +92,7 @@ const StockAlert = (props) => {
       })
     }
     else if (props.details.role === "company") {
-      const stockalert = axios.get('/prothreshold_c').then((res) => {
+      const stockalert = axios.get('https://sangrah-29z9.onrender.com/prothreshold_c').then((res) => {
         const data = res.data
         let labels = [];
         let quantity = [];

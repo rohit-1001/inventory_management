@@ -63,14 +63,14 @@ export default function Adminlogin(props123) {
       password: data.get('password')
     }
     try {
-      const res = await axios.post("/adminlogin", adminData);
+      const res = await axios.post("https://sangrah-29z9.onrender.com/adminlogin", adminData);
       if (res.status !== 200) {
         toast.warning(res.data.msg);
       } else {
         toast.success(res.data.msg);
         const { setRole } = props123.details
         setRole("admin")
-        navigate("/adminDashboard");
+        navigate("https://sangrah-29z9.onrender.com/adminDashboard");
       }
     } catch (error) {
       if (error.response) {

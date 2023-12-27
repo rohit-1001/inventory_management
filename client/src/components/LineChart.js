@@ -41,7 +41,7 @@ function LineChart(props) {
   const getLineChart = async () => {
     if (props.details.role === "vendor") {
       try {
-        const lineChart = await axios.get('/monthlysales_v').then((res) => {
+        const lineChart = await axios.get('https://sangrah-29z9.onrender.com/monthlysales_v').then((res) => {
           const salesData = res.data;
           const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
           setMonths(salesData.map(entry => monthNames[Number(entry.month) - 1])); // subtract 1 because array indices start at 0
@@ -88,7 +88,7 @@ function LineChart(props) {
 
     else if (props.details.role === "company") {
       try {
-        const lineChart = await axios.get('/monthlysales_c').then((res) => {
+        const lineChart = await axios.get('https://sangrah-29z9.onrender.com/monthlysales_c').then((res) => {
           const salesData = res.data;
           const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
           setMonths(salesData.map(entry => monthNames[Number(entry.month) - 1])); // subtract 1 because array indices start at 0
@@ -132,7 +132,7 @@ function LineChart(props) {
     }
     else if (props.details.role === "admin") {
       try {
-        const lineChart = await axios.get('/adminLineChart').then((res) => {
+        const lineChart = await axios.get('https://sangrah-29z9.onrender.com/adminLineChart').then((res) => {
           const salesData = res.data;
           const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
           setMonths(salesData.map(entry => monthNames[Number(entry.month) - 1])); // subtract 1 because array indices start at 0

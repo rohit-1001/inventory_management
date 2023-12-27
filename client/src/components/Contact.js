@@ -12,7 +12,7 @@ const Contact = () => {
   })
   const fetchContact = async () => {
       try {
-        const data = await axios.get('/getcontact',{
+        const data = await axios.get('https://sangrah-29z9.onrender.com/getcontact',{
           withCredentials: true
         });
 
@@ -40,7 +40,7 @@ const Contact = () => {
 
   const contactForm = async (event) => {
     event.preventDefault()
-    const res = await axios.post('/contactform', contact)
+    const res = await axios.post('https://sangrah-29z9.onrender.com/contactform', contact)
 
     if(res.status!==200){
       toast.error("Form submission failed")

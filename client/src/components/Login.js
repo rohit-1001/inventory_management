@@ -75,7 +75,7 @@ const Login = (props) => {
     const { role } = event.target;
     if (role.value === "company") {
       try {
-        const res = await axios.post("/companysignin", userData);
+        const res = await axios.post("https://sangrah-29z9.onrender.com/companysignin", userData);
         if (res.status !== 200) {
           toast.error(res.data.msg);
         } else {
@@ -93,7 +93,7 @@ const Login = (props) => {
       }
     } else if (role.value === "vendor") {
       try {
-        const res = await axios.post("/vendorsignin", userData);
+        const res = await axios.post("https://sangrah-29z9.onrender.com/vendorsignin", userData);
         if (res.status !== 200) {
           toast.error(res.data.msg);
         } else {
@@ -122,7 +122,7 @@ const Login = (props) => {
     // }, 2000);-
     if (role.value === "company") {
       try {
-        const res = await axios.post("/companyregister", userDataSignUp);
+        const res = await axios.post("https://sangrah-29z9.onrender.com/companyregister", userDataSignUp);
 
         if (res.status === 200) {
           toast.success("User registered successfully");
@@ -140,7 +140,7 @@ const Login = (props) => {
       }
     } else if (role.value === "vendor") {
       try {
-        const res = await axios.post("/vendorregister", userDataSignUp);
+        const res = await axios.post("https://sangrah-29z9.onrender.com/vendorregister", userDataSignUp);
 
         if (res.status === 200) {
           toast.success("User registered successfully");

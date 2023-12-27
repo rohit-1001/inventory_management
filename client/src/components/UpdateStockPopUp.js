@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 
 const UpdateStockPopUp = ({ details }) => {
   const handleClose = async () => {
-    const c = await axios.get("/getallproducts", {
+    const c = await axios.get("https://sangrah-29z9.onrender.com/getallproducts", {
       withCredentials: true,
     });
     details.setAllProducts(c.data);
@@ -47,7 +47,7 @@ const UpdateStockPopUp = ({ details }) => {
     if (stock === "add") {
       let c;
       try {
-        c = await axios.post("/addstock", {
+        c = await axios.post("https://sangrah-29z9.onrender.com/addstock", {
           quantity: newquantity,
           pid: details.pid,
           name,
@@ -74,7 +74,7 @@ const UpdateStockPopUp = ({ details }) => {
       }
     } else if (stock === "subtract") {
       try {
-        const c = await axios.post("/subtractstock", {
+        const c = await axios.post("https://sangrah-29z9.onrender.com/subtractstock", {
           quantity: newquantity,
           pid: details.pid,
           name,

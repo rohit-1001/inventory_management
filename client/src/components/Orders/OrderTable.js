@@ -32,7 +32,7 @@ export default function OrderTable(props) {
   const acceptRequest = async (id) => {
     try {
       const c = await axios.post(
-        "/acceptRequest",
+        "https://sangrah-29z9.onrender.com/acceptRequest",
         { id },
         {
           withCredentials: true,
@@ -53,7 +53,7 @@ export default function OrderTable(props) {
   const rejectRequest = async (id) => {
     try {
       const c = await axios.post(
-        "/rejectRequest",
+        "https://sangrah-29z9.onrender.com/rejectRequest",
         { id },
         {
           withCredentials: true,
@@ -74,7 +74,7 @@ export default function OrderTable(props) {
   const dispatchRequest = async (id) => {
     try {
       const c = await axios.post(
-        "/dispatchRequest",
+        "https://sangrah-29z9.onrender.com/dispatchRequest",
         { id },
         {
           withCredentials: true,
@@ -96,7 +96,7 @@ export default function OrderTable(props) {
   const confirmationPending = async (id) => {
     try {
       const c = await axios.post(
-        "/confirmationPending",
+        "https://sangrah-29z9.onrender.com/confirmationPending",
         { id },
         {
           withCredentials: true,
@@ -119,7 +119,7 @@ export default function OrderTable(props) {
   const revokeRequest = async (id) => {
     try {
       const c = await axios.post(
-        "/revokeRequest",
+        "https://sangrah-29z9.onrender.com/revokeRequest",
         { id },
         {
           withCredentials: true,
@@ -139,7 +139,7 @@ export default function OrderTable(props) {
   };
   const confirmDelivery = async (id) => {
     try {
-      const dataaa = await axios.post("/getcurrorderinfo", { id }, { withCredentials: true });
+      const dataaa = await axios.post("https://sangrah-29z9.onrender.com/getcurrorderinfo", { id }, { withCredentials: true });
       
   
       if (dataaa.status === 200) {
@@ -164,7 +164,7 @@ export default function OrderTable(props) {
               "Content-Type": "application/json",
             };
   
-            const response = await fetch("/create-checkout-session", {
+            const response = await fetch("https://sangrah-29z9.onrender.com/create-checkout-session", {
               method: "POST",
               headers: headers,
               body: JSON.stringify(body),
@@ -197,7 +197,7 @@ export default function OrderTable(props) {
     }
   
     try {
-      const c = await axios.post("/confirmDelivery", { id }, { withCredentials: true });
+      const c = await axios.post("https://sangrah-29z9.onrender.com/confirmDelivery", { id }, { withCredentials: true });
       if (c.status === 200) {
         toast.success(c.data.msg);
       }
@@ -215,7 +215,7 @@ export default function OrderTable(props) {
   const declineConfirmation = async (id) => {
     try {
       const c = await axios.post(
-        "/declineConfirmation",
+        "https://sangrah-29z9.onrender.com/declineConfirmation",
         { id },
         {
           withCredentials: true,

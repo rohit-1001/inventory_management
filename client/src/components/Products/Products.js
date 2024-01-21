@@ -7,7 +7,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Card from "../UI/Card";
 import "./Products.css";
 import ProductTable from "./ProductTable";
-import UpdateStockPopUp from "../UpdateStockPopUp";
+import UpdateStockPopUp from "./UpdateStockPopUp";
 import { TextField, Button } from "@mui/material";
 import axios from "axios";
 import { createRoot } from "react-dom/client";

@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { Button } from "@mui/material";
-import "../css_files/Popup.css";
+import "./Popup.css";
 import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
 

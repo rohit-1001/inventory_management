@@ -22,7 +22,7 @@ import {
   Button,
   Box,
 } from "@mui/material";
-import ViewProductsPopup from "./ViewProductsPopup.js";
+import ViewProductsPopup from "./Products/ViewProductsPopup.js";
 import ShowInfo from "./Orders/ShowInfo.js";
 
 const Admin = (props) => {

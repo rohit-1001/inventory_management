@@ -30,7 +30,7 @@ import whatisupper from "./images/whatisdivimg.png"
 import whatisdownimg from "./images/whatisdownimg.png"
 import founders from "./images/founders.png"
 import homeimg1 from "./images/homeimg1.png"
-import Footer from "../../components/Footer"
+import Footer from "../Home/Footer"
 import { useEffect } from 'react'
 import Fade from 'react-reveal/Fade';
 import Zoom from 'react-reveal/Zoom';

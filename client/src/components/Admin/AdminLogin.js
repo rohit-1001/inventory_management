@@ -18,7 +18,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
 import { gapi } from 'gapi-script'
 import { useEffect } from 'react';
-import Login2 from './Login2';
+import Login2 from '../Registration/Login2';
 // import Logout2 from './Logout2';
 // import { GoogleLogin } from 'react-google-login'
 const clientId = "114263541606-9lf0mrh7gl51q7skf8d2ja8rq4rqr4pe.apps.googleusercontent.com"

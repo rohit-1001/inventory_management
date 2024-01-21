@@ -1,13 +1,13 @@
 import React from 'react'
 import "./HomeStyles.css"
-import rightsecimg from "../assets/hometrial2.png"
-import verficiation from "../assets/id-removebg-preview.png"
-import results from "../assets/online-exam.svg"
-import createexam from "../assets/hometrial4.avif"
-import homeimg1 from "../assets/homeimg1.png"
-import testi1 from "../assets/testi1.jpg"
-import testi2 from "../assets/testi2.jpg"
-import testi3 from "../assets/testi3.jpg"
+import rightsecimg from "../../assets/hometrial2.png"
+import verficiation from "../../assets/id-removebg-preview.png"
+import results from "../../assets/online-exam.svg"
+import createexam from "../../assets/hometrial4.avif"
+import homeimg1 from "../../assets/homeimg1.png"
+import testi1 from "../../assets/testi1.jpg"
+import testi2 from "../../assets/testi2.jpg"
+import testi3 from "../../assets/testi3.jpg"
 import Footer from './Footer'
 import { useEffect } from 'react'
 import Fade from 'react-reveal/Fade';

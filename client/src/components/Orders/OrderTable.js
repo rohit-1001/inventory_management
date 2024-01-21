@@ -8,7 +8,7 @@ import {
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ProductDetailsButton from "./ProductDetailsButton";
-import ShowInfo from "./ShowInfo";
+import ShowInfo from "../Profile/ShowInfo";
 import { Button } from "@mui/material";
 import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";

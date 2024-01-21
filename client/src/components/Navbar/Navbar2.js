@@ -3,8 +3,8 @@ import React from 'react'
 import { NavLink } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
 import { useState } from 'react';
-import companyLogo from "../assets/logo.png"
-import signin from "../assets/signin.png"
+import companyLogo from "../../assets/logo.png"
+import signin from "../../assets/signin.png"
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useEffect } from 'react';
 import { useRef } from 'react';

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import signin from "../assets/signin.png";
-import signup from "../assets/signup.png";
+import signin from "../../assets/signin.png";
+import signup from "../../assets/signup.png";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import DonutChart from "../components/Chart&Tables/DonutChart.js";
-import LineChart from "./Chart&Tables/LineChart.js";
-import image1 from "../assets/image_2.png";
+import DonutChart from "../Chart&Tables/DonutChart.js";
+import LineChart from "../Chart&Tables/LineChart.js";
+import image1 from "../../assets/image_2.png";
 import axios from "axios";
 import { createRoot } from "react-dom/client";
 import "react-toastify/dist/ReactToastify.css";
@@ -22,8 +22,8 @@ import {
   Button,
   Box,
 } from "@mui/material";
-import ViewProductsPopup from "./Products/ViewProductsPopup.js";
-import ShowInfo from "./Orders/ShowInfo.js";
+import ViewProductsPopup from "../Products/ViewProductsPopup.js";
+import ShowInfo from "../Profile/ShowInfo.js";
 
 const Admin = (props) => {
   const [activeTab, setActiveTab] = useState("vendors");

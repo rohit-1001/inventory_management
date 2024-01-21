@@ -8,7 +8,7 @@ import {
   TableCell,
   Button,
 } from "@mui/material";
-import "../css_files/Popup.css";
+import "./Popup.css";
 
 const ViewProductsPopup = ({ details }) => {
   const handleClose = () => {

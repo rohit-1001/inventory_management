@@ -907,7 +907,7 @@ router.put("/updateprofile", async (req, res) => {
       user1.phone = phone;
       await Company.replaceOne({ email: email }, user1);
     }
-    else{
+    else {
       user1.name = name;
       user1.phone = phone;
       await Vendor.replaceOne({ email: email }, user1);
@@ -1099,8 +1099,8 @@ router.get('/getcompanylogos', async (req, res) => {
   try {
     const companies = await Profile.find({ Grole: "company" });
     let logos = [];
-    for(company of companies){
-      logos.push({email: company.email, logo: company.logo});
+    for (company of companies) {
+      logos.push({ email: company.email, logo: company.logo });
     }
 
     res.status(200).json(logos);
@@ -1117,30 +1117,30 @@ router.post("/create-checkout-session", async (req, res) => {
   console.log(products);
   // Create lineItems dynamically based on products
   const lineItem = {
-      price_data: {
-          currency: "inr",
-          product_data: {
-              name: products.email, // Assuming each product has a 'name' property
-              images: [], // You can add images if you have them
-          },
-          unit_amount: products.price * 100, // Assuming each product has a 'donationAmount' property
+    price_data: {
+      currency: "inr",
+      product_data: {
+        name: products.email, // Assuming each product has a 'name' property
+        images: [], // You can add images if you have them
       },
-      quantity: 1, // You can adjust the quantity as needed
+      unit_amount: products.price * 100, // Assuming each product has a 'donationAmount' property
+    },
+    quantity: 1, // You can adjust the quantity as needed
   };
   console.log(lineItem);
 
   const session = await stripe.checkout.sessions.create({
-      payment_method_types: ["card"],
-      line_items: [lineItem],
-      mode: "payment",
-      success_url: "http://localhost:3000/orders",
-      cancel_url: "http://localhost:3000/codb",
+    payment_method_types: ["card"],
+    line_items: [lineItem],
+    mode: "payment",
+    success_url: "http://localhost:3000/orders",
+    cancel_url: "http://localhost:3000/codb",
   });
 
   res.json({ id: session.id });
 });
 
-router.post('/selectedprofile', async(req, res) => {
+router.post('/selectedprofile', async (req, res) => {
   const email = req.body.email;
   try {
     const profile = await Profile.findOne({ email: email });
@@ -1169,9 +1169,9 @@ router.post('/selectedprofile', async(req, res) => {
 //   return res.status(500).json({ error: 'Internal server error' });
 // }
 
-router.get('/allprofile', async(req, res) => {
+router.get('/allprofile', async (req, res) => {
   try {
-    const profile = await Profile.find({Grole: "company"});
+    const profile = await Profile.find({ Grole: "company" });
     if (!profile || profile.length === 0) {
       return res.status(404).json({ error: "Profile not found" });
     }
@@ -1253,7 +1253,7 @@ router.get('/getPrice', async (req, res) => {
       { $match: { item: regex } },
       { $group: { _id: '$item', prices: { $addToSet: '$price' } } }
     ]);
-    
+
     // console.log("Prices in getPrice:", prices);
     res.json(prices);
   } catch (error) {
@@ -1262,11 +1262,11 @@ router.get('/getPrice', async (req, res) => {
   }
 });
 
-router.post('/getSelectedCompany', async(req, res) => {
+router.post('/getSelectedCompany', async (req, res) => {
   const email = req.body.email
   try {
-    const company = await Company.findOne({email:email})
-    if(!company){
+    const company = await Company.findOne({ email: email })
+    if (!company) {
       return res.status(400).json({ error: "Company not found" });
     }
     return res.status(200).json(company)

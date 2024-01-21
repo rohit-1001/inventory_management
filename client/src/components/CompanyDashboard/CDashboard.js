@@ -1,10 +1,10 @@
 import React from 'react'
-import UpperBoxes from '../components/UpperBoxes';
-import StockAlert from '../components/StockAlert';
-import Compchta from '../components/Compchta';
+import UpperBoxes from '../Chart&Tables/UpperBoxes';
+import StockAlert from '../Chart&Tables/StockAlert';
+import Compchta from '../Chart&Tables/Compchta';
 import { useEffect } from 'react';
 // import BarChart from '../components/BarChart';
-import LineChart from '../components/LineChart';
+import LineChart from '../Chart&Tables/LineChart';
 
 const CDashboard = (props) => {
   useEffect(() => {

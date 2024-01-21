@@ -11,7 +11,7 @@ import Signup from "./components/Signup";
 // import Logout from './components/Logout';
 import NotFound from "./components/NotFound";
 import Admin from "./components/Admin";
-import CDashboard from "./Pages/CDashboard";
+import CDashboard from "../src/components/CompanyDashboard/CDashboard";
 import Requests from "./components/Requests";
 import AdminLogin from "./components/AdminLogin";
 import CProfile from "./Pages/CProfile";

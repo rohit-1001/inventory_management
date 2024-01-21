@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import DonutChart from "./DonutChart";
-import LineChart from "./LineChart";
+import DonutChart from "../components/Chart&Tables/DonutChart.js";
+import LineChart from "./Chart&Tables/LineChart.js";
 import image1 from "../assets/image_2.png";
 import axios from "axios";
 import { createRoot } from "react-dom/client";

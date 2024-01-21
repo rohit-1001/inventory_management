@@ -137,7 +137,7 @@ const Home = () => {
               <div className="testimonial-user123">
                 <img src={testi2} alt="user-img" className="user-img123" />
                 <div className="user-info123">
-                  <span className="user-name123">Brian Marchman</span>
+                  <span className="user-name123">John Doe</span>
                   <div className="user-job-details123">
                     <span className="user-job">Business Owner</span>
                   </div>
@@ -155,7 +155,7 @@ const Home = () => {
                 <div className="testimonial-user123">
                   <img src={testi3} alt="user-img" className="user-img123" />
                   <div className="user-info123">
-                    <span className="user-name123">Brian Marchman</span>
+                    <span className="user-name123">Adam Reynold</span>
                     <div className="user-job-details123">
                       <span className="user-job">Business Owner</span>
                     </div>

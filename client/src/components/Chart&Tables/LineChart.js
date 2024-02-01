@@ -54,16 +54,6 @@ function LineChart(props) {
           // toast.error(error.response.data.error);
           setMonths(['January', 'February', 'March', 'April', 'May', 'June']);
           setSales([0,0,0,0,0,0]);
-          // let chartData = {
-          //   ...initialData,
-          //   labels: months,
-          //   datasets: initialData.datasets.map(dataset => ({
-          //     ...dataset,
-          //     data: sales,
-          //   })),
-          // };
-  
-          // setLineChartData(chartData)
         } else {
           toast.error("Some error occured");
         }
@@ -81,19 +71,9 @@ function LineChart(props) {
         })
       } catch (error) {
         if (error.response) {
-          // toast.error(error.response.data.error);
+          toast.error(error.response.data.error);
           setMonths(['January', 'February', 'March', 'April', 'May', 'June']);
-          setSales([0,0,0,0,0,0]);
-          // let chartData = {
-          //   ...initialData,
-          //   labels: months,
-          //   datasets: initialData.datasets.map(dataset => ({
-          //     ...dataset,
-          //     data: sales,
-          //   })),
-          // };
-  
-          // setLineChartData(chartData)   
+          setSales([0,0,0,0,0,0]);  
         } else {
           toast.error("Some error occured");
         }
@@ -105,39 +85,13 @@ function LineChart(props) {
           const salesData = res.data;
           const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
           setMonths(salesData.map(entry => monthNames[Number(entry.month) - 1])); // subtract 1 because array indices start at 0
-          setSales(salesData.map(entry => entry.sales));
-          // if (months.length === 0) {
-          //   months.push(['January', 'February', 'March', 'April', 'May', 'June']);
-          //   sales.push([10, 20, 30, 40, 50, 60]);
-          // }
-      
-          // let chartData = {
-          //   ...initialData,
-          //   labels: months,
-          //   datasets: initialData.datasets.map(dataset => ({
-          //     ...dataset,
-          //     data: sales,
-          //   })),
-          // };
-      
-          // setLineChartData(chartData)
-         
+          setSales(salesData.map(entry => entry.sales));  
         })
       } catch (error) {
         if (error.response) {
-          // toast.error(error.response.data.error);
           setMonths(['January', 'February', 'March', 'April', 'May', 'June']);
           setSales([0,0,0,0,0,0]);
-          // let chartData = {
-          //   ...initialData,
-          //   labels: months,
-          //   datasets: initialData.datasets.map(dataset => ({
-          //     ...dataset,
-          //     data: sales,
-          //   })),
-          // };
-  
-          // setLineChartData(chartData)   
+
         } else {
           toast.error("Some error occured");
         }

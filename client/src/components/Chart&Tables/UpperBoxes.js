@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Box from '@mui/material/Box';
-import image1 from '../../assets/image_2.png';
 import axios from 'axios';
-import PropTypes from 'prop-types';
-// import CurrencyDollarIcon from '@heroicons/react/24/solid/CurrencyDollarIcon';
-import { Avatar, Card, CardContent, Stack, SvgIcon, Typography, Paper } from '@mui/material';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import PointOfSaleSharpIcon from '@mui/icons-material/PointOfSaleSharp';
 import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
  

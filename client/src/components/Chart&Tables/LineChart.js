@@ -47,22 +47,6 @@ function LineChart(props) {
           setMonths(salesData.map(entry => monthNames[Number(entry.month) - 1])); // subtract 1 because array indices start at 0
           setSales(salesData.map(entry => entry.sales));
           
-          // if (months.length === 0) {
-          //   months.push(['January', 'February', 'March', 'April', 'May', 'June']);
-          //   sales.push([10, 20, 30, 40, 50, 60]);
-          // }
-          
-          // let chartData = {
-          //   ...initialData,
-          //   labels: months,
-          //   datasets: initialData.datasets.map(dataset => ({
-          //     ...dataset,
-          //     data: sales,
-          //   })),
-          // };
-  
-          // setLineChartData(chartData)
-          // console.log("chart data : ", chartData)
         })
       } catch (error) {
         // alert("Inside Catch")
@@ -93,21 +77,6 @@ function LineChart(props) {
           const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
           setMonths(salesData.map(entry => monthNames[Number(entry.month) - 1])); // subtract 1 because array indices start at 0
           setSales(salesData.map(entry => entry.sales));
-          // if (months.length === 0) {
-          //   months.push(['January', 'February', 'March', 'April', 'May', 'June']);
-          //   sales.push([10, 20, 30, 40, 50, 60]);
-          // }
-      
-          // let chartData = {
-          //   ...initialData,
-          //   labels: months,
-          //   datasets: initialData.datasets.map(dataset => ({
-          //     ...dataset,
-          //     data: sales,
-          //   })),
-          // };
-      
-          // setLineChartData(chartData)
          
         })
       } catch (error) {

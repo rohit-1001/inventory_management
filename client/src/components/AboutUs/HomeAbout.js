@@ -1,33 +1,9 @@
-// import React from 'react'
-// import Navbar from './Navbar'
-// import About from './About'
-// import Testimonials from './Testimonials'
-// import Demo from './Demo'
-// import Picture from './Picture'
-
-// function HomeAbout() {
-//   return (
-//     <div>
-//     {/* <Picture/> */}
-//       {/* <Navbar /> */}
-//       <About />
-//       {/* <Testimonials /> */}
-//       <Demo />
-//     </div>
-//   );
-// }
-
-// export default HomeAbout;
-
-
-// ======================================================================================
-
 import React from 'react'
 import leftimg from "./images/download.png"
 import whatis from "./images/QualityArtboard16@2x-8-2x.png"
 import "./AboutStyles.css"
-import whatisupper from "./images/whatisdivimg.png"
-import whatisdownimg from "./images/whatisdownimg.png"
+// import whatisupper from "./images/whatisdivimg.png"
+// import whatisdownimg from "./images/whatisdownimg.png"
 import founders from "./images/founders.png"
 import homeimg1 from "./images/homeimg1.png"
 import Footer from "../Home/Footer"
@@ -69,7 +45,6 @@ export default function HomeAbout() {
           <Slide left>
             <div className="leftsec">
               <h2>What is Sangrah?</h2>
-              {/* <div className="seewhy">We make online proctoring simple, easy, and human.</div> */}
               <div className="seewhyinfo" id='absec2left'>
                 Sangrah is an innovative platform designed to help businesses efficiently manage their inventory. Our platform provides intuitive inventory management tools, allowing you to organize your products, set stock levels, and monitor restocking requirements with ease. Detailed reports and analytics offer valuable insights into inventory trends, enabling data-driven decision-making for your business. Sangrah is a comprehensive solution that empowers businesses to streamline and optimize their inventory management securely and efficiently.
               </div>

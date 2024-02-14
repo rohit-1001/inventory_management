@@ -10,10 +10,11 @@ import testi2 from "../../assets/testi2.jpg"
 import testi3 from "../../assets/testi3.jpg"
 import Footer from './Footer'
 import { useEffect } from 'react'
-import Fade from 'react-reveal/Fade';
-import Zoom from 'react-reveal/Zoom';
-// import Flip from 'react-reveal/Flip';
-import Slide from 'react-reveal/Slide';
+
+import { Fade } from "react-awesome-reveal";
+import { Zoom } from "react-awesome-reveal";
+// import { Flip } from "react-awesome-reveal";
+import { Slide } from "react-awesome-reveal";
 
 const Home = () => {
   useEffect(() => {

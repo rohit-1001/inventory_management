@@ -32,12 +32,11 @@ import founders from "./images/founders.png"
 import homeimg1 from "./images/homeimg1.png"
 import Footer from "../Home/Footer"
 import { useEffect } from 'react'
-import Fade from 'react-reveal/Fade';
-import Zoom from 'react-reveal/Zoom';
-import Flip from 'react-reveal/Flip';
-import Slide from 'react-reveal/Slide';
-// import Pulse from 'react-reveal/Pulse';
-// import Bounce from 'react-reveal/Bounce';
+
+import { Fade } from "react-awesome-reveal";
+// import { Zoom } from "react-awesome-reveal";
+// import { Flip } from "react-awesome-reveal";
+import { Slide } from "react-awesome-reveal";
 
 export default function HomeAbout() {
   useEffect(() => {

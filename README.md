@@ -1,4 +1,4 @@
-# Sangrah Inventory management System
+# [Sangrah Inventory Management System](https://rohit-sangrah.netlify.app/)
 
 Create config.env in server and put the below mentioned credentials
 ```

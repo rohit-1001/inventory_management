@@ -15,5 +15,5 @@ nodemon app
 
 For running client:
 ```
-npm start
+npm run dev
 ```
